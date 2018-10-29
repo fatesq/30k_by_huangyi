@@ -1,0 +1,21 @@
+<style lang="less">
+.login {
+  background-color: #555;
+  color: #fff;
+}
+</style>
+<template>
+  <view class="page__bd page__bd_spacing">
+    <button class="weui-btn login"> 人机测试控件 </button>
+    <button class="weui-btn"  type="warn"> 签入 </button>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+
+export default class Login extends wepy.page {
+  config = {
+    navigationBarTitleText: '登录'
+  };
+}
+</script>
