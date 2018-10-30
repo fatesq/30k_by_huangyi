@@ -1,20 +1,18 @@
 <style lang="less">
-.login {
-  background-color: #555;
-  color: #fff;
-}
 </style>
+
 <template>
   <view class="page__bd page__bd_spacing">
-
+    123
   </view>
 </template>
+
 <script>
 import wepy from 'wepy'
 
-export default class action extends wepy.page {
+export default class Search extends wepy.page {
   config = {
-    navigationBarTitleText: '项目进件'
+    navigationBarTitleText: '检索'
   };
 }
 </script>

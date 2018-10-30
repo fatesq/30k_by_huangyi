@@ -7,15 +7,22 @@
 <template>
   <view class="page__bd page__bd_spacing">
     <button class="weui-btn login"> 人机测试控件 </button>
-    <button class="weui-btn"  type="warn"> 签入 </button>
+    <button class="weui-btn"  @tap='login()' type="warn"> 签入 </button>
   </view>
 </template>
 <script>
-import wepy from 'wepy';
+import wepy from 'wepy'
 
 export default class Login extends wepy.page {
   config = {
     navigationBarTitleText: '登录'
   };
+  methods = {
+    login() {
+      wx.switchTab({
+        url: 'search'        
+      })
+    }
+  }
 }
 </script>

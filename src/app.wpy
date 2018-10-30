@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 page {
-  background-color: #f8f8f8;
+  background-color: #FFFFFF;
   font-size: 16px;
   font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }
@@ -43,23 +43,55 @@ page {
 </style>
 
 <script>
-import wepy from 'wepy';
-import 'wepy-async-function';
+import wepy from 'wepy'
+import 'wepy-async-function'
 
-import { setStore } from 'wepy-redux';
-import configStore from './store';
+import { setStore } from 'wepy-redux'
+import configStore from './store'
 
-const store = configStore();
-setStore(store);
+const store = configStore()
+setStore(store)
 
 export default class extends wepy.app {
   config = {
-    pages: ['pages/login', 'pages/index'],
+    pages: [
+      'pages/login',
+      'pages/index',
+      'pages/search',
+      'pages/setting',
+      'pages/action'
+    ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: '#999999',
+      selectedColor: '#3ab54a',
+      backgroundColor: '#ffffff',
+      borderStyle: 'black',
+      list: [
+        {
+          pagePath: 'pages/search',
+          text: '项目检索'
+          // iconPath: 'images/icon_home.png',
+          // selectedIconPath: 'images/icon_home_active.png'
+        },
+        {
+          pagePath: 'pages/action',
+          text: '项目进件'
+          // iconPath: 'images/icon_home.png',
+          // selectedIconPath: 'images/icon_home_active.png'
+        },
+        {
+          pagePath: 'pages/setting',
+          text: '设置'
+          // iconPath: 'images/icon_info.png',
+          // selectedIconPath: 'images/icon_info_active.png'
+        }
+      ]
     }
   };
 
