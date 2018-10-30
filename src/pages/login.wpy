@@ -23,23 +23,23 @@ page {
 }
 </style>
 <template>
-<view>
-  <view class="page__bd page__bd_spacing">
-    <view class="section">
-      <input placeholder="手机号" auto-focus/>
+  <view>
+    <view class="page__bd page__bd_spacing">
+      <view class="section">
+        <input placeholder="手机号" auto-focus/>
+      </view>
+      <view class="section">
+        <input placeholder="签入口令" auto-focus/>
+      </view>
+      <view class="group">
+        <button class="weui-btn login"> 人机测试控件 </button>
+        <button class="weui-btn"  @tap='login()' type="warn"> 签入 </button>
+      </view>
     </view>
-    <view class="section">
-      <input placeholder="签入口令" auto-focus/>
+    <view class="forget">
+      忘记密码
     </view>
-    <view class="group">
-      <button class="weui-btn login"> 人机测试控件 </button>
-      <button class="weui-btn"  @tap='login()' type="warn"> 签入 </button>
-    </view>
-  </view>
-  <view class="forget">
-    忘记密码
-  </view>
-</view>  
+  </view>  
 </template>
 <script>
 import wepy from 'wepy'

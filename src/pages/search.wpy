@@ -1,9 +1,30 @@
 <style lang="less">
+page {
+  background-color: #f2f2f2;
+}
+.field-index--van-field {
+  background-color: #f2f2f2 !important;
+}
+.van-search {
+  background-color: #FFF !important;
+}
+.select {
+  padding: 10px 0px;
+}
+.item {
+  background-color: #FFF;
+}
 </style>
 
 <template>
-  <view class="page__bd page__bd_spacing">
-    123
+  <view>
+    <van-search value="" placeholder="项目编号/项目名称" />
+    <view class="select">
+      <van-cell title="请选择行业" is-link/>
+    </view>
+    
+    <view class="item">123</view>
+   
   </view>
 </template>
 
@@ -12,7 +33,11 @@ import wepy from 'wepy'
 
 export default class Search extends wepy.page {
   config = {
-    navigationBarTitleText: '检索'
+    navigationBarTitleText: '检索',
+    usingComponents: {
+      'van-search': "../components/van/search/index",
+      "van-cell": "../components/van/cell/index"
+    }
   };
 }
 </script>
