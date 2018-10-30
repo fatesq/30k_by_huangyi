@@ -3,11 +3,27 @@
   background-color: #555;
   color: #fff;
 }
+.group {
+  margin-top: 50px;
+}
+.section {
+  border-bottom: 1px #eee solid;
+  margin: 0px 8px 20px 8px;
+  padding-bottom: 8px;
+}
 </style>
 <template>
   <view class="page__bd page__bd_spacing">
-    <button class="weui-btn login"> 人机测试控件 </button>
-    <button class="weui-btn"  @tap='login()' type="warn"> 签入 </button>
+    <view class="section">
+      <input placeholder="手机号" auto-focus/>
+    </view>
+    <view class="section">
+      <input placeholder="签入口令" auto-focus/>
+    </view>
+    <view class="group">
+      <button class="weui-btn login"> 人机测试控件 </button>
+      <button class="weui-btn"  @tap='login()' type="warn"> 签入 </button>
+    </view>
   </view>
 </template>
 <script>
