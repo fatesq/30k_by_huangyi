@@ -39,6 +39,30 @@ page {
       }
     }
   }
+  .detail {
+    display: flex;
+    .list {
+      width: 500rpx;
+      view {
+        padding: 10rpx 0rpx 10rpx 20rpx;
+        font-size:14px;
+      }
+    }
+    .more {
+      width: 250rpx;
+      display: flex;
+      justify-content:center;
+      align-items:Center;
+      button {
+        color:#E64340;
+        font-size:16px;
+        height:32px;
+        line-height:32px;
+        width:130rpx;
+        border-radius:2px;
+      }
+    }
+  }
 }
 </style>
 
@@ -60,7 +84,27 @@ page {
         </view>
       </view>
       <view class="detail">
-
+        <view class="list">
+          <view>
+            <van-icon name="more-o" />
+            8% ~ 20%
+          </view>
+          <view>
+            <van-icon name="more-o" />
+            8% ~ 20%
+          </view>
+          <view>
+            <van-icon name="more-o" />
+            8% ~ 20%
+          </view>
+          <view>
+            <van-icon name="more-o" />
+            8% ~ 20%
+          </view>
+        </view>
+        <view class="more">
+          <button> 详情 </button>
+        </view>
       </view>
     </view>
   </view>
@@ -74,7 +118,8 @@ export default class Search extends wepy.page {
     navigationBarTitleText: '检索',
     usingComponents: {
       'van-search': "../components/van/search/index",
-      "van-cell": "../components/van/cell/index"
+      "van-cell": "../components/van/cell/index",
+      "van-icon": "../components/van/icon/index"
     }
   };
 }
