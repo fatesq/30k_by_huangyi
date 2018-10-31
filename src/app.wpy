@@ -58,6 +58,7 @@ export default class extends wepy.app {
       'pages/search',
       'pages/login',
       'pages/index',
+      'pages/selectIndustry',
       'pages/setting',
       'pages/action'
     ],

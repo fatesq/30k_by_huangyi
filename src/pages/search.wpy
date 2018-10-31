@@ -73,9 +73,9 @@ page {
   <view>
     <van-search value="" placeholder="项目编号/项目名称" />
     <view class="select">
-      <van-cell title="请选择行业" is-link/>
+      <van-cell title="请选择行业" is-link @tap="toSelectIndustry()"/>
     </view>
-    <view class="item" wx:for="{{list}}">
+    <view class="item" wx:for="{{list}}" wx:key="index">
       <view class="title">
         <image class="img" mode="aspectFill" src="https://developers.weixin.qq.com/miniprogram/dev/image/cat/0.jpg?t=18102614" />
         <view class="box">
@@ -124,7 +124,7 @@ export default class Search extends wepy.page {
       "van-cell": "../components/van/cell/index",
       "van-icon": "../components/van/icon/index"
     }
-  };
+  }
 
   data = {
     list: [],
@@ -132,12 +132,14 @@ export default class Search extends wepy.page {
 
   methods = {
     toSelectIndustry() {
-      
+      wx.navigateTo({
+        url: 'selectIndustry'
+      })
     }
   }
 
   onShow() {
-    this.getList();
+    this.getList()
   }
 
   getList() {
@@ -158,7 +160,7 @@ export default class Search extends wepy.page {
       'demo3': '上海市普通新区',
       'demo4': '中影餐饮娱乐公司',
     }]
-    this.$apply();
+    this.$apply()
   }
 
 }
