@@ -55,6 +55,8 @@ page {
       justify-content:center;
       align-items:Center;
       button {
+        background-color: #FDE9E9;
+        border-color: #FDE9E9 !important;
         color:#E64340;
         font-size:16px;
         height:32px;
@@ -116,7 +118,7 @@ import wepy from 'wepy'
 
 export default class Search extends wepy.page {
   config = {
-    navigationBarTitleText: '检索',
+    navigationBarTitleText: '项目检索',
     usingComponents: {
       'van-search': "../components/van/search/index",
       "van-cell": "../components/van/cell/index",
