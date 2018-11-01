@@ -2,16 +2,21 @@
 .setting {}
 </style>
 <template>
-  <view class="page__bd page__bd_spacing">
-    123
-  </view>
+  <van-cell-group>
+    <van-cell title="目标行业" is-link value="测试行业" />
+    <van-cell title="修改口令" is-link/>
+  </van-cell-group>
 </template>
 <script>
 import wepy from 'wepy'
 
 export default class Setting extends wepy.page {
   config = {
-    navigationBarTitleText: '设置'
+    navigationBarTitleText: '设置',
+    usingComponents: {
+      'van-cell': '../components/van/cell/index',
+      'van-cell-group': '../components/van/cell-group/index',
+    }
   };
 }
 </script>
