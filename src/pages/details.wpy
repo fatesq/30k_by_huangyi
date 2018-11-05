@@ -1,4 +1,7 @@
 <style lang="less">
+page {
+  background-color: #f2f2f2;
+}
 .item {
   background-color: #FFF;
   margin-bottom: 20rpx;
@@ -15,6 +18,7 @@
     .box {
       display: flex;
       flex-direction: column-reverse;
+      justify-content: space-between;
       .time {
         color: #ccc;
       }
@@ -28,28 +32,99 @@
       }
     }
   }
+  .detail {
+    display: flex;
+    .list {
+      width: 500rpx;
+      view {
+        padding: 10rpx 0rpx 10rpx 20rpx;
+        font-size:14px;
+      }
+    }
+  }
 }  
 </style>
 <template>
+<view>
   <view class="item">
     <view class="title">
       <image class="img" mode="aspectFill" src="https://developers.weixin.qq.com/miniprogram/dev/image/cat/0.jpg?t=18102614" />
       <view class="box">
-        <view class="time">{{item.time}}</view>
+        <view class="time">{{info.time}}</view>
         <view class="value">
-          <text>{{item.type}}</text>
-          <text class="price">{{item.price}}</text>
+          <text>{{info.type}}</text>
+          <text class="price">{{info.price}}</text>
+        </view>
+        <view>{{info.demo3}}</view>
+        <view>{{info.id}}</view>
+      </view>
+    </view>
+    <view class="detail">
+      <view class="list">
+        <view>
+          <van-icon name="more-o" />
+          {{info.demo1}}
+        </view>
+        <view>
+          <van-icon name="more-o" />
+          {{info.demo2}}
+        </view>
+        <view>
+          <van-icon name="more-o" />
+          {{info.demo3}}
+        </view>
+        <view>
+          <van-icon name="more-o" />
+          {{info.demo4}}
         </view>
       </view>
     </view>
   </view>  
+  <van-cell-group>
+    <van-cell title="品牌概况" is-link/>
+    <van-cell title="品牌行业相关" is-link/>
+    <van-cell title="项目概况" is-link/>
+    <van-cell title="项目组织情况" is-link/>
+    <van-cell title="客户群体画像" is-link/>
+    <van-cell title="行业项目相关" is-link/>
+    <van-cell title="融资经营信息" is-link/>
+  </van-cell-group>
+</view>  
 </template>
 <script>
 import wepy from 'wepy'
 
 export default class Details extends wepy.page {
-   onLoad(option) {
+  config = {
+    navigationBarTitleText: '详情',
+    usingComponents: {
+      "van-cell": "../components/van/cell/index",
+      'van-cell-group': '../components/van/cell-group/index',
+      "van-icon": "../components/van/icon/index"
+    }
+  }
+
+  data = {
+    info: {},
+  }
+
+  onLoad(option) {
     console.log(option.query)
+    this.getInfo();
+  }
+
+  getInfo() {
+    this.info = {
+      'id': 'No.11111111111111',
+      'time': '2020-11-11 11:11:11',
+      'type': '餐饮',
+      'price': '123',
+      'demo1': '8% ~ 20%',
+      'demo2': '熊集枫',
+      'demo3': '上海市普通新区',
+      'demo4': '中影餐饮娱乐公司',
+    }
+    this.$apply();
   }
 }
 </script>
