@@ -81,8 +81,8 @@ page {
     </view>
   </view>  
   <van-cell-group>
-    <van-cell title="品牌概况" is-link/>
-    <van-cell title="品牌行业相关" is-link/>
+    <van-cell title="品牌概况" is-link @tap="router('brand')"/>
+    <van-cell title="品牌行业相关" is-link  @tap="router('brandIndustry')"/>
     <van-cell title="项目概况" is-link/>
     <van-cell title="项目组织情况" is-link/>
     <van-cell title="客户群体画像" is-link/>
@@ -98,14 +98,22 @@ export default class Details extends wepy.page {
   config = {
     navigationBarTitleText: '详情',
     usingComponents: {
-      "van-cell": "../components/van/cell/index",
-      'van-cell-group': '../components/van/cell-group/index',
-      "van-icon": "../components/van/icon/index"
+      "van-cell": "../../components/van/cell/index",
+      'van-cell-group': '../../components/van/cell-group/index',
+      "van-icon": "../../components/van/icon/index"
     }
   }
 
   data = {
     info: {},
+  }
+
+   methods = {
+    router(page) {
+      wx.navigateTo({
+        url: `${page}`
+      })
+    }
   }
 
   onLoad(option) {

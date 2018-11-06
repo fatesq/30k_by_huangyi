@@ -139,7 +139,7 @@ export default class Search extends wepy.page {
     toDetails(id) {
       console.log(id)
       wx.navigateTo({
-        url: `details?id=${id}`
+        url: `details/index?id=${id}`
       })
     }
   }
