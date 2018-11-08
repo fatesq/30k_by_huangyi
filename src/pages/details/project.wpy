@@ -1,12 +1,42 @@
 <style lang="less">
+page {
+  background-color: #f2f2f2;
+}
+.van-cell-group {
+  margin-bottom: 30rpx;
+}
 </style>
 <template>
-  
+<view>
+  <van-cell-group>
+    <van-cell title="融资概况" label="描述信息" />
+  </van-cell-group>  
+  <van-cell-group>
+    <van-cell title="融资概况"/>
+    <van-cell title="总投资额" value=""/>
+    <van-cell title="目标融资额" value=""/>
+    <van-cell title="融资时限" value=""/>
+    <van-cell title="出让股份" value=""/>
+    <van-cell title="已投入资金" value=""/>
+    <van-cell title="承诺出资" value=""/>
+  </van-cell-group>
+
+  <van-panel title="已投入凭据影印件">
+    <view></view>
+  </van-panel>
+</view>
 </template>
 <script>
 import wepy from 'wepy'
 
 export default class Project extends wepy.page {
-
+  config = {
+    navigationBarTitleText: '项目概况',
+    usingComponents: {
+      "van-cell": "../../components/van/cell/index",
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-panel': '../../components/van/panel/index'
+    }
+  }
 }
 </script>

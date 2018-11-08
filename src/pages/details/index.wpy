@@ -83,11 +83,11 @@ page {
   <van-cell-group>
     <van-cell title="品牌概况" is-link @tap="router('brand')"/>
     <van-cell title="品牌行业相关" is-link  @tap="router('brandIndustry')"/>
-    <van-cell title="项目概况" is-link/>
-    <van-cell title="项目组织情况" is-link/>
-    <van-cell title="客户群体画像" is-link/>
-    <van-cell title="行业项目相关" is-link/>
-    <van-cell title="融资经营信息" is-link/>
+    <van-cell title="项目概况" is-link @tap="router('project')"/>
+    <van-cell title="项目组织情况" is-link @tap="router('projectGroup')"/>
+    <van-cell title="客户群体画像" is-link @tap="router('clint')"/>
+    <van-cell title="行业项目相关" is-link @tap="router('industry')"/>
+    <van-cell title="融资经营信息" is-link @tap="router('financ')"/>
   </van-cell-group>
 </view>  
 </template>

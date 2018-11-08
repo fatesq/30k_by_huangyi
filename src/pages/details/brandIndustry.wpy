@@ -1,12 +1,42 @@
 <style lang="less">
+page {
+  background-color: #f2f2f2;
+}
+.van-cell-group {
+  margin-bottom: 30rpx;
+}
 </style>
 <template>
-  
+<view>
+  <van-cell-group>
+    <van-cell title="门店所在分布"/>
+    <van-cell title="xxxxxx" value=""/>
+    <van-cell title="xxxxxx" value=""/>
+  </van-cell-group>
+
+  <van-cell-group>
+    <van-cell title="绩优门店周边环境分布"/>
+    <van-cell title="xxxxxx" value=""/>
+    <van-cell title="xxxxxx" value=""/>
+  </van-cell-group>
+
+  <van-cell-group>
+    <van-cell title="绩优门店平均人流量"/>
+    <van-cell title="绩优门店平均客流量" value=""/>
+    <van-cell title="目标市场份额" value=""/>
+  </van-cell-group>
+</view>  
 </template>
 <script>
 import wepy from 'wepy'
 
 export default class BrandIndustry extends wepy.page {
-
+  config = {
+    navigationBarTitleText: '品牌行业相关',
+    usingComponents: {
+      "van-cell": "../../components/van/cell/index",
+      'van-cell-group': '../../components/van/cell-group/index',
+    }
+  }
 }
 </script>
