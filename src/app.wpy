@@ -67,6 +67,7 @@ export default class extends wepy.app {
       'pages/details/financ',
       'pages/selectIndustry',
       'pages/setting/index',
+      'pages/setting/forget',
       'pages/action'
     ],
     window: {

@@ -3,7 +3,7 @@
 </style>
 <template>
   <van-cell-group>
-    <van-cell title="目标行业" is-link value="测试行业" />
+    <van-cell title="目标行业" is-link value="测试行业" url="forget" />
     <van-cell title="修改口令" is-link/>
   </van-cell-group>
 </template>

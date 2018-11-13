@@ -1,0 +1,43 @@
+<style lang="less">
+page {
+  background-color: #f2f2f2;
+}
+.van-cell-group {
+  margin-bottom: 30rpx;
+}
+</style>
+<template>
+<view>
+  <van-cell-group>
+    <van-cell title="品牌名称" value=""/>
+    <van-cell title="创始人" value=""/>
+    <van-cell title="创立日期" value=""/>
+    <van-cell title="总部所在地" value=""/>
+    <van-cell title="总部统一社会信用代码" value=""/>
+  </van-cell-group>
+  <van-cell-group>
+    <van-cell title="连锁规模" value=""/>
+    <van-cell title="代表门店" value=""/>
+    <van-cell title="场地面积" value=""/>
+    <van-cell title="客单价区间" value=""/>
+    <van-cell title="单店投资额" value=""/>
+    <van-cell title="月净利润" value=""/>
+    <van-cell title="年化投资回报率" value=""/>
+    <van-cell title="回本周期" value=""/>
+    <van-cell title="项目失败率" value=""/>
+  </van-cell-group>
+</view>  
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class Forget extends wepy.page {
+  config = {
+    navigationBarTitleText: '修改口令',
+    usingComponents: {
+      "van-cell": "../../components/van/cell/index",
+      'van-cell-group': '../../components/van/cell-group/index',
+    }
+  }
+}
+</script>
