@@ -32,7 +32,7 @@ page {
         <input placeholder="签入口令" auto-focus/>
       </view>
       <view class="group">
-        <button class="weui-btn login"> 人机测试控件 </button>
+        <button class="weui-btn login" bindgetuserinfo="bindGetUserInfo"  open-type="getUserInfo" form-type="submit"> 人机测试控件 </button>
         <button class="weui-btn"  @tap='login()' type="warn"> 签入 </button>
       </view>
     </view>
@@ -54,6 +54,17 @@ export default class Login extends wepy.page {
         url: 'search'        
       })
     }
+  }
+
+  bindGetUserInfo (e) {
+    wepy.login({
+      success: res => {
+        console.log(res);
+      },
+      fail: () => {
+        console.log('失败');
+      }
+    })  
   }
 }
 </script>

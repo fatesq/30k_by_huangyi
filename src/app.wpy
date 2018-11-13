@@ -55,6 +55,7 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/login',
       'pages/search',
       'pages/details/index',
       'pages/details/brand',
@@ -64,10 +65,8 @@ export default class extends wepy.app {
       'pages/details/client',
       'pages/details/industry',
       'pages/details/financ',
-      'pages/login',
-      'pages/index',
       'pages/selectIndustry',
-      'pages/setting',
+      'pages/setting/index',
       'pages/action'
     ],
     window: {
@@ -95,7 +94,7 @@ export default class extends wepy.app {
           // selectedIconPath: 'images/icon_home_active.png'
         },
         {
-          pagePath: 'pages/setting',
+          pagePath: 'pages/setting/index',
           text: '设置'
           // iconPath: 'images/icon_info.png',
           // selectedIconPath: 'images/icon_info_active.png'
