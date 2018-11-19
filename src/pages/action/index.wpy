@@ -1,0 +1,57 @@
+<style lang="less">
+.van-switch--on {
+  background-color:  #4b0 !important;
+}
+.fix {
+  position: fixed;
+  width: 100%;
+  button {
+    border-radius: 0px;
+  }
+}
+</style>
+<template>
+<view>
+  <van-cell-group>
+    <van-cell title="项目所处行业" value="行业"  is-link/>
+    <van-field
+      label="统一信用代码"
+      bind:change="onChange"
+    />
+    <van-switch-cell
+      title="品牌连锁"
+      checked="{{ checked }}"
+      bind:change="onChange"
+    />
+  </van-cell-group>
+  <navigator class="fix" url="brand">
+    <button type="warn">下一步</button>
+  </navigator>
+</view>  
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class action extends wepy.page {
+  config = {
+    navigationBarTitleText: '项目进件',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-switch-cell': '../../components/van/switch-cell/index'
+    }
+  };
+
+  data = {
+    checked: true,
+  }
+
+  methods = {
+    onChange() {
+      this.checked = !this.checked
+      this.$apply()
+    }
+  }
+}
+</script>

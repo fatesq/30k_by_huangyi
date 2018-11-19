@@ -1,7 +1,7 @@
 import wepy from 'wepy';
 
 const wxRequest = async (params = {}, url) => {
-    const TOKEN = wx.getStorageSync("TOKEN");
+    const token = wx.getStorageSync("token");
     wx.showLoading();
     let data = params.query || {};
     let res = await wepy.request({
@@ -11,8 +11,8 @@ const wxRequest = async (params = {}, url) => {
         header: {
             'Content-Type': params.method == 'FORM' ? 'application/x-www-form-urlencoded ' : 'application/json;charset=UTF-8;',
             'Authorization': data.wxSession,
-            'Cookie': 'JSESSIONID=' + TOKEN,
-            'TOKEN': TOKEN
+            'Cookie': 'JSESSIONID=' + token,
+            'token': token
         },
     });
     wx.hideLoading();
