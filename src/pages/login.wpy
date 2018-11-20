@@ -33,7 +33,7 @@ page {
       </view>
       <view class="group">
         <button class="weui-btn login" bindgetuserinfo="bindGetUserInfo"  open-type="getUserInfo" form-type="submit"> 人机测试控件 </button>
-        <button class="weui-btn"  @tap='login()' type="warn"> 签入 </button>
+        <button class="weui-btn"  @tap='bind()' type="warn"> 签入 </button>
       </view>
     </view>
     <view class="forget">
@@ -43,6 +43,7 @@ page {
 </template>
 <script>
 import wepy from 'wepy'
+import api from '../api/api'
 
 export default class Login extends wepy.page {
   config = {
@@ -56,10 +57,28 @@ export default class Login extends wepy.page {
     }
   }
 
+  async bind() {
+    const json = await api.bind({
+      method: 'FORM',
+      query: {
+        code:'logincode',
+        mobile:'17700000000',
+        loginPassword:'1234567'
+      }
+    });
+  }
+
   bindGetUserInfo (e) {
     wepy.login({
-      success: res => {
-        console.log(res);
+      success: async(res) => {
+        const json = await api.bind({
+          method: 'FORM',
+          query: {
+            code:res.code,
+            mobile:'17700000000',
+            loginPassword:'1234567'
+          }
+        });
       },
       fail: () => {
         console.log('失败');

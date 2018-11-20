@@ -67,23 +67,22 @@ export default class authorize extends wepy.page {
   }
   async getUserInfo(res, info, type) {
     let that = this;
-    try {
+    // try {
       const json = await api.login({
         method: 'FORM',
         query: {
           code: res.code
         }
       });
-      console.log('111', json);
       if (json.data.code === 'noprivilege') {
         // wx.setStorageSync('wxSession', json.data.obj);
         wx.redirectTo({ url: 'login' });
       } else {
         wx.redirectTo({ url: 'search' });
       }
-    } catch (e) {
-      console.log(e);
-    }
+    // } catch (e) {
+    //   console.log(e);
+    // }
     that.$apply();
   }
   login() {
