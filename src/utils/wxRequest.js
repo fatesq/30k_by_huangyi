@@ -15,12 +15,12 @@ const wxRequest = async (params = {}, url) => {
       'token': token
     }
   })
+  console.log('000', res)
   wx.hideLoading()
   if (res.statusCode == 401) {
     wx.setStorageSync('loginState', false)
     wx.reLaunch({url: 'login'})
   }
-  console.log(res)
   return res
 }
 

@@ -69,12 +69,12 @@ export default class authorize extends wepy.page {
     let that = this;
     try {
       const json = await api.login({
+        method: 'FORM',
         query: {
           code: res.code
-        },
-        method: 'FORM'
+        }
       });
-      console.log(json);
+      console.log('111', json);
       if (json.data.code === 'noprivilege') {
         // wx.setStorageSync('wxSession', json.data.obj);
         wx.redirectTo({ url: 'login' });
@@ -102,6 +102,7 @@ export default class authorize extends wepy.page {
   async getSetting() {
     let that = this;
     const code = await this.login();
+    console.log(code)
     wx.getSetting({
       success: function(res) {
         if (res.authSetting['scope.userInfo']) {
