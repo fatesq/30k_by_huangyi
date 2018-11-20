@@ -1,0 +1,130 @@
+<style lang="less">
+.page{
+position:inherit;
+background: #fff;
+}
+.weui-btn-area {
+    margin: 90rpx 30rpx 0rpx 30rpx;
+}
+.weui-btn {
+    margin-top: 15px;
+}
+
+.weui-btn:first-child {
+    margin-top: 0;
+}
+.column-center {
+    align-items: center;
+}
+.brand {
+    padding-top: 130rpx;
+    padding-bottom: 40rpx;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.logo {
+    width: 100px;
+    height: 100px;
+}
+
+
+    .weui-btn-area .submit{
+        background: #36a2f9;
+    }
+.title{
+    font-size: 34rpx;
+    color: #333;
+    margin-top:25rpx;
+
+}
+</style>
+<template>
+    <view class="page">
+        <view class="brand column-center">
+            <image class="logo" src="https://cloudchain.oss-cn-hangzhou.aliyuncs.com/xiaochengxu_img/logo.png"/>
+            <view class="title">肉品交易买家版</view>
+        </view>
+        <view class="page__bd">
+            <view class="weui-btn-area">
+                <button class="weui-btn submit" bindgetuserinfo="bindGetUserInfo"  open-type="getUserInfo" type="primary" form-type="submit">点击授权用户信息</button>
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy';
+import api from '../api/api';
+// import util from '../util/util';
+export default class authorize extends wepy.page {
+data = {
+  };
+  methods={
+   };
+    /*
+     * 授权
+     * */
+    async bindGetUserInfo(e){
+        let that = this;
+        const res = await this.login();
+        const info = e.detail;
+        that.getUserInfo(res,info,2);
+    }
+    async getUserInfo(res,info,type){
+        let that = this;
+        try{
+            const json = await api.login({
+                query: {
+                    code:res.code,
+                },
+                method:'FORM',
+            });
+            console.log(json)
+            if(json.data.code === 'noprivilege'){
+              // wx.setStorageSync('wxSession', json.data.obj);
+              wx.redirectTo({url:'login'});
+            }else{
+              wx.redirectTo({url:'search'});
+            }
+        }catch(e){
+            console.log(e);
+        }
+        that.$apply();
+    }
+    login() {
+        return new Promise((resolve, reject) => {
+                    wepy.login({
+                            success: res => {
+                            resolve(res);
+    },
+        fail: () => {
+            reject('失败');
+        },
+        complete: () => {}
+    });
+    });
+    }
+    async getSetting(){
+        let that = this;
+        const code = await this.login();
+        wx.getSetting({
+            success: function(res){
+                if (res.authSetting['scope.userInfo']) {
+                    wx.getUserInfo({
+                        success: function(info) {
+                            that.getUserInfo(code,info,1);
+                        }
+                    })
+                }
+            }
+        })
+    }
+    onShow() {
+      let self = this;
+      wx.setNavigationBarTitle({
+        title: '授权'
+      });
+      self.getSetting();
+  }
+}
+</script>
