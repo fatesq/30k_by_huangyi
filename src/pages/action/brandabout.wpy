@@ -1,0 +1,77 @@
+<style lang="less">
+page {
+  background-color:  #f4f4f4
+}
+.panel-box {
+  margin-top: 10px;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4
+  }
+  .add {
+    display: flex;
+    justify-content:center;
+    align-items:Center;
+    color: #BBB;
+  }
+}
+.van-cell {
+  align-items:center;
+}
+</style>
+<template>
+  <view>
+    <van-panel class="panel-box" title="门店所在地分布">
+      <view class="item">
+        xxxxxx2家, 加盟店1家, 直营店1家
+      </view>
+      <view class="item add">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px" /> 添加门店所在地分布
+      </view>
+    </van-panel>
+    <van-panel class="panel-box" title="绩优门店周边环境分布">
+      <view class="item">
+        CBD占10%
+      </view>
+      <view class="item add">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px" /> 添加绩优门店周边环境分布
+      </view>
+    </van-panel>
+    <van-cell-group>
+      <van-field
+        value=""
+        label="绩优门店平均人流量"
+        placeholder="0"
+        use-button-slot
+      >
+        <text slot="button">万人/月</text>
+      </van-field>
+      <van-field
+        value=""
+        label="绩优门店平均客流量"
+        placeholder="0"
+        use-button-slot
+      >
+        <text slot="button">万人/月</text>
+      </van-field>
+      <interval start='目标市场份额' end="元/平米/月" />
+    </van-cell-group>  
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class BrandAbout extends wepy.page {
+  config = {
+    navigationBarTitleText: '品牌概况',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+      'interval': '../../components/interval/index'
+    }
+  };
+}
+</script>

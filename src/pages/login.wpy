@@ -63,7 +63,7 @@ export default class Login extends wepy.page {
       query: {
         code:'logincode',
         mobile:'17700000000',
-        loginPassword:'1234567'
+        loginPassword:'123456'
       }
     });
   }
@@ -76,7 +76,7 @@ export default class Login extends wepy.page {
           query: {
             code:res.code,
             mobile:'17700000000',
-            loginPassword:'1234567'
+            loginPassword:'123456'
           }
         });
       },

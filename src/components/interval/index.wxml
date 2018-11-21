@@ -1,0 +1,19 @@
+<view>
+  <view class="interval">
+    <view
+      style="{{ startStyle }}"
+      class="van-cell__title title-class"
+    > 
+      {{ start }}
+    </view>
+    <input placeholder="0"/>
+    <view class="van-cell__title title-class">{{center}}</view>
+    <input placeholder="0"/>
+    <view
+      style="{{ endStyle }}"
+      class="van-cell__title title-class"
+    > 
+      {{ end }}
+    </view>
+  </view>
+</view>

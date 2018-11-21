@@ -6,6 +6,10 @@ page {
   position: relative;
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 24px;
+  align-items: center;
   &:after{
     content:' ';
     position:absolute;
@@ -21,23 +25,33 @@ page {
     transform:scaleY(.5);
     border-bottom:1px solid #eee;
   }
-  view {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding:10px 15px;
-    text {
-      font-size:14px;
-      white-space: nowrap;
-    }
-    input {
-      padding: 0 5px;
-    }
+  // view {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   padding:10px 15px;
+  //   text {
+  //     font-size:14px;
+  //     white-space: nowrap;
+  //   }
+  //   input {
+  //     padding: 0 5px;
+  //   }
+  // }
+}
+
+.fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  button {
+    border-radius: 0px;
   }
 }
 </style>
 <template>
-  <view>
+  <view style="margin-bottom: 50px">
     <van-cell-group>
       <van-field
         label="品牌名称"
@@ -75,18 +89,29 @@ page {
         bind:change="onChange"
       />
     </van-cell-group>    
-    <van-panel title="连锁规模" style="margin: 30rpx 0rpx">
+    <van-panel title="连锁规模" style="margin: 10px ">
       <view class="item">
-        <view>
-          <text>直营店</text>
-          <input placeholder="0"/>
-          <text>家</text>
-        </view>
-        <view>
+        <van-field
+          value=""
+          label="加盟店"
+          placeholder="0"
+          use-button-slot
+        >
+          <text slot="button">家</text>
+        </van-field>
+        <van-field
+          value=""
+          label="加盟店"
+          placeholder="0"
+          use-button-slot
+        >
+          <text slot="button">家</text>
+        </van-field>
+        <!-- <view>
           <text>加盟店</text>
           <input placeholder="0"/>
           <text>家</text>
-        </view>
+        </view> -->
       </view>
       <van-field
         label="代表门店"
@@ -95,74 +120,22 @@ page {
       />
     </van-panel>  
     <van-cell-group>
-      <view class="item">
-        <view>
-          <text>场地面积</text>
-          <input placeholder="0"/>
-          <text>至</text>
-          <input placeholder="0"/>
-          <text>平方米</text>
-        </view>
-      </view>
-      <view class="item">
-        <view>
-          <text>客单价区间</text>
-          <input placeholder="0"/>
-          <text>至</text>
-          <input placeholder="0"/>
-          <text>元</text>
-        </view>
-      </view>
-      <view class="item">
-        <view>
-          <text>单店投资额</text>
-          <input placeholder="0"/>
-          <text>至</text>
-          <input placeholder="0"/>
-          <text>万元</text>
-        </view>
-      </view>
-      <view class="item">
-        <view>
-          <text>月净利润</text>
-          <input placeholder="0"/>
-          <text>至</text>
-          <input placeholder="0"/>
-          <text>万元</text>
-        </view>
-      </view>
-      <view class="item">
-        <view>
-          <text>年华投资回报率</text>
-          <input placeholder="0"/>
-          <text>至</text>
-          <input placeholder="0"/>
-          <text>%</text>
-        </view>
-      </view>
-      <view class="item">
-        <view>
-          <text>回本周期</text>
-          <input placeholder="0"/>
-          <text>至</text>
-          <input placeholder="0"/>
-          <text>个月</text>
-        </view>
-      </view>
-      <view class="item">
-        <view>
-          <text>项目失败率</text>
-          <input placeholder="0"/>
-          <text>至</text>
-          <input placeholder="0"/>
-          <text>%</text>
-        </view>
-      </view>
+      <interval start='场地面积' end="平方米" />
+      <interval start='客单价区间' end="元" />
+      <interval start='单店投资额' end="万元" />
+      <interval start='月净利润' end="万元" />
+      <interval start='年华投资回报率' end="%" />
+      <interval start='回本周期' end="个月" />
+      <interval start='项目失败率' end="%" />
     </van-cell-group>  
+    <navigator class="fix" url="brandabout">
+      <button type="warn">下一步</button>
+    </navigator>
   </view>
 </template>
 <script>
 import wepy from 'wepy'
+// import Interval from '../../components/interval'
 
 export default class Brand extends wepy.page {
   config = {
@@ -171,7 +144,8 @@ export default class Brand extends wepy.page {
       'van-cell': '../../components/van/cell/index',
       'van-cell-group': '../../components/van/cell-group/index',
       'van-field': '../../components/van/field/index',
-      'van-panel': '../../components/van/panel/index'
+      'van-panel': '../../components/van/panel/index',
+      'interval': '../../components/interval/index'
     }
   };
 }

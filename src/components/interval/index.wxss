@@ -1,0 +1,40 @@
+@import '../van/common/index.wxss';
+.interval {
+  width: 100%;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  line-height: 24px;
+  position: relative;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.interval:after {
+  content: ' ';
+  position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+  top: auto;
+  left: 15px;
+  right: 0;
+  bottom: 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  border-bottom: 1px solid #eee;
+}
+.interval .van-cell__title,
+.interval .van-cell__value {
+  flex: 1;
+}
+.interval .van-cell__title:empty,
+.interval .van-cell__value:empty {
+  display: none;
+}
+.interval input {
+  text-align: center;
+}
