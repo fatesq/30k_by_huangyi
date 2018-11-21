@@ -1,9 +1,9 @@
 <style lang="less">
 page {
-  background-color:  #f4f4f4
+  background-color:  #f4f4f4;
 }
 .panel-box {
-  margin-top: 10px;
+  margin-bottom: 20px;
   .item {
     padding: 10px 15px;
     border-bottom: 1px solid #f4f4f4
@@ -18,10 +18,19 @@ page {
 .van-cell {
   align-items:center;
 }
+.fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  button {
+    border-radius: 0px;
+  }
+}
 </style>
 <template>
   <view>
-    <van-panel class="panel-box" title="门店所在地分布">
+    <van-panel custom-class="panel-box" title="门店所在地分布">
       <view class="item">
         xxxxxx2家, 加盟店1家, 直营店1家
       </view>
@@ -29,7 +38,7 @@ page {
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px" /> 添加门店所在地分布
       </view>
     </van-panel>
-    <van-panel class="panel-box" title="绩优门店周边环境分布">
+    <van-panel custom-class="panel-box" title="绩优门店周边环境分布">
       <view class="item">
         CBD占10%
       </view>
@@ -55,7 +64,10 @@ page {
         <text slot="button">万人/月</text>
       </van-field>
       <interval start='目标市场份额' end="元/平米/月" />
-    </van-cell-group>  
+    </van-cell-group>
+    <navigator class="fix" url="brandabout">
+      <button type="warn">下一步</button>
+    </navigator>
   </view>
 </template>
 <script>
