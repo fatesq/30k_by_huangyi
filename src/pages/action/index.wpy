@@ -16,7 +16,8 @@
     <van-cell title="项目所处行业" value="行业"  is-link/>
     <van-field
       label="统一信用代码"
-      bind:change="onChange"
+      bind:change="getCode"
+      input-align="right"
     />
     <van-switch-cell
       title="品牌连锁"
@@ -24,13 +25,15 @@
       bind:change="onChange"
     />
   </van-cell-group>
-  <navigator class="fix" url="brand">
-    <button type="warn">下一步</button>
-  </navigator>
+  <view class="fix">
+    <button type="warn" @tap="toNext()">下一步</button>
+  </view>
 </view>  
 </template>
 <script>
 import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
 
 export default class action extends wepy.page {
   config = {
@@ -45,13 +48,45 @@ export default class action extends wepy.page {
 
   data = {
     checked: true,
+    enterpriseSocialNum: ''
   }
 
   methods = {
+    getCode (e) {
+      console.log(e)
+      this.enterpriseSocialNum = e.detail
+      this.$apply()
+    },
     onChange() {
       this.checked = !this.checked
       this.$apply()
     }
+  }
+
+  async toNext() {
+    if (!this.enterpriseSocialNum) {
+      utils.alert('统一信用代码未填写')
+      return
+    }
+    try {
+      const json = await api.projectStart({
+        method: 'FORM',
+        query: {
+          industryId: 12,
+          enterpriseSocialNum: this.enterpriseSocialNum,
+          chainFlag: this.checked ? 0 : 1
+        }
+      })
+      if (json.data.code === 'success') {
+        wx.setStorageSync('pId', json.data.data)
+        wx.navigateTo({ url: 'brand' })
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+    this.$apply()
   }
 }
 </script>

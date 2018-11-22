@@ -17,7 +17,9 @@ VantComponent({
     endWidth: {
       type: String,
       value: '100rpx'
-    }
+    },
+    startId: String,
+    endId: String
   },
   computed: {
     startStyle: function titleStyle() {
@@ -30,7 +32,17 @@ VantComponent({
     }
   },
   methods: {
-    onClick: function onClick(event) {
+    onInput: function onInput(event) {
+      console.log('child', event)
+      var _ref = event.detail || {},
+        _ref$value = _ref.value,
+        value = _ref$value === void 0 ? '' : _ref$value
+      this.$emit('input', value)
+      this.$emit('change', event)
+      this.setData({value: value})
+    },
+    onChange: function onChange(event) {
+      // console.log(event)
       // this.$emit('click', event.detail)
       // this.jumpLink()
     }

@@ -49,10 +49,11 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/action/brandabout',
       'pages/action/brand',
-      'pages/action/index',
       'pages/authorize',
+      'pages/action/brandabout',
+      
+      'pages/action/index',
       'pages/login',
       'pages/search',
       'pages/details/index',
