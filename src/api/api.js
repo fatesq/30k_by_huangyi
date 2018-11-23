@@ -12,7 +12,7 @@ const loginOut = (params) => wxRequest(params, `${url}/login/out`)
 // 开始进件
 const projectStart = (params) => wxRequest(params, `${url}/saveProject/projectStart`)
 // 保存品牌概况
-const saveBrandStart = (params) => wxRequest(params, `${url}/saveProject/saveBrandStart`)
+const saveBrandStart = (params) => wxRequest(params, `${url}/saveProject/brandStart`)
 
 module.exports = {
   login,

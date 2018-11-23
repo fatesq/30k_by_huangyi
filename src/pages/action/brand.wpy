@@ -105,6 +105,7 @@ page {
         <van-field
           id="direStore"
           label="直营店"
+          type="number"
           placeholder="0"
           bind:change="onChange"
           use-button-slot
@@ -113,6 +114,7 @@ page {
         </van-field>
         <van-field
           id="joinStore"
+          type="number"
           label="加盟店"
           placeholder="0"
           bind:change="onChange"
@@ -129,21 +131,24 @@ page {
       />
     </van-panel>  
     <van-cell-group>
-      <interval start='场地面积' startId="area1"  end="平方米" endId="area2" bind:change='onChange' />
-      <interval start='客单价区间' end="元" />
-      <interval start='单店投资额' end="万元" />
-      <interval start='月净利润' end="万元" />
-      <interval start='年华投资回报率' end="%" />
-      <interval start='回本周期' end="个月" />
-      <interval start='项目失败率' end="%" />
+      <interval start='场地面积' startId="area1"  end="平方米" endId="area2" bind:change='onChildChange' />
+      <interval start='客单价区间' startId="price1" end="元" endId="price2" bind:change='onChildChange' />
+      <interval start='单店投资额' startId="investment1" end="万元" endId="investment2" bind:change='onChildChange' />
+      <interval start='月净利润' startId="monthProfile1" end="万元" endId="monthProfile2" bind:change='onChildChange'/>
+      <interval start='年华投资回报率' startId="yearProfile1" end="%" endId="yearProfile2" bind:change='onChildChange'/>
+      <interval start='回本周期' startId="backWeek1" end="个月" endId="backWeek2" bind:change='onChildChange'/>
+      <interval start='项目失败率' startId="price1" end="%" endId="price2" bind:change='onChildChange'/>
     </van-cell-group>  
-    <navigator class="fix" url="brandabout">
-      <button type="warn">下一步</button>
-    </navigator>
+    <view class="fix">
+      <button type="warn" @tap="toNext">下一步</button>
+    </view>
   </view>
 </template>
 <script>
 import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
+import moment from 'moment'
 // import Interval from '../../components/interval'
 
 export default class Brand extends wepy.page {
@@ -156,6 +161,10 @@ export default class Brand extends wepy.page {
       'van-panel': '../../components/van/panel/index',
       'interval': '../../components/interval/index'
     }
+  }
+
+  onShow() {
+    console.log(this)
   }
 
   data = {
@@ -171,6 +180,16 @@ export default class Brand extends wepy.page {
     representStore: '',
     area1: '',
     area2: '',
+    price1: '',
+    price2: '',
+    investment1: '', 
+    investment2: '',
+    monthProfile1: '', 
+    monthProfile2: '', 
+    yearProfile1: '', 
+    yearProfile2: '', 
+    backWeek1: '',
+    backWeek2: '',
   }
 
   methods = {
@@ -178,6 +197,11 @@ export default class Brand extends wepy.page {
       console.log('parent', e)
       this[e.target.id] = e.detail
       console.log(this)
+      this.$apply()
+    },
+    onChildChange(e) {
+      const { detail } = e
+      this[detail.target.id] = detail.detail.value
       this.$apply()
     },
     bindDateChange(e) {
@@ -189,6 +213,33 @@ export default class Brand extends wepy.page {
       this.hqLocal = e.detail.value.join(' ')
       this.$apply()
     }
+  }
+
+  async toNext() {
+    if (Object.values(this.data).some(k => k == '')) {
+      utils.alert('有未填写的项目')
+      return
+    }
+    try {
+      const json = await api.saveBrandStart({
+        method: 'FORM',
+        query: {
+          projectId: wx.getStorageSync('pId'),
+          ...this.data,
+          createDate: moment(this.createDate, 'x'),
+          failureRate: 'jb',
+          chainFlag:  wx.setStorageSync('chainFlag'),
+        }
+      })
+      if (json.data.code === 'success') {
+        wx.navigateTo({ url: 'brandabout' })
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+    this.$apply()
   }
 }
 </script>

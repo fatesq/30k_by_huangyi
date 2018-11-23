@@ -1,22 +1,22 @@
 <style lang="less">
 page {
-  background-color:  #f4f4f4;
+  background-color: #f4f4f4;
 }
 .panel-box {
   margin-bottom: 20px;
   .item {
     padding: 10px 15px;
-    border-bottom: 1px solid #f4f4f4
+    border-bottom: 1px solid #f4f4f4;
   }
   .add {
     display: flex;
-    justify-content:center;
-    align-items:Center;
-    color: #BBB;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
   }
 }
 .van-cell {
-  align-items:center;
+  align-items: center;
 }
 .fix {
   position: fixed;
@@ -27,23 +27,85 @@ page {
     border-radius: 0px;
   }
 }
+.item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 24px;
+  align-items: center;
+  &:after {
+    content: ' ';
+    position: absolute;
+    pointer-events: none;
+    box-sizing: border-box;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    top: auto;
+    left: 15px;
+    right: 0;
+    bottom: 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    border-bottom: 1px solid #eee;
+  }
+}
 </style>
 <template>
   <view>
     <van-panel custom-class="panel-box" title="门店所在地分布">
-      <view class="item">
-        xxxxxx2家, 加盟店1家, 直营店1家
+      <view>
+        <view class="item" wx:for="{{shopInfo}}" wx:key="index">
+          {{item}}
+        </view>
       </view>
-      <view class="item add">
-        <van-icon name="add-o" custom-style="display: block;margin-right: 10px" /> 添加门店所在地分布
+      <view class="item add" @tap="show('Shop')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加门店所在地分布
       </view>
+      <van-action-sheet show="{{ showShop }}" title="添加门店所在地分布" bind:close="onClose('Shop')">
+        <van-cell-group>
+          <van-field
+            id="hqLocal"
+            value="{{hqLocal}}"
+            placeholder="请输入所在地"
+            bind:change="onChange"
+          />
+          <view class="item">
+            <van-field
+              id="direStore"
+              value="{{direStore}}"
+              label="直营店"
+              type="number"
+              placeholder="0"
+              bind:change="onChange"
+              use-button-slot
+            >
+              <text slot="button">家</text>
+            </van-field>
+            <van-field
+              id="joinStore"
+              value="{{joinStore}}"
+              type="number"
+              label="加盟店"
+              placeholder="0"
+              bind:change="onChange"
+              use-button-slot
+            >
+              <text slot="button">家</text>
+            </van-field>
+          </view>
+        </van-cell-group>
+        <button type="warn" @tap="addShop">保存</button>
+      </van-action-sheet>
     </van-panel>
+    
     <van-panel custom-class="panel-box" title="绩优门店周边环境分布">
       <view class="item">
         CBD占10%
       </view>
       <view class="item add">
-        <van-icon name="add-o" custom-style="display: block;margin-right: 10px" /> 添加绩优门店周边环境分布
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px" @tap="show('Area')"/> 添加绩优门店周边环境分布
       </view>
     </van-panel>
     <van-cell-group>
@@ -71,7 +133,9 @@ page {
   </view>
 </template>
 <script>
-import wepy from 'wepy'
+import wepy from 'wepy';
+import api from '../../api/api'
+import utils from '../../utils/utils'
 
 export default class BrandAbout extends wepy.page {
   config = {
@@ -82,7 +146,45 @@ export default class BrandAbout extends wepy.page {
       'van-cell-group': '../../components/van/cell-group/index',
       'van-field': '../../components/van/field/index',
       'van-panel': '../../components/van/panel/index',
-      'interval': '../../components/interval/index'
+      'van-action-sheet': '../../components/van/action-sheet/index',
+      interval: '../../components/interval/index'
+    }
+  };
+
+  data = {
+    showShop: false,
+    showArea: false,
+    hqLocal: '',
+    direStore: '',
+    joinStore: '',
+    shopInfo: []
+  };
+
+  methods = {
+    show(name) {
+      this[`show${name}`] = true
+      this.$apply();
+    },
+    onClose(name) {
+      this[`show${name}`] = false
+      this.$apply();
+    },
+    onChange(e) {
+      this[e.target.id] = e.detail
+      this.$apply();
+    },
+    addShop() {
+      if (!this.hqLocal || !this.direStore || !this.joinStore) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      this.shopInfo.push(`${this.hqLocal}}共${parseInt(this.direStore) + parseInt(this.joinStore)}家, 加盟店${this.joinStore}家, 直营店${this.direStore}家`);
+      console.log(this.shopInfo)
+      this.showShop = false;
+      this.hqLocal = '';
+      this.direStore = '';
+      this.joinStore = '';
+      this.$apply();
     }
   };
 }

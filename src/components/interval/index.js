@@ -4,6 +4,10 @@ VantComponent({
   classes: ['title-class', 'label-class', 'value-class'],
   mixins: [link],
   props: {
+    type: {
+      type: String,
+      value: 'text'
+    },
     start: String,
     center: {
       type: String,

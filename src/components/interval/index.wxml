@@ -6,9 +6,9 @@
     > 
       {{ start }}
     </view>
-    <input id="{{startId}}" placeholder="0" bindinput="onInput"/>
+    <input id="{{startId}}" type="{{type}}" placeholder="0" bindinput="onInput"/>
     <view class="van-cell__title title-class">{{center}}</view>
-    <input id="{{endId}}" placeholder="0" bindinput="onInput"/>
+    <input id="{{endId}}" type="{{type}}" placeholder="0" bindinput="onInput"/>
     <view
       style="{{ endStyle }}"
       class="van-cell__title title-class"
