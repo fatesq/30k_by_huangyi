@@ -1,0 +1,71 @@
+<style>
+
+</style>
+<template>
+<view>
+  <van-cell-group>
+    <van-cell title="{{area.length < 1 ? '请选择绩优门店周边环境分布' : areaString}}" @tap="showAreaList" is-link/>
+    <van-field
+      id="areaPoint"
+      value="{{areaPoint}}"
+      type="number"
+      label="占"
+      placeholder="0"
+      bind:change="onChange"
+      use-button-slot
+    >
+      <text slot="button">%</text>
+    </van-field>
+  </van-cell-group>
+  <button type="warn" @tap="addArea">保存</button>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class Demo extends wepy.page {
+  config = {
+    navigationBarTitleText: '添加绩优门店周边环境分布',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
+
+  data = {
+    area: [],
+    areaPoint: '',
+  }
+
+  computed  = {
+    areaString() {
+      return this.area.join(',')
+    }
+  }
+
+  methods = {
+    onChange(e) {
+      this[e.target.id] = e.detail
+      this.$apply();
+    },
+    addArea() {
+      if (!this.area || !this.areaPoint) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      this.$emit('addArea', `${this.areaString}占${this.areaPoint}%`);
+      this.area = [];
+      this.areaPoint = '';
+      this.$apply();
+    },
+    showAreaList() {
+      this.$emit('showAreaList')
+    }
+  }
+
+
+}
+</script>

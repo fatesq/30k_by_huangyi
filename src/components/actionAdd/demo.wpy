@@ -1,0 +1,22 @@
+<style>
+
+</style>
+<template>
+  
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class Demo extends wepy.page {
+  config = {
+    navigationBarTitleText: '',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
+}
+</script>

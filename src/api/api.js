@@ -10,9 +10,13 @@ const forgetPwd = (params) => wxRequest(params, `${url}/login/forgetPwd`)
 // 登出
 const loginOut = (params) => wxRequest(params, `${url}/login/out`)
 // 开始进件
-const projectStart = (params) => wxRequest(params, `${url}/saveProject/projectStart`)
+const projectStart = (params) => wxRequest(params, `${url}/saveProject/start`)
 // 保存品牌概况
 const saveBrandStart = (params) => wxRequest(params, `${url}/saveProject/brandStart`)
+// 获取所有行业
+const loadAllIndustry = (params) => wxRequest(params, `${url}/searchProject/loadAllIndustry`)
+// 品牌行业相关
+const brandIndustryStart = (params) => wxRequest(params, `${url}/saveProject/brandIndustryStart`) 
 
 module.exports = {
   login,
@@ -20,5 +24,7 @@ module.exports = {
   forgetPwd,
   loginOut,
   projectStart,
-  saveBrandStart
+  saveBrandStart,
+  loadAllIndustry,
+  brandIndustryStart
 }

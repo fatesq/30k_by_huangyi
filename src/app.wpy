@@ -50,8 +50,10 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/action/brandabout',
-      'pages/action/brand',
+      'pages/action/project',
+     
       'pages/authorize',
+      'pages/action/brand',
       'pages/action/index',
       'pages/login',
       'pages/search',

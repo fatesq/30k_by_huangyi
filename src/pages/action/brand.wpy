@@ -228,7 +228,7 @@ export default class Brand extends wepy.page {
           ...this.data,
           createDate: moment(this.createDate, 'x'),
           failureRate: 'jb',
-          chainFlag:  wx.setStorageSync('chainFlag'),
+          chainFlag:  wx.getStorageSync('chainFlag'),
         }
       })
       if (json.data.code === 'success') {

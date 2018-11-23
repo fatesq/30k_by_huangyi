@@ -1,0 +1,26 @@
+<style lang="less">
+</style>
+<template>
+  <van-field
+    label="统一信用代码"
+    bind:change="onChange"
+  />
+</template>
+<script>
+import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
+
+export default class Project extends wepy.page {
+  config = {
+    navigationBarTitleText: '项目概况',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
+}
+</script>
+

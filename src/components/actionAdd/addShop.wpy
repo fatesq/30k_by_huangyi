@@ -1,0 +1,82 @@
+<style>
+
+</style>
+<template>
+  <view>
+    <van-cell-group>
+      <van-field
+        id="hqLocal"
+        value="{{hqLocal}}"
+        placeholder="请输入所在地"
+        bind:change="onChange"
+      />
+      <view class="item">
+        <van-field
+          id="direStore"
+          value="{{direStore}}"
+          label="直营店"
+          type="number"
+          placeholder="0"
+          bind:change="onChange"
+          use-button-slot
+        >
+          <text slot="button">家</text>
+        </van-field>
+        <van-field
+          id="joinStore"
+          value="{{joinStore}}"
+          type="number"
+          label="加盟店"
+          placeholder="0"
+          bind:change="onChange"
+          use-button-slot
+        >
+          <text slot="button">家</text>
+        </van-field>
+      </view>
+    </van-cell-group>
+    <button type="warn" @tap="addShop">保存</button>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class Demo extends wepy.page {
+  config = {
+    navigationBarTitleText: '添加门店所在地分布',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
+
+  data = {
+    hqLocal: '',
+    joinStore: '',
+    direStore: '',
+  }
+
+  methods = {
+    onChange(e) {
+      this[e.target.id] = e.detail
+      this.$apply();
+    },
+    addShop() {
+      if (!this.hqLocal || !this.direStore || !this.joinStore) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      this.$emit('addShop', `${this.hqLocal}共${parseInt(this.direStore) + parseInt(this.joinStore)}家, 加盟店${this.joinStore}家, 直营店${this.direStore}家`);
+      this.hqLocal = '';
+      this.direStore = '';
+      this.joinStore = '';
+      this.$apply();
+    },
+  }
+
+
+}
+</script>
