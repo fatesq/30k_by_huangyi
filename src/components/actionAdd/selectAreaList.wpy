@@ -28,7 +28,7 @@ import utils from '@/utils/utils'
 
 export default class Demo extends wepy.page {
   config = {
-    navigationBarTitleText: '添加绩优门店周边环境分布',
+    navigationBarTitleText: '选择绩优门店周边环境分布',
     usingComponents: {
       'van-cell': '../../components/van/cell/index',
       'van-cell-group': '../../components/van/cell-group/index',
@@ -40,14 +40,21 @@ export default class Demo extends wepy.page {
   }
 
   props = {
-    list: [],
+    list: {
+        type: Array,
+        default: []
+    }
   }
 
   methods = {
-    onChange(e) {
-      this[e.target.id] = e.detail
-      this.$apply();
+    select(event) {
+      this.area = event.detail
+      this.$apply()
     },
+    otherChange(event) {
+      this.area = [event.detail]
+      this.$apply()
+    }
   }
 
 

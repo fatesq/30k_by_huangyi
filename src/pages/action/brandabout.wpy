@@ -165,18 +165,10 @@ export default class BrandAbout extends wepy.page {
       this[detail.target.id] = detail.detail.value
       this.$apply()
     },
-    select(event) {
-      this.area = event.detail
-      this.$apply()
-    },
-    otherChange(event) {
-      this.area = [event.detail]
-      this.$apply()
-    }
+    
   };
 
   async toNext() {
-    console.log(this)
     if (this.shopInfo.length < 1 || this.areaInfo.length < 1) {
       utils.alert('有未添加的分布项目')
       return

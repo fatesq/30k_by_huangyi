@@ -1,0 +1,37 @@
+<style lang="less">
+
+</style>
+<template>
+<view>
+  <van-field
+    id=""
+    label="企业名称"
+    bind:change="onChange"
+  />
+  <van-panel title="团队核心">
+    <van-field
+      placeholder="一句话概括项目, 突出项目特点"
+      border="{{ false }}"
+      type="textarea"
+      bind:change="onChange"
+    />
+  </van-panel>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
+
+export default class Project extends wepy.page {
+  config = {
+    navigationBarTitleText: '项目概况概况',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
+}
+</script>
