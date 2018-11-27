@@ -1,21 +1,155 @@
 <style lang="less">
-
+page {
+  background-color: #f4f4f4;
+}
+.title {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  image {
+    width: 110rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: #CCC;
+  }
+}
+.panel-box {
+  margin-bottom: 20rpx;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
+.fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  button {
+    border-radius: 0px;
+  }
+}
 </style>
 <template>
-<view>
-  <van-field
-    id=""
-    label="企业名称"
-    bind:change="onChange"
-  />
-  <van-panel title="团队核心">
+<view style="margin-bottom: 70px">
+  <van-cell-group custom-class="panel-box">
     <van-field
-      placeholder="一句话概括项目, 突出项目特点"
-      border="{{ false }}"
-      type="textarea"
+      id=""
+      label="企业名称"
       bind:change="onChange"
     />
+  </van-cell-group>
+  <van-panel custom-class="panel-box" title="核心团队">
+    <view class="title">
+      <image/>
+      <van-cell title="单元格" style="width: 100%" border="{{false}}">
+        <van-icon
+          slot="right-icon"
+          name="delete"
+          class="van-cell__right-icon"
+        />
+      </van-cell>
+    </view>
+    <view class="title">内容</view>
+    <van-cell-group>
+      <van-field value="" label="手机号" readonly/>
+      <van-field value="" label="身份证号" readonly/>
+      <van-field value="" label="学历学位" readonly/>
+      <van-field value="" label="婚姻状况" readonly/>
+    </van-cell-group>
+    <view class="item add" @tap="show('Area')">
+      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加成员
+    </view>
   </van-panel>
+
+  <van-panel custom-class="panel-box" title="团队经验">
+    <view>
+      <view class="item" wx:for="{{shopInfo}}" wx:key="index">
+        {{item}}
+      </view>
+    </view>
+    <view class="item add" @tap="show('Shop')">
+      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加团队经验
+    </view>
+  </van-panel>
+  <van-cell-group custom-class="panel-box">
+    <van-field
+      id=""
+      label="团队能力评分"
+      placeholder="0~5分,能力越强得分越高"
+      bind:change="onChange"
+    />
+  </van-cell-group>
+
+  <van-panel custom-class="panel-box" title="投资人条件">
+    <van-cell-group>
+      <van-switch-cell
+        title="籍贯"
+        checked="{{ checked }}"
+        bind:change="onChange"
+      />
+      <van-field
+        id=""
+        placeholder="请输入籍贯"
+        bind:change="onChange"
+      />
+      <van-switch-cell
+        title="常驻地"
+        checked="{{ checked }}"
+        bind:change="onChange"
+      />
+      <van-field
+        id=""
+        placeholder="请输入常驻地"
+        bind:change="onChange"
+      />
+      <van-switch-cell
+        title="邀请参与"
+        checked="{{ checked }}"
+        bind:change="onChange"
+      />
+    </van-cell-group>
+  </van-panel>  
+
+  <van-cell-group>
+    <van-field
+      id=""
+      label="经营团队持股"
+      placeholder="请输入经营团队持股"
+      bind:change="onChange"
+      use-button-slot
+    >
+      <text slot="button">%</text>
+    </van-field>
+    <van-field
+      id="storeCustomer"
+      label="预计员工数"
+      placeholder="请输入员工数"
+      bind:change="onChange"
+      use-button-slot
+    >
+      <text slot="button">位</text>
+    </van-field>
+    <van-field
+      id="storeCustomer"
+      label="场地面积"
+      placeholder="请输入场地面积"
+      bind:change="onChange"
+      use-button-slot
+    >
+      <text slot="button">平方米</text>
+    </van-field>
+  </van-cell-group>
+
+  <view class="fix">
+    <button type="warn" @tap="toNext">下一步</button>
+  </view>
 </view>
 </template>
 <script>
@@ -25,12 +159,14 @@ import utils from '../../utils/utils'
 
 export default class Project extends wepy.page {
   config = {
-    navigationBarTitleText: '项目概况概况',
+    navigationBarTitleText: '项目概况',
     usingComponents: {
+      'van-icon': '../../components/van/icon/index',
       'van-cell': '../../components/van/cell/index',
       'van-cell-group': '../../components/van/cell-group/index',
       'van-field': '../../components/van/field/index',
       'van-panel': '../../components/van/panel/index',
+      'van-switch-cell': '../../components/van/switch-cell/index'
     }
   }
 }

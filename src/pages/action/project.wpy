@@ -102,6 +102,7 @@
   <van-field
     id="name"
     label="项目名称"
+    placeholder="请输入项目名称"
     bind:change="onChange"
   />
   <van-panel title="宣传形象图">
@@ -207,10 +208,10 @@ export default class Project extends wepy.page {
       'van-cell': '../../components/van/cell/index',
       'van-cell-group': '../../components/van/cell-group/index',
       'van-field': '../../components/van/field/index',
-      'van-panel': '../../components/van/panel/index',
+      'van-panel': '../../components/van/panel/index'
     }
   }
-  
+
   data = {
     files: []
   }
@@ -218,28 +219,27 @@ export default class Project extends wepy.page {
   methods = {
     onChange(e) {
       this[e.target.id] = e.detail
-      this.$apply();
+      this.$apply()
     },
     chooseImage: function (e) {
-        var that = this;
-        wx.chooseImage({
-            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-                // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-                that.setData({
-                    files: that.data.files.concat(res.tempFilePaths)
-                });
-            }
-        })
+      var that = this
+      wx.chooseImage({
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          that.setData({
+            files: that.data.files.concat(res.tempFilePaths)
+          })
+        }
+      })
     },
-    previewImage: function(e){
-        wx.previewImage({
-            current: e.currentTarget.id, // 当前显示图片的http链接
-            urls: this.data.files // 需要预览的图片http链接列表
-        })
+    previewImage: function(e) {
+      wx.previewImage({
+        current: e.currentTarget.id, // 当前显示图片的http链接
+        urls: this.data.files // 需要预览的图片http链接列表
+      })
     }
   }
 }
 </script>
-
