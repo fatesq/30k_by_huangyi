@@ -15,22 +15,145 @@ page {
     color: #bbb;
   }
 }
+.switch {
+   padding: 10px 15px;
+  display: flex;
+  justify-content: space-around;
+  text-align: left
+}
+
+.fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  button {
+    border-radius: 0px;
+  }
+}
 </style>
 <template>
 <view>
-  <van-panel custom-class="panel-box" title="公私分类">
-    <van-radio-group value="{{ radio }}" bind:change="onChange" style="display: flex;justify-content: space-around;text-align: left">
-      <van-radio name="1">对组织</van-radio>
-      <van-radio name="2">对个人</van-radio>
-    </van-radio-group>
-  </van-panel>
+  <view wx:if="{{showIndex}}">
+    <van-panel custom-class="panel-box" title="公私分类">
+      <van-radio-group custom-class="switch" value="{{ publicFlag }}" bind:change="switchChange">
+        <van-radio name="{{0}}">对组织</van-radio>
+        <van-radio name="{{1}}">对个人</van-radio>
+      </van-radio-group>
+    </van-panel>
 
+    <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="存续时长分布">
+      <view>
+        <view class="item" wx:for="{{saveTimeDistribution}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('saveTimeShow')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加存续时长分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="性质分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加性质分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="规模分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加规模分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="行业分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加行业分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="年龄分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加年龄分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="性别分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加性别分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="收入分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加收入分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="职业分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加职业分布
+      </view>
+    </van-panel>
+
+    <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="特征分布">
+      <view>
+        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+          {{item}}
+        </view>
+      </view>
+      <view class="item add" @tap="show('Area')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加特征分布
+      </view>
+    </van-panel>
+
+
+    <view class="fix">
+      <button type="warn" @tap="toNext">下一步</button>
+    </view>
+  </view>
+  <SaveTime wx:if="{{saveTimeShow}}"/>
 </view>
 </template>
 <script>
 import wepy from 'wepy'
 import api from '../../api/api'
 import utils from '../../utils/utils'
+import saveTime from '../../components/drawAdd/saveTime'
 
 export default class Draw extends wepy.page {
   config = {
@@ -46,5 +169,40 @@ export default class Draw extends wepy.page {
       'van-radio-group': '../../components/van/radio-group/index',
     }
   }
+
+  components = {
+    SaveTime: saveTime,
+  };
+
+  data = {
+    publicFlag: 0,
+    saveTimeShow: false,
+    saveTimeDistribution: [],
+  }
+
+  computed = {
+    showIndex () {
+      return !this.saveTimeShow
+    }
+  }
+
+  methods = {
+    show(name) {
+      this[name] = true
+      this.$apply();
+    },
+    switchChange(e) {
+      this.publicFlag = parseInt(e.detail)
+      this.$apply()
+    }
+  }
+
+   events = {
+     saveTime(value) {
+      this.saveTimeDistribution.push(value);
+      this.saveTimeShow = false;
+      this.$apply();
+     }
+   }
 }
 </script>

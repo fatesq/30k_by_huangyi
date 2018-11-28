@@ -40,6 +40,15 @@ page {
   text-align: left;
   font-size: 14px;
 }
+.fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  button {
+    border-radius: 0px;
+  }
+}
 </style>
 
 <script>
