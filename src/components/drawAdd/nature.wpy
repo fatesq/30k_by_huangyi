@@ -1,0 +1,71 @@
+<style>
+
+</style>
+<template>
+<view>
+  <van-cell-group>
+    <picker bindchange="bindPickerChange" range="{{array}}">
+      <van-field
+        readonly
+        value="{{ array[value] }}"
+        placeholder="请选择性质分布"
+        border="{{ false }}"
+      />
+    </picker>
+    <van-field
+      id="value2"
+      label="占"
+      placeholder="0"
+      bind:change="onInput"
+      use-button-slot
+    >
+      <text slot="button">%</text>
+    </van-field>
+  </van-cell-group>
+  <view class="fix">
+    <button type="warn" @tap="save">保存</button>
+  </view>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class Nature extends wepy.page {
+  config = {
+    navigationBarTitleText: '性质分布',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index'
+    }
+  }
+
+  data = {
+    array: ['机关', '事业单位', '中共编办直接管理机构编制的群众团体', '社会团体'],
+    value: '',
+    value2: ''
+  }
+
+  methods = {
+    bindPickerChange(e) {
+     this.value = e.detail.value
+     this.$apply()
+    },
+    onInput(e) {
+      this[e.target.id] = e.detail
+      this.$apply()
+    },
+    save() {
+      if (!this.value || !this.value2) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      this.$emit('nature', `${this.array[this.value]}占${this.value2}%`);
+      this.value = ''
+      this.value2 = ''
+      this.$apply()
+    }
+  }
+}
+</script>

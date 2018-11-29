@@ -55,33 +55,33 @@ page {
 
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="性质分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{natureDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showNature')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加性质分布
       </view>
     </van-panel>
 
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="规模分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{scaleDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showScale')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加规模分布
       </view>
     </van-panel>
 
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="行业分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{industryDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showIndustry')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加行业分布
       </view>
     </van-panel>
@@ -147,6 +147,10 @@ page {
     </view>
   </view>
   <SaveTime wx:if="{{saveTimeShow}}"/>
+  <Nature wx:if="{{showNature}}" />
+  <Scale wx:if="{{showScale}}"/>
+  <Industry wx:if="{{showIndustry}}" />
+  <List wx:if="{{showList}}" list="{{list}}" />
 </view>
 </template>
 <script>
@@ -154,6 +158,11 @@ import wepy from 'wepy'
 import api from '../../api/api'
 import utils from '../../utils/utils'
 import saveTime from '../../components/drawAdd/saveTime'
+import nature from '../../components/drawAdd/nature'
+import scale from '../../components/drawAdd/scale'
+import industry from '../../components/drawAdd/industry'
+import list from '../../components/drawAdd/list'
+
 
 export default class Draw extends wepy.page {
   config = {
@@ -172,17 +181,29 @@ export default class Draw extends wepy.page {
 
   components = {
     SaveTime: saveTime,
+    Nature: nature,
+    Scale: scale,
+    Industry: industry,
+    List: list
   };
 
   data = {
+    list: [],
     publicFlag: 0,
     saveTimeShow: false,
     saveTimeDistribution: [],
+    showNature: false,
+    natureDistribution: [],
+    showScale: false,
+    scaleDistribution: [],
+    showIndustry: false,
+    industryDistribution: [],
+    showList: false
   }
 
   computed = {
     showIndex () {
-      return !this.saveTimeShow
+      return !this.saveTimeShow && !this.showNature && !this.showScale && !this.showIndustry && !this.showList
     }
   }
 
@@ -197,11 +218,49 @@ export default class Draw extends wepy.page {
     }
   }
 
+  async showAreaList() {
+    try {
+      const json = await api.loadAllIndustry()
+      if (json.data.code === 'success') {
+        // this.showList = true
+        this.list = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+    this.$apply()
+  }
+
    events = {
      saveTime(value) {
       this.saveTimeDistribution.push(value);
       this.saveTimeShow = false;
-      this.$apply();
+      this.$apply()
+     },
+     nature(value) {
+       this.natureDistribution.push(value);
+       this.showNature = false
+       this.$apply()
+     },
+     scale(value) {
+      this.scaleDistribution.push(value);
+      this.showScale = false
+      this.$apply()
+     },
+     industry(value) {
+      this.industryDistribution.push(value);
+      this.showIndustry = false
+      this.$apply()
+     },
+     showList(value) {
+       this.showAreaList()
+       this.showIndustry = false
+       this.showList = value
+       this.$apply()
      }
    }
 }
