@@ -3,6 +3,8 @@ import { wxRequest } from '../utils/wxRequest'
 const url = 'http://121.199.63.157:134'
 // 获取登陆授权
 const login = (params) => wxRequest(params, `${url}/login/go`)
+// 校验
+const checktoken = (params) => wxRequest(params, `${url}/login/checktoken`)
 // 绑定账户
 const bind = (params) => wxRequest(params, `${url}/login/bind`)
 // 忘记密码
@@ -47,8 +49,13 @@ const loadProjectIndustryByProjectId = (params) => wxRequest(params, `${url}/sea
 // 获取融资经营信息
 const loadInvestmentByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadInvestmentByProjectId`)
 
+// 查询账号关联的一级分类行业
+const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectFirstLevelIndustry`)
+
+
 module.exports = {
   login,
+  checktoken,
   bind,
   forgetPwd,
   loginOut,
@@ -69,5 +76,6 @@ module.exports = {
   loadProjectOrganizationByProjectId,
   loadCustomerByProjectId,
   loadProjectIndustryByProjectId,
-  loadInvestmentByProjectId
+  loadInvestmentByProjectId,
+  selectFirstLevelIndustry
 }

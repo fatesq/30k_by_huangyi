@@ -131,13 +131,13 @@ page {
       />
     </van-panel>  
     <van-cell-group>
-      <interval start='场地面积' startId="area1"  end="平方米" endId="area2" bind:change='onChildChange' />
-      <interval start='客单价区间' startId="price1" end="元" endId="price2" bind:change='onChildChange' />
-      <interval start='单店投资额' startId="investment1" end="万元" endId="investment2" bind:change='onChildChange' />
-      <interval start='月净利润' startId="monthProfile1" end="万元" endId="monthProfile2" bind:change='onChildChange'/>
-      <interval start='年华投资回报率' startId="yearProfile1" end="%" endId="yearProfile2" bind:change='onChildChange'/>
-      <interval start='回本周期' startId="backWeek1" end="个月" endId="backWeek2" bind:change='onChildChange'/>
-      <interval start='项目失败率' startId="price1" end="%" endId="price2" bind:change='onChildChange'/>
+      <interval start='场地面积' startId="areaFrom"  end="平方米" endId="areaTo" bind:change='onChildChange' />
+      <interval start='客单价区间' startId="priceFrom" end="元" endId="priceTo" bind:change='onChildChange' />
+      <interval start='单店投资额' startId="investmentFrom" end="万元" endId="investmentTo" bind:change='onChildChange' />
+      <interval start='月净利润' startId="monthProfileFrom" end="万元" endId="monthProfileTo" bind:change='onChildChange'/>
+      <interval start='年华投资回报率' startId="yearProfileFrom" end="%" endId="yearProfileTo" bind:change='onChildChange'/>
+      <interval start='回本周期' startId="backWeekFrom" end="个月" endId="backWeekTo" bind:change='onChildChange'/>
+      <interval start='项目失败率' startId="priceFrom" end="%" endId="priceTo" bind:change='onChildChange'/>
     </van-cell-group>  
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
@@ -178,18 +178,18 @@ export default class Brand extends wepy.page {
     direStore: '',
     joinStore: '',
     representStore: '',
-    area1: '',
-    area2: '',
-    price1: '',
-    price2: '',
-    investment1: '', 
-    investment2: '',
-    monthProfile1: '', 
-    monthProfile2: '', 
-    yearProfile1: '', 
-    yearProfile2: '', 
-    backWeek1: '',
-    backWeek2: '',
+    areaFrom: '',
+    areaTo: '',
+    priceFrom: '',
+    priceTo: '',
+    investmentFrom: '', 
+    investmentTo: '',
+    monthProfileFrom: '', 
+    monthProfileTo: '', 
+    yearProfileFrom: '', 
+    yearProfileTo: '', 
+    backWeekFrom: '',
+    backWeekTo: '',
   }
 
   methods = {
@@ -226,7 +226,7 @@ export default class Brand extends wepy.page {
         query: {
           projectId: wx.getStorageSync('pId'),
           ...this.data,
-          createDate: moment(this.createDate, 'x'),
+          createDate: moment(this.createDate).format('X'),
           failureRate: 'jb',
           chainFlag:  wx.getStorageSync('chainFlag'),
         }

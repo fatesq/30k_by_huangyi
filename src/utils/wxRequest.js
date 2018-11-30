@@ -22,7 +22,6 @@ const wxRequest = async(params = {}, url) => {
         reject(e)
       }
     })
-    console.log(res)
     wx.hideLoading()
   })
 }

@@ -58,12 +58,12 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/authorize',
       'pages/action/draw',
       'pages/action/group',
       'pages/action/project',
       'pages/action/brandabout',
      
-      'pages/authorize',
       'pages/action/brand',
       'pages/action/index',
       'pages/login',
@@ -76,7 +76,7 @@ export default class extends wepy.app {
       'pages/details/client',
       'pages/details/industry',
       'pages/details/financ',
-      'pages/selectIndustry',
+      // 'pages/selectIndustry',
       'pages/setting/index',
       'pages/setting/forget',
     ],

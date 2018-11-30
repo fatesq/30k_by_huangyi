@@ -34,7 +34,7 @@ page {
 </style>
 <template>
 <view>
-  <view wx:if="{{showIndex}}">
+  <view wx:if="{{showIndex}}" style="padding-bottom: 50px">
     <van-panel custom-class="panel-box" title="公私分类">
       <van-radio-group custom-class="switch" value="{{ publicFlag }}" bind:change="switchChange">
         <van-radio name="{{0}}">对组织</van-radio>
@@ -88,33 +88,33 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="年龄分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{ageDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showAge')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加年龄分布
       </view>
     </van-panel>
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="性别分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{sexDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showSex')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加性别分布
       </view>
     </van-panel>
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="收入分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{incomeDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showIncome')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加收入分布
       </view>
     </van-panel>
@@ -141,7 +141,6 @@ page {
       </view>
     </van-panel>
 
-
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
     </view>
@@ -150,7 +149,10 @@ page {
   <Nature wx:if="{{showNature}}" />
   <Scale wx:if="{{showScale}}"/>
   <Industry wx:if="{{showIndustry}}" />
-  <List wx:if="{{showList}}" list="{{list}}" />
+  <List wx:if="{{showList}}" :list.sync="list"/>
+  <Age wx:if="{{showAge}}" />
+  <Sex wx:if="{{showSex}}" />
+  <Price wx:if="{{showIncome}}" />
 </view>
 </template>
 <script>
@@ -162,7 +164,9 @@ import nature from '../../components/drawAdd/nature'
 import scale from '../../components/drawAdd/scale'
 import industry from '../../components/drawAdd/industry'
 import list from '../../components/drawAdd/list'
-
+import age from '../../components/drawAdd/age'
+import sex from '../../components/drawAdd/sex'
+import price from '../../components/drawAdd/price'
 
 export default class Draw extends wepy.page {
   config = {
@@ -176,6 +180,10 @@ export default class Draw extends wepy.page {
       'van-switch-cell': '../../components/van/switch-cell/index',
       'van-radio': '../../components/van/radio/index',
       'van-radio-group': '../../components/van/radio-group/index',
+      'van-collapse': '../../components/van/collapse/index',
+      'van-collapse-item': '../../components/van/collapse-item/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index',
     }
   }
 
@@ -184,11 +192,13 @@ export default class Draw extends wepy.page {
     Nature: nature,
     Scale: scale,
     Industry: industry,
-    List: list
+    List: list,
+    Age: age,
+    Sex: sex,
+    Price: price
   };
 
   data = {
-    list: [],
     publicFlag: 0,
     saveTimeShow: false,
     saveTimeDistribution: [],
@@ -198,12 +208,20 @@ export default class Draw extends wepy.page {
     scaleDistribution: [],
     showIndustry: false,
     industryDistribution: [],
-    showList: false
+    showList: false,
+    list: [],
+    showAge: false,
+    ageDistribution: [],
+    showSex: false,
+    sexDistribution: [],
+    showIncome: false,
+    incomeDistribution: []
   }
 
   computed = {
     showIndex () {
       return !this.saveTimeShow && !this.showNature && !this.showScale && !this.showIndustry && !this.showList
+        && !this.showAge && !this.showSex && !this.showIncome
     }
   }
 
@@ -216,23 +234,6 @@ export default class Draw extends wepy.page {
       this.publicFlag = parseInt(e.detail)
       this.$apply()
     }
-  }
-
-  async showAreaList() {
-    try {
-      const json = await api.loadAllIndustry()
-      if (json.data.code === 'success') {
-        // this.showList = true
-        this.list = json.data.data
-        this.$apply()
-      } else {
-        utils.alert(json.data.msg)
-      }
-    } catch (e) {
-      console.log(e)
-      utils.alert('系统异常')
-    }
-    this.$apply()
   }
 
    events = {
@@ -256,10 +257,42 @@ export default class Draw extends wepy.page {
       this.showIndustry = false
       this.$apply()
      },
-     showList(value) {
-       this.showAreaList()
-       this.showIndustry = false
-       this.showList = value
+     async showList(value) {
+        try {
+          const json = await api.selectFirstLevelIndustry({
+            method: 'FORM',
+            query: {
+              actorId: wx.getStorageSync('id')
+            }
+          })
+          if (json.data.code === 'success') {
+            // this.showList = true
+            this.list = json.data.data
+            this.showIndustry = false
+            this.showList = value
+            this.$apply()
+          } else {
+            utils.alert(json.data.msg)
+          }
+        } catch (e) {
+          console.log(e)
+          utils.alert('系统异常')
+        }
+        // this.$apply()
+     },
+     saveAge(value) {
+       this.ageDistribution.push(value);
+       this.showAge = false
+       this.$apply()
+     },
+     saveSex(value) {
+       this.sexDistribution.push(value);
+       this.showSex = false
+       this.$apply()
+     },
+     savePrice(value) {
+       this.incomeDistribution.push(value);
+       this.showIncome = false
        this.$apply()
      }
    }

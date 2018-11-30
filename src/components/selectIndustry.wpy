@@ -3,7 +3,7 @@
   color:#E64340 !important;
 }
 .van-cell__title {
-  font-size: 18px !important;
+  // font-size: 18px !important;
 }
 .select {
   position: fixed;
@@ -11,8 +11,8 @@
   background-color: #E64340;
   color: #FFF;
   text-align: center;
-  height: 60px;
-  line-height: 60px;
+  height: 50px;
+  line-height: 50px;
   font-size: 20px;
   bottom:0;
 }
@@ -21,18 +21,20 @@
   <view style="padding-bottom: 60px">
     <van-radio-group value="{{ radio }}" bind:change="onChange">
       <van-cell-group>
-        <van-cell wx:for="{{list}}" wx:key="index" title="{{item.title}}" clickable data-name="{{item.id}}" >
+        <van-cell wx:for="{{list}}" wx:key="index" title="{{item.name}}" clickable data-name="{{item.id}}" >
           <van-radio name="{{item.id}}" />
         </van-cell>
       </van-cell-group>
     </van-radio-group>
-    <view class="select">
+    <view class="select" @tap="goBack">
       确定
     </view>
   </view>  
 </template>
 <script>
 import wepy from 'wepy'
+import api from '@/api/api'
+import utils from '@/utils/utils'
 
 export default class SelectIndustry extends wepy.page {
   config = {
@@ -48,43 +50,37 @@ export default class SelectIndustry extends wepy.page {
   data = {
     list: [],
     radio: '',
+    name: '',
   }
 
   methods = {
     onChange(e) {
-      console.log(e)
      this.radio = e.detail
+     this.name = this.list.find(res => res.id == e.detail).name
      this.$apply()
+    },
+    goBack() {
+      this.$emit('saveIndustry', this.radio, this.name);
     }
   }
 
-  onShow() {
+  onLoad() {
     this.getList()
   }
 
-  getList() {
-    this.list = [
-      {id:'0', title: '行业0'},
-      {id:'1', title: '行业1'},
-      {id:'2', title: '行业2'},
-      {id:'3', title: '行业3'},
-      {id:'4', title: '行业4'},
-      {id:'5', title: '行业5'},
-      {id:'6', title: '行业6'},
-      {id:'7', title: '行业7'},
-      {id:'8', title: '行业8'},
-      {id:'9', title: '行业9'},
-      {id:'10', title: '行业10'},
-      {id:'10', title: '行业10'},
-      {id:'10', title: '行业10'},
-      {id:'10', title: '行业10'},
-      {id:'10', title: '行业10'},
-      {id:'10', title: '行业10'},
-      {id:'10', title: '行业10'},
-      {id:'10', title: '行业10'},
-      {id:'11', title: '行业11'},
-    ]
-    this.$apply()
+  async getList() {
+    try {
+      const json = await api.loadAllIndustry()
+      if (json.data.code === 'success') {
+        this.list = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
   }
 }
 </script>

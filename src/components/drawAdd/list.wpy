@@ -3,7 +3,25 @@
 </style>
 <template>
 <view>
-  <van-checkbox-group value="{{ area }}" bind:change="select">
+  <van-checkbox-group value="{{ value }}" bind:change="onSelect">
+  <van-collapse value="{{ value }}" bind:change="onChange" accordion>
+    <view wx:for="{{ list }}"  wx:key="index" >
+      <van-collapse-item title="{{ item.name }}" name="{{ item.id }}">
+        <van-cell-group>
+          <van-cell
+            wx:for="{{ item.childrenList }}"
+            wx:key="index"
+            title="{{ item.name }}"
+            clickable
+          >
+            <van-checkbox name="{{ item.name }}" class="checkboxes-{{ item.name }}"/>
+          </van-cell>
+        </van-cell-group>
+      </van-collapse-item>
+    </view>
+  </van-collapse>
+  </van-checkbox-group> 
+  <!-- <van-checkbox-group value="{{ value }}" bind:change="onChange">
     <van-cell-group>
       <van-cell
         wx:for="{{ list }}"
@@ -11,21 +29,19 @@
         title="{{ item.name }}"
         clickable
       >
-        <van-checkbox name="{{ item.name }}" checked-color="#E64340"/>
+        <van-checkbox name="{{ item.name }}" class="checkboxes-{{ item.name }}"/>
       </van-cell>
     </van-cell-group>
-  </van-checkbox-group> 
-  <van-field
-    placeholder="请输入其他"
-    bind:change="otherChange"
-  />
-  <button type="warn" @tap="addList">确定</button>
+  </van-checkbox-group>  -->
+  <view class="fix">
+    <button type="warn" @tap="save">保存</button>
+  </view>
 </view>   
 </template>
 <script>
 import wepy from 'wepy'
 import utils from '@/utils/utils'
-import api from '../../api/api'
+
 export default class List extends wepy.page {
   config = {
     navigationBarTitleText: '',
@@ -36,28 +52,42 @@ export default class List extends wepy.page {
       'van-panel': '../../components/van/panel/index',
       'van-checkbox': '../../components/van/checkbox/index',
       'van-checkbox-group': '../../components/van/checkbox-group/index',
-      "van-collapse": "../../components/van/collapse/index",
-      "van-collapse-item": "../../components/van/collapse-item/index"
+      'van-collapse': '../../components/van/collapse/index',
+      'van-collapse-item': '../../components/van/collapse-item/index'
     }
   }
 
   props = {
     list: {
         type: Array,
+        twoWay: true,
         default: []
-    }
+    },
   }
 
+  data = {
+    value: []
+  }
+  
   methods = {
-    select(event) {
-      this.area = event.detail
+    onSelect() {
+      console.log(event)
+    },
+    onChange(event) {
+      console.log(event)
+      this.value = event.detail
       this.$apply()
     },
-    otherChange(event) {
-      this.area = [event.detail]
-      this.$apply()
-    }
+    save() {
+      console.log(this.value)
+      if (!this.value) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      // this.$emit('scale', `${this.start}至${this.end}人占${this.num}%`);
+     
+     // this.$apply();
+    },
   }
-
 }
 </script>

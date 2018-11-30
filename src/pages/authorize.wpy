@@ -77,6 +77,8 @@ export default class authorize extends wepy.page {
       console.log(json)
       if (json.data.code === 'success') {
         wx.setStorageSync('token', json.data.token)
+        wx.setStorageSync('openId', json.data.openId)
+        wx.setStorageSync('id', json.data.data.id)
         wx.switchTab({ url: 'search' })
       } else {
         wx.redirectTo({ url: 'login' })
@@ -102,7 +104,6 @@ export default class authorize extends wepy.page {
   async getSetting() {
     let that = this
     const code = await this.login()
-    console.log(code)
     wx.getSetting({
       success: function(res) {
         if (res.authSetting['scope.userInfo']) {
@@ -115,12 +116,30 @@ export default class authorize extends wepy.page {
       }
     })
   }
+
+  async checkToken() {
+    const json = await api.checktoken();
+    if (json.data.code === 'success') {
+      wx.switchTab({ url: 'search' })
+    } else {
+      this.getSetting()
+    }
+  }
+
   onShow() {
     let self = this
     wx.setNavigationBarTitle({
       title: '授权'
     })
-    self.getSetting()
+    wx.checkSession({
+      success () {
+        self.checkToken()
+      },
+      fail () {
+       self.getSetting()
+      }
+    })    
+    
   }
 }
 </script>

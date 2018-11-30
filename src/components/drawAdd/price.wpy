@@ -1,0 +1,123 @@
+<style>
+.interval {
+  width: 100%;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  line-height: 24px;
+  position: relative;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.interval:after {
+  content: ' ';
+  position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+  top: auto;
+  left: 15px;
+  right: 0;
+  bottom: 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  border-bottom: 1px solid #eee;
+}
+.interval .van-cell__title,
+.interval .van-cell__value {
+  flex: 1;
+}
+.interval .van-cell__title:empty,
+.interval .van-cell__value:empty {
+  display: none;
+}
+.interval input {
+  text-align: center;
+}
+
+</style>
+<template>
+<view>
+  <van-cell-group>
+    <view class="interval">
+      <view style="{{ endStyle }}" class="van-cell__title title-class">年入</view>
+      <input id="start" type="{{type}}" placeholder="0" bindinput="onInput"/>
+      <view class="van-cell__title title-class">至</view>
+      <input id="end" type="{{type}}" placeholder="0" bindinput="onInput"/>
+      <view
+        style="{{ endStyle }}"
+        class="van-cell__title title-class"
+      > 
+        万元占
+      </view>
+      <input id="num" type="{{type}}" placeholder="0" bindinput="onInput"/>
+      <view
+        style="{{ endStyle }}"
+        class="van-cell__title title-class"
+      > 
+        %
+      </view>
+    </view>
+  </van-cell-group>
+  <view class="fix">
+    <button type="warn" @tap="save">保存</button>
+  </view>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class SaveTime extends wepy.page {
+  config = {
+    navigationBarTitleText: '收入分布',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      interval: '../../components/interval/index'
+    }
+  }
+
+  data = {
+    startWidth: '100px',
+    endWidth: '50px',
+    start: '',
+    end: '',
+    num: ''
+  }
+
+  computed = {
+    startStyle: function titleStyle() {
+      var titleWidth = this.data.startWidth
+      return titleWidth ? "max-width: " + titleWidth + ";min-width: " + titleWidth : '';
+    },
+    endStyle: function titleStyle() {
+      var titleWidth = this.data.endWidth
+      return titleWidth ? "max-width: " + titleWidth + ";min-width: " + titleWidth : '';
+    }
+  }
+
+  methods = {
+    onInput(e) {
+      this[e.target.id] = e.detail.value
+      this.$apply();
+    },
+    save() {
+      if (!this.start || !this.end || !this.num) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      this.$emit('savePrice', `年入${this.start}至${this.end}万元占${this.num}%`);
+      this.start = ''
+      this.end = ''
+      this.num = ''
+      this.$apply();
+    },
+  }
+  
+}
+</script>
