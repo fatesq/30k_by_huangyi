@@ -54,7 +54,7 @@ page {
 </style>
 <template>
 <view>
-  <view wx:if="{{!showShop && !showArea}}">
+  <view wx:if="{{!showShop && !showArea && !showList}}">
     <van-panel custom-class="panel-box" title="门店所在地分布">
       <view>
         <view class="item" wx:for="{{shopInfo}}" wx:key="index">
@@ -222,9 +222,10 @@ export default class BrandAbout extends wepy.page {
     },
     async showAreaList() {
       try {
-        const json = await api.loadAllIndustry()
+        const json = await api.loadAllPosition()
         if (json.data.code === 'success') {
           this.showList = true
+          this.showArea = false
           this.list = json.data.data
           this.$apply()
         } else {

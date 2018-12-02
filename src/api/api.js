@@ -49,8 +49,10 @@ const loadProjectIndustryByProjectId = (params) => wxRequest(params, `${url}/sea
 // 获取融资经营信息
 const loadInvestmentByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadInvestmentByProjectId`)
 
-// 查询账号关联的一级分类行业
+// 查询账号关联的一级分类行业列表
 const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectFirstLevelIndustry`)
+// 获取位置列表
+const loadAllPosition = (params) => wxRequest(params, `${url}/searchProject/loadAllPosition`)
 
 
 module.exports = {
@@ -77,5 +79,6 @@ module.exports = {
   loadCustomerByProjectId,
   loadProjectIndustryByProjectId,
   loadInvestmentByProjectId,
-  selectFirstLevelIndustry
+  selectFirstLevelIndustry,
+  loadAllPosition
 }
