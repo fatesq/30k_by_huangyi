@@ -102,7 +102,7 @@ page {
   </view>
   <AddShop wx:if="{{showShop}}"/>
   <AddArea wx:if="{{showArea}}"/>
-  <SelectAreaList wx:if="{{showList}}" list="{{list}}">
+  <SelectAreaList wx:if="{{showList}}" :list.sync="list">
 </view>  
 </template>
 <script>
@@ -182,12 +182,12 @@ export default class BrandAbout extends wepy.page {
         method: 'FORM',
         query: {
           projectId: wx.getStorageSync('pId'),
-          local: this.shopInfo.join(','),
-          position: this.areaInfo.join(','),
+          storeLocal: this.shopInfo.join(','),
+          storeEnviroment : this.areaInfo.join(','),
           storePeople: this.storePeople,
           storeCustomer: this.storeCustomer, 
-          storeEfficiency1: this.storeEfficiency1,
-          storeEfficiency2: this.storeEfficiency2  
+          storeEfficiencyFrom: this.storeEfficiency1,
+          storeEfficiencyTo: this.storeEfficiency2  
         }
       })
       if (json.data.code === 'success') {
@@ -208,16 +208,13 @@ export default class BrandAbout extends wepy.page {
       this.$apply();
     },
     addArea(value) {
-      if (!this.area || !this.areaPoint) {
-        utils.alert('有未填写的项目')
-        return
-      }
       this.areaInfo.push(value);
       this.showArea = false;
       this.$apply();
     },
     addList() {
       this.showList = false;
+      this.showArea = true;
       this.$apply();
     },
     async showAreaList() {
@@ -228,6 +225,7 @@ export default class BrandAbout extends wepy.page {
           this.showArea = false
           this.list = json.data.data
           this.$apply()
+          console.log(this.list)
         } else {
           utils.alert(json.data.msg)
         }

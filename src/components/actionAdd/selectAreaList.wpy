@@ -19,14 +19,14 @@
     placeholder="请输入其他"
     bind:change="otherChange"
   />
-  <button type="warn" @tap="addList">确定</button>
+  <button type="warn" @tap="save">确定</button>
 </view>  
 </template>
 <script>
 import wepy from 'wepy'
 import utils from '@/utils/utils'
 
-export default class Demo extends wepy.page {
+export default class SelectAreaList extends wepy.page {
   config = {
     navigationBarTitleText: '选择绩优门店周边环境分布',
     usingComponents: {
@@ -42,19 +42,31 @@ export default class Demo extends wepy.page {
   props = {
     list: {
         type: Array,
+        twoWay: true,
         default: []
-    }
+    },
+    area: []
   }
 
   methods = {
     select(event) {
+      console.log(event)
       this.area = event.detail
       this.$apply()
     },
     otherChange(event) {
       this.area = [event.detail]
       this.$apply()
-    }
+    },
+    save() {
+      if (this.area.length < 1) {
+        utils.alert('选择一个地区')
+        return
+      }
+      this.$emit('addList', this.area);
+      this.$invoke('../AddArea', 'getList', this.area);
+      this.$apply();
+    },
   }
 
 

@@ -81,8 +81,8 @@ export default class List extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('saveList', this.value1);
-      this.$invoke('../Industry', 'getList', this.value1.join(','));
+      this.$emit('saveJobList', this.value1);
+      this.$invoke('../Job', 'getList', this.value1.join(','));
      
       this.$apply();
     },

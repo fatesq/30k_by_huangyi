@@ -121,11 +121,11 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="职业分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{occupationDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showJob')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加职业分布
       </view>
     </van-panel>
@@ -153,6 +153,8 @@ page {
   <Age wx:if="{{showAge}}" />
   <Sex wx:if="{{showSex}}" />
   <Price wx:if="{{showIncome}}" />
+  <Job wx:if="{{showJob}}" />
+  <JobList wx:if="{{showJobList}}"  :list.sync="jobList"/> 
 </view>
 </template>
 <script>
@@ -167,6 +169,8 @@ import list from '../../components/drawAdd/list'
 import age from '../../components/drawAdd/age'
 import sex from '../../components/drawAdd/sex'
 import price from '../../components/drawAdd/price'
+import job from '../../components/drawAdd/job'
+import jobList from '../../components/drawAdd/jobList'
 
 export default class Draw extends wepy.page {
   config = {
@@ -195,7 +199,9 @@ export default class Draw extends wepy.page {
     List: list,
     Age: age,
     Sex: sex,
-    Price: price
+    Price: price,
+    Job: job,
+    JobList: jobList
   };
 
   data = {
@@ -210,18 +216,22 @@ export default class Draw extends wepy.page {
     industryDistribution: [],
     showList: false,
     list: [],
+    showJobList: false,
+    jobList: [],
     showAge: false,
     ageDistribution: [],
     showSex: false,
     sexDistribution: [],
     showIncome: false,
-    incomeDistribution: []
+    incomeDistribution: [],
+    showJob: false,
+    occupationDistribution: [],
   }
 
   computed = {
     showIndex () {
       return !this.saveTimeShow && !this.showNature && !this.showScale && !this.showIndustry && !this.showList
-        && !this.showAge && !this.showSex && !this.showIncome
+        && !this.showAge && !this.showSex && !this.showIncome && !this.showJob
     }
   }
 
@@ -257,6 +267,11 @@ export default class Draw extends wepy.page {
       this.showIndustry = false
       this.$apply()
      },
+     saveList() {
+       this.showIndustry = true
+       this.showList = false
+       this.$apply()
+     },
      async showList(value) {
         try {
           const json = await api.selectFirstLevelIndustry({
@@ -270,6 +285,29 @@ export default class Draw extends wepy.page {
             this.list = json.data.data
             this.showIndustry = false
             this.showList = value
+            this.$apply()
+          } else {
+            utils.alert(json.data.msg)
+          }
+        } catch (e) {
+          console.log(e)
+          utils.alert('系统异常')
+        }
+        // this.$apply()
+     },
+     saveJobList() {
+       this.showJob = true
+       this.showJobList = false
+       this.$apply()
+     },
+     async showJobList(value) {
+        try {
+          const json = await api.loadAllIndustryCarefulInfo()
+          if (json.data.code === 'success') {
+            // this.showList = true
+            this.jobList = json.data.data
+            this.showJob = false
+            this.showJobList = value
             this.$apply()
           } else {
             utils.alert(json.data.msg)

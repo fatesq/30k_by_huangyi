@@ -35,7 +35,9 @@
         </van-field>
       </view>
     </van-cell-group>
+    <view class="fix">
     <button type="warn" @tap="addShop">保存</button>
+    </view>
   </view>
 </template>
 <script>

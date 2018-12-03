@@ -98,7 +98,7 @@
 
 </style>
 <template>
-<view>
+<view style="margin-bottom: 50px">
   <van-field
     id="name"
     label="项目名称"
@@ -113,6 +113,7 @@
   </van-panel>
   <van-panel title="项目概述">
     <van-field
+      id="introduce"
       placeholder="一句话概括项目, 突出项目特点"
       border="{{ false }}"
       type="textarea"
@@ -121,12 +122,13 @@
   </van-panel>
   <van-cell-group>
     <van-field
+      id="local"
       label="所在地"
       placeholder="请输入所在地"
       bind:change="onChange"
     />
     <van-field
-      id=""
+      id="totalInvestment"
       label="总投资额"
       placeholder="目标融资额+已投资额+承诺出资"
       bind:change="onChange"
@@ -135,7 +137,7 @@
       <text slot="button">万元</text>
     </van-field>
     <van-field
-      id=""
+      id="goalInvestment"
       label="目标融资额"
       placeholder="请输入目标融资额"
       bind:change="onChange"
@@ -144,7 +146,7 @@
       <text slot="button">万元</text>
     </van-field>
     <van-field
-      id=""
+      id="deadLine"
       label="融资时限"
       placeholder="请输入融资时限"
       bind:change="onChange"
@@ -153,7 +155,7 @@
       <text slot="button">天</text>
     </van-field>
     <van-field
-      id=""
+      id="sellShares"
       label="出让股份"
       placeholder="请输入出让股份"
       bind:change="onChange"
@@ -162,7 +164,7 @@
       <text slot="button">%</text>
     </van-field>
     <van-field
-      id=""
+      id="investment"
       label="已投入资金"
       placeholder="请输入投入资金"
       bind:change="onChange"
@@ -185,7 +187,7 @@
       </view>
     </van-panel>
     <van-field
-      id=""
+      id="promiseInvestment"
       label="承诺出资"
       placeholder="请输入投入资金"
       bind:change="onChange"
@@ -194,6 +196,9 @@
       <text slot="button">万元</text>
     </van-field>
   </van-cell-group>  
+  <view class="fix">
+    <button type="warn" @tap="toNext">下一步</button>
+  </view>
 </view>  
 </template>
 <script>
@@ -213,12 +218,25 @@ export default class Project extends wepy.page {
   }
 
   data = {
-    files: []
+    files: [],
+    imageUrl:'',
+    info: {
+      name: '',
+      parentId:'',
+      introduce:'',
+      local:'',
+      totalInvestment: '',
+      goalInvestment: '',
+      deadLine:'' ,
+      sellShares: '',
+      investment:'',
+      promiseInvestment:'',
+    }
   }
 
   methods = {
     onChange(e) {
-      this[e.target.id] = e.detail
+      this.info[e.target.id] = e.detail
       this.$apply()
     },
     chooseImage: function (e) {
@@ -228,9 +246,33 @@ export default class Project extends wepy.page {
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-          that.setData({
-            files: that.data.files.concat(res.tempFilePaths)
+          const tempFilePaths = res.tempFilePaths
+          that.files = tempFilePaths
+          that.$apply()
+          console.log(tempFilePaths)
+          wx.uploadFile({
+            url: `${api.url}/file/upload`,
+            header: {  
+              "Content-Type": "multipart/form-data",
+              'token': wx.getStorageSync('token')
+            },  
+            filePath: tempFilePaths[0],
+            name: 'file',
+            formData: {
+              
+            },
+            success (res){
+              console.log(res)
+              const data = res.data
+              //do something
+            },
+            fail (res) {
+              console.log(res)
+            }
           })
+          // that.setData({
+          //   files: that.data.files.concat(res.tempFilePaths)
+          // })
         }
       })
     },
@@ -240,6 +282,27 @@ export default class Project extends wepy.page {
         urls: this.data.files // 需要预览的图片http链接列表
       })
     }
+  }
+
+  async toNext() {
+    try {
+      const json = await api.info({
+        method: 'FORM',
+        query: {
+          projectId: wx.getStorageSync('pId'),
+          ...this.info,
+          imageUrls: this.files,
+        }
+      })
+      if (json.data.code === 'success') {
+        wx.navigateTo({ url: 'brandabout' })
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+    this.$apply()
   }
 }
 </script>

@@ -39,13 +39,13 @@ export default class Nature extends wepy.page {
   }
 
   data = {
-    value: '请选择行业分布',
+    value: '请选择职业分布',
     value2: ''
   }
 
   methods = {
     toList() {
-      this.$emit('showList', true);
+      this.$emit('showJobList', true);
       this.$apply()
     },
     onInput(e) {

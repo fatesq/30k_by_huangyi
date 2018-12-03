@@ -53,9 +53,11 @@ const loadInvestmentByProjectId = (params) => wxRequest(params, `${url}/searchPr
 const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectFirstLevelIndustry`)
 // 获取位置列表
 const loadAllPosition = (params) => wxRequest(params, `${url}/searchProject/loadAllPosition`)
-
+// 获取行业列表
+const loadAllIndustryCarefulInfo = (params) => wxRequest(params, `${url}/searchProject/loadAllIndustryCarefulInfo`)
 
 module.exports = {
+  url,
   login,
   checktoken,
   bind,
@@ -80,5 +82,6 @@ module.exports = {
   loadProjectIndustryByProjectId,
   loadInvestmentByProjectId,
   selectFirstLevelIndustry,
-  loadAllPosition
+  loadAllPosition,
+  loadAllIndustryCarefulInfo
 }
