@@ -219,18 +219,18 @@ export default class Project extends wepy.page {
 
   data = {
     files: [],
-    imageUrl:'',
+    imageUrl: '',
     info: {
       name: '',
-      parentId:'',
-      introduce:'',
-      local:'',
+      parentId: '',
+      introduce: '',
+      local: '',
       totalInvestment: '',
       goalInvestment: '',
-      deadLine:'' ,
+      deadLine: '',
       sellShares: '',
-      investment:'',
-      promiseInvestment:'',
+      investment: '',
+      promiseInvestment: ''
     }
   }
 
@@ -249,22 +249,20 @@ export default class Project extends wepy.page {
           const tempFilePaths = res.tempFilePaths
           that.files = tempFilePaths
           that.$apply()
-          console.log(tempFilePaths)
+          console.log(typeof tempFilePaths[0])
           wx.uploadFile({
             url: `${api.url}/file/upload`,
-            header: {  
-              "Content-Type": "multipart/form-data",
+            header: {
+              'Content-Type': 'multipart/form-data',
               'token': wx.getStorageSync('token')
-            },  
+            },
             filePath: tempFilePaths[0],
             name: 'file',
-            formData: {
-              
-            },
-            success (res){
+            formData: {},
+            success (res) {
               console.log(res)
               const data = res.data
-              //do something
+              // do something
             },
             fail (res) {
               console.log(res)
@@ -291,7 +289,7 @@ export default class Project extends wepy.page {
         query: {
           projectId: wx.getStorageSync('pId'),
           ...this.info,
-          imageUrls: this.files,
+          imageUrls: this.files
         }
       })
       if (json.data.code === 'success') {

@@ -132,11 +132,11 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="特征分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        <view class="item" wx:for="{{featuresDistribution}}" wx:key="index">
           {{item}}
         </view>
       </view>
-      <view class="item add" @tap="show('Area')">
+      <view class="item add" @tap="show('showSp')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加特征分布
       </view>
     </van-panel>
@@ -155,6 +155,8 @@ page {
   <Price wx:if="{{showIncome}}" />
   <Job wx:if="{{showJob}}" />
   <JobList wx:if="{{showJobList}}"  :list.sync="jobList"/> 
+  <Sp wx:if="{{showSp}}" />
+  <SpList wx:if="{{showSpList}}"  :list.sync="spList" />
 </view>
 </template>
 <script>
@@ -171,6 +173,8 @@ import sex from '../../components/drawAdd/sex'
 import price from '../../components/drawAdd/price'
 import job from '../../components/drawAdd/job'
 import jobList from '../../components/drawAdd/jobList'
+import sp from '../../components/drawAdd/sp'
+import spList from '../../components/drawAdd/spList'
 
 export default class Draw extends wepy.page {
   config = {
@@ -187,7 +191,7 @@ export default class Draw extends wepy.page {
       'van-collapse': '../../components/van/collapse/index',
       'van-collapse-item': '../../components/van/collapse-item/index',
       'van-checkbox': '../../components/van/checkbox/index',
-      'van-checkbox-group': '../../components/van/checkbox-group/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index'
     }
   }
 
@@ -201,7 +205,9 @@ export default class Draw extends wepy.page {
     Sex: sex,
     Price: price,
     Job: job,
-    JobList: jobList
+    JobList: jobList,
+    Sp: sp,
+    SpList: spList
   };
 
   data = {
@@ -218,6 +224,8 @@ export default class Draw extends wepy.page {
     list: [],
     showJobList: false,
     jobList: [],
+    showSpList: false,
+    spList: [],
     showAge: false,
     ageDistribution: [],
     showSex: false,
@@ -226,19 +234,21 @@ export default class Draw extends wepy.page {
     incomeDistribution: [],
     showJob: false,
     occupationDistribution: [],
+    showSp: false,
+    featuresDistribution: []
   }
 
   computed = {
     showIndex () {
-      return !this.saveTimeShow && !this.showNature && !this.showScale && !this.showIndustry && !this.showList
-        && !this.showAge && !this.showSex && !this.showIncome && !this.showJob
+      return !this.saveTimeShow && !this.showNature && !this.showScale && !this.showIndustry && !this.showList && !this.showSp
+        && !this.showAge && !this.showSex && !this.showIncome && !this.showJob && !this.showJobList && !this.showSpList
     }
   }
 
   methods = {
     show(name) {
       this[name] = true
-      this.$apply();
+      this.$apply()
     },
     switchChange(e) {
       this.publicFlag = parseInt(e.detail)
@@ -246,93 +256,126 @@ export default class Draw extends wepy.page {
     }
   }
 
-   events = {
-     saveTime(value) {
-      this.saveTimeDistribution.push(value);
-      this.saveTimeShow = false;
+  events = {
+    saveTime(value) {
+      this.saveTimeDistribution.push(value)
+      this.saveTimeShow = false
       this.$apply()
-     },
-     nature(value) {
-       this.natureDistribution.push(value);
-       this.showNature = false
-       this.$apply()
-     },
-     scale(value) {
-      this.scaleDistribution.push(value);
+    },
+    nature(value) {
+      this.natureDistribution.push(value)
+      this.showNature = false
+      this.$apply()
+    },
+    scale(value) {
+      this.scaleDistribution.push(value)
       this.showScale = false
       this.$apply()
-     },
-     industry(value) {
-      this.industryDistribution.push(value);
+    },
+    industry(value) {
+      this.industryDistribution.push(value)
       this.showIndustry = false
       this.$apply()
-     },
-     saveList() {
-       this.showIndustry = true
-       this.showList = false
-       this.$apply()
-     },
-     async showList(value) {
-        try {
-          const json = await api.selectFirstLevelIndustry({
-            method: 'FORM',
-            query: {
-              actorId: wx.getStorageSync('id')
-            }
-          })
-          if (json.data.code === 'success') {
-            // this.showList = true
-            this.list = json.data.data
-            this.showIndustry = false
-            this.showList = value
-            this.$apply()
-          } else {
-            utils.alert(json.data.msg)
+    },
+    saveList() {
+      this.showIndustry = true
+      this.showList = false
+      this.$apply()
+    },
+    async showList(value) {
+      try {
+        const json = await api.selectFirstLevelIndustry({
+          method: 'FORM',
+          query: {
+            actorId: wx.getStorageSync('id')
           }
-        } catch (e) {
-          console.log(e)
-          utils.alert('系统异常')
+        })
+        if (json.data.code === 'success') {
+          // this.showList = true
+          this.list = json.data.data
+          this.showIndustry = false
+          this.showList = value
+          this.$apply()
+        } else {
+          utils.alert(json.data.msg)
         }
-        // this.$apply()
-     },
-     saveJobList() {
-       this.showJob = true
-       this.showJobList = false
-       this.$apply()
-     },
-     async showJobList(value) {
-        try {
-          const json = await api.loadAllIndustryCarefulInfo()
-          if (json.data.code === 'success') {
-            // this.showList = true
-            this.jobList = json.data.data
-            this.showJob = false
-            this.showJobList = value
-            this.$apply()
-          } else {
-            utils.alert(json.data.msg)
-          }
-        } catch (e) {
-          console.log(e)
-          utils.alert('系统异常')
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+      // this.$apply()
+    },
+    saveJobList() {
+      this.showJob = true
+      this.showJobList = false
+      this.$apply()
+    },
+    async showJobList(value) {
+      try {
+        const json = await api.loadAllIndustryCarefulInfo()
+        if (json.data.code === 'success') {
+          // this.showList = true
+          this.jobList = json.data.data
+          this.showJob = false
+          this.showJobList = value
+          this.$apply()
+        } else {
+          utils.alert(json.data.msg)
         }
-        // this.$apply()
-     },
-     saveAge(value) {
-       this.ageDistribution.push(value);
-       this.showAge = false
-       this.$apply()
-     },
-     saveSex(value) {
-       this.sexDistribution.push(value);
-       this.showSex = false
-       this.$apply()
-     },
-     savePrice(value) {
-       this.incomeDistribution.push(value);
-       this.showIncome = false
-       this.$apply()
-     }
-   }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+      // this.$apply()
+    },
+    saveSpList () {
+      this.showSp = true
+      this.showSpList = false
+      this.$apply()
+    },
+    async showSpList(value) {
+      try {
+        const json = await api.loadAllIndustryCarefulInfo()
+        if (json.data.code === 'success') {
+          // this.showList = true
+          this.spList = json.data.data
+          this.showSp = false
+          this.showSpList = value
+          this.$apply()
+        } else {
+          utils.alert(json.data.msg)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+      // this.$apply()
+    },
+    saveAge(value) {
+      this.ageDistribution.push(value)
+      this.showAge = false
+      this.$apply()
+    },
+    saveSex(value) {
+      this.sexDistribution.push(value)
+      this.showSex = false
+      this.$apply()
+    },
+    savePrice(value) {
+      this.incomeDistribution.push(value)
+      this.showIncome = false
+      this.$apply()
+    },
+    saveJob(value) {
+      this.occupationDistribution.push(value)
+      this.showJob = false
+      this.$apply()
+    },
+    saveSp(value) {
+      this.featuresDistribution.push(value)
+      this.showSp = false
+      this.$apply()
+    }
+  }
 }
 </script>
