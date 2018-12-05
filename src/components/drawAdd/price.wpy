@@ -111,7 +111,7 @@ export default class SaveTime extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('savePrice', `年入${this.start}至${this.end}万元占${this.num}%`);
+      this.$emit('savePrice', this.start, this.end, this.num);
       this.start = ''
       this.end = ''
       this.num = ''

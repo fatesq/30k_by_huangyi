@@ -47,7 +47,7 @@ export default class Nature extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('saveSex', `女性占${this.value2}%`);
+      this.$emit('saveSex', this.value2);
       this.value2 = ''
       this.$apply()
     }

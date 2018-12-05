@@ -40,12 +40,13 @@ export default class Nature extends wepy.page {
 
   data = {
     value: '请选择职业分布',
-    value2: ''
+    value2: '',
+    id: ''
   }
 
   methods = {
     toList() {
-      this.$emit('showJobList', true);
+      this.$emit('showSpList', true);
       this.$apply()
     },
     onInput(e) {
@@ -57,13 +58,14 @@ export default class Nature extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('industry', `${this.value}占${this.value2}%`);
+      this.$emit('saveSp', this.id, this.value, this.value2);
       this.value = ''
       this.value2 = ''
       this.$apply()
     },
-    getList(value) {
-      this.value = value
+    getList(id, name) {
+      this.id = id,
+      this.value = name
       this.$apply()
     }
   }

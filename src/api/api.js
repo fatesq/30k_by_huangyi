@@ -60,6 +60,12 @@ const loadAllIndustryCarefulInfo = (params) => wxRequest(params, `${url}/searchP
 const createEEAndMember = (params) => wxRequest(params, `${url}/enterprise/createEEAndMember`)
 // 获取地区
 const loadAllParentArea = (params) => wxRequest(params, `${url}/searchProject/loadAllParentArea`)
+
+// 获取行业列表 群像
+const loadAllOccupation = (params) => wxRequest(params, `${url}/searchProject/loadAllOccupation`)
+// 获取所有的身份信息 群像
+const loadAllIdentity = (params) => wxRequest(params, `${url}/searchProject/loadAllIdentity`)
+
 module.exports = {
   url,
   login,
@@ -89,5 +95,7 @@ module.exports = {
   loadAllPosition,
   loadAllIndustryCarefulInfo,
   createEEAndMember,
-  loadAllParentArea
+  loadAllParentArea,
+  loadAllOccupation,
+  loadAllIdentity
 }

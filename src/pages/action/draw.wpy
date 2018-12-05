@@ -100,7 +100,7 @@ page {
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="性别分布">
       <view>
         <view class="item" wx:for="{{sexDistribution}}" wx:key="index">
-          {{item}}
+          女性占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showSex')">
@@ -111,7 +111,7 @@ page {
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="收入分布">
       <view>
         <view class="item" wx:for="{{incomeDistribution}}" wx:key="index">
-          {{item}}
+          年入{{item.dataFrom}}至{{this.dataTo}}万元占{{this.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showIncome')">
@@ -122,7 +122,7 @@ page {
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="职业分布">
       <view>
         <view class="item" wx:for="{{occupationDistribution}}" wx:key="index">
-          {{item}}
+          {{item.name}}占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showJob')">
@@ -133,7 +133,7 @@ page {
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="特征分布">
       <view>
         <view class="item" wx:for="{{featuresDistribution}}" wx:key="index">
-          {{item}}
+         {{item.name}}占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showSp')">
@@ -374,7 +374,7 @@ export default class Draw extends wepy.page {
     },
     async showJobList(value) {
       try {
-        const json = await api.loadAllIndustryCarefulInfo()
+        const json = await api.loadAllOccupation()
         if (json.data.code === 'success') {
           // this.showList = true
           this.jobList = json.data.data
@@ -397,7 +397,7 @@ export default class Draw extends wepy.page {
     },
     async showSpList(value) {
       try {
-        const json = await api.loadAllIndustryCarefulInfo()
+        const json = await api.loadAllIdentity()
         if (json.data.code === 'success') {
           // this.showList = true
           this.spList = json.data.data
@@ -426,23 +426,55 @@ export default class Draw extends wepy.page {
       this.showAge = false
       this.$apply()
     },
-    saveSex(value) {
-      this.sexDistribution.push(value)
+    saveSex(count) {
+      this.sexDistribution.push({
+        'type': 1,
+        'mid': 1,
+        'dataFrom': 0,
+        'dataTo': 0,
+        'name': '',
+        'count': count,
+        'code': ''
+      })
       this.showSex = false
       this.$apply()
     },
-    savePrice(value) {
-      this.incomeDistribution.push(value)
+    savePrice(dataFrom, dataTo, count) {
+      this.incomeDistribution.push({
+        'type': 1,
+        'mid': 2,
+        'dataFrom': dataFrom,
+        'dataTo': dataTo,
+        'name': '',
+        'count': count,
+        'code': ''
+      })
       this.showIncome = false
       this.$apply()
     },
-    saveJob(value) {
-      this.occupationDistribution.push(value)
+    saveJob(code, name, count) {
+      this.occupationDistribution.push({
+        'type': 1,
+        'mid': 3,
+        'dataFrom': 0,
+        'dataTo': 0,
+        'name': name,
+        'count': count,
+        'code': code
+      })
       this.showJob = false
       this.$apply()
     },
-    saveSp(value) {
-      this.featuresDistribution.push(value)
+    saveSp(code, name, count) {
+      this.featuresDistribution.push({
+        'type': 1,
+        'mid': 4,
+        'dataFrom': 0,
+        'dataTo': 0,
+        'name': name,
+        'count': count,
+        'code': code
+      })
       this.showSp = false
       this.$apply()
     }
