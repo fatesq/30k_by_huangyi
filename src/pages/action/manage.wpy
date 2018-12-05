@@ -96,6 +96,7 @@ page {
         bind:change="onChange"
       />
     </van-cell>
+    <interval startWidth="0" centerWidth="100"  center='个月后达成' startId="areaFrom"  end="位" endId="areaTo" bind:change='onChildChange' />
   </van-cell-group>
 </view>
 </template>
@@ -113,7 +114,8 @@ export default class Manage extends wepy.page {
       'van-cell-group': '../../components/van/cell-group/index',
       'van-field': '../../components/van/field/index',
       'van-panel': '../../components/van/panel/index',
-      'van-stepper': '../../components/van/stepper/index'
+      'van-stepper': '../../components/van/stepper/index',
+      interval: '../../components/interval/index'
     }
   }
 }

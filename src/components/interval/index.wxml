@@ -7,7 +7,7 @@
       {{ start }}
     </view>
     <input id="{{startId}}" type="{{type}}" placeholder="0" bindinput="onInput"/>
-    <view class="van-cell__title title-class">{{center}}</view>
+    <view style="{{ enterStyle}}" class="van-cell__title title-class">{{center}}</view>
     <input id="{{endId}}" type="{{type}}" placeholder="0" bindinput="onInput"/>
     <view
       style="{{ endStyle }}"

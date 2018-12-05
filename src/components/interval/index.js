@@ -18,6 +18,10 @@ VantComponent({
       type: String,
       value: '140rpx'
     },
+    centerWidth: {
+      type: String,
+      value: '30rpx'
+    },
     endWidth: {
       type: String,
       value: '100rpx'
@@ -28,6 +32,10 @@ VantComponent({
   computed: {
     startStyle: function titleStyle() {
       var titleWidth = this.data.startWidth
+      return titleWidth ? "max-width: " + titleWidth + ";min-width: " + titleWidth : '';
+    },
+    centerStyle: function titleStyle() {
+      var titleWidth = this.data.centerWidth
       return titleWidth ? "max-width: " + titleWidth + ";min-width: " + titleWidth : '';
     },
     endStyle: function titleStyle() {
