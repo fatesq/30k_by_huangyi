@@ -1,0 +1,120 @@
+<style lang="less">
+page {
+  background-color: #f4f4f4;
+}
+.panel-box {
+  margin-bottom: 20rpx;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
+.title {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  image {
+    width: 110rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: #CCC;
+  }
+}
+</style>
+<template>
+<view>
+  <van-cell-group custom-class="panel-box" >
+    <van-cell title="业态细分" value="" is-link/>
+  </van-cell-group>
+
+  <van-panel custom-class="panel-box" title="行业市场规模">
+    <van-field
+      id=""
+      label="规模总量"
+      placeholder="请输入规模总量"
+      bind:change="onChange"
+      use-button-slot
+    >
+      <text slot="button">亿元</text>
+    </van-field>
+    <van-field
+      id=""
+      label="近三年平均增长率"
+      placeholder="请输入平均增长率"
+      bind:change="onChange"
+      use-button-slot
+    >
+      <text slot="button">%</text>
+    </van-field>
+    <van-cell title="评估分值">
+      <van-stepper
+        id="score"
+        value="{{ score }}"
+        integer
+        min="1"
+        max="5"
+        step="1"
+        bind:change="onChange"
+      />
+    </van-cell>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="主要产品(技术)">
+    <view wx:for="{{memberList}}" wx:key="index">
+      <view class="title">
+        <van-cell title="{{item.name}}" style="width: 100%" border="{{false}}">
+          <van-icon
+            slot="right-icon"
+            name="delete"
+            class="van-cell__right-icon"
+            bindtap="delete({{index}})"
+          />
+        </van-cell>
+      </view>
+      <view class="title">{{item.profile}}</view>
+    </view>
+    <view class="item add" @tap="show('showMember')">
+      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加成员
+    </view>
+  </van-panel>
+
+  <van-cell-group custom-class="panel-box" >
+    <van-cell title="产品(技术)评估">
+      <van-stepper
+        id="score"
+        value="{{ score }}"
+        integer
+        min="1"
+        max="5"
+        step="1"
+        bind:change="onChange"
+      />
+    </van-cell>
+  </van-cell-group>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
+
+export default class Manage extends wepy.page {
+  config = {
+    navigationBarTitleText: '行业经营信息',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+      'van-stepper': '../../components/van/stepper/index'
+    }
+  }
+}
+</script>
