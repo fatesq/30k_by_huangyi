@@ -110,7 +110,7 @@ export default class SaveTime extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('saveAge', `${this.start}至${this.end}岁占${this.num}%`);
+      this.$emit('saveAge', this.start, this.end, this.num);
       this.start = ''
       this.end = ''
       this.num = ''

@@ -1,0 +1,77 @@
+<style>
+
+</style>
+<template>
+<view>
+  <van-cell-group>
+    <picker id="index" bindchange="bindPickerChange" value="{{index}}" range="{{list}}" range-key="name">
+      <van-cell title="请选择成员" value="{{list[index].name}}" is-link/>
+    </picker>
+    <van-field
+      id="point"
+      value="{{point}}"
+      type="number"
+      label="占"
+      placeholder="0"
+      bind:change="onChange"
+      use-button-slot
+    >
+      <text slot="button">%</text>
+    </van-field>
+  </van-cell-group>
+  <view class="fix">
+  <button type="warn" @tap="save">保存</button>
+  </view>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class AddArea extends wepy.page {
+  config = {
+    navigationBarTitleText: '添加绩优门店周边环境分布',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
+
+  props = {
+    list: {
+        type: Array,
+        twoWay: true,
+        default: []
+    },
+  }
+
+  data = {
+    index: '',
+    point: '',
+  }
+
+  methods = {
+    onChange(e) {
+      this[e.target.id] = e.detail
+      this.$apply();
+    },
+    bindPickerChange(e) {
+      this[e.target.id] = e.detail.value
+      console.log(e)
+      this.$apply()
+    },
+    save() {
+      if (!this.index || !this.point) {
+        utils.alert('有未填选 的项目')
+        return
+      }
+      this.list[this.index].experience = this.point
+      this.$emit('saveExp', this.list);
+      this.$apply();
+    }
+  }
+
+}
+</script>

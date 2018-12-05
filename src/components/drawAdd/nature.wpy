@@ -61,7 +61,7 @@ export default class Nature extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('nature', `${this.array[this.value]}占${this.value2}%`);
+      this.$emit('nature', this.value, this.array[this.value], this.value2);
       this.value = ''
       this.value2 = ''
       this.$apply()

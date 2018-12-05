@@ -40,7 +40,8 @@ export default class Nature extends wepy.page {
 
   data = {
     value: '请选择行业分布',
-    value2: ''
+    value2: '',
+    id: ''
   }
 
   methods = {
@@ -57,13 +58,14 @@ export default class Nature extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('industry', `${this.value}占${this.value2}%`);
+      this.$emit('industry', this.id, this.value, this.value2);
       this.value = ''
       this.value2 = ''
       this.$apply()
     },
-    getList(value) {
-      this.value = value
+    getList(id, name) {
+      this.id = id,
+      this.value = name
       this.$apply()
     }
   }

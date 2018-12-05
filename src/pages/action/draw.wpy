@@ -45,7 +45,7 @@ page {
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="存续时长分布">
       <view>
         <view class="item" wx:for="{{saveTimeDistribution}}" wx:key="index">
-          {{item}}
+          {{item.dataFrom}}至{{item.dataTo}}年占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('saveTimeShow')">
@@ -56,7 +56,7 @@ page {
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="性质分布">
       <view>
         <view class="item" wx:for="{{natureDistribution}}" wx:key="index">
-          {{item}}
+          {{item.name}}占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showNature')">
@@ -67,7 +67,7 @@ page {
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="规模分布">
       <view>
         <view class="item" wx:for="{{scaleDistribution}}" wx:key="index">
-          {{item}}
+          {{item.dataFrom}}至{{item.dataTo}}人占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showScale')">
@@ -78,7 +78,7 @@ page {
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="行业分布">
       <view>
         <view class="item" wx:for="{{industryDistribution}}" wx:key="index">
-          {{item}}
+          {{item.name}}占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showIndustry')">
@@ -89,7 +89,7 @@ page {
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="年龄分布">
       <view>
         <view class="item" wx:for="{{ageDistribution}}" wx:key="index">
-          {{item}}
+          {{item.dataFrom}}至{{item.dataTo}}岁占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('showAge')">
@@ -253,27 +253,89 @@ export default class Draw extends wepy.page {
     switchChange(e) {
       this.publicFlag = parseInt(e.detail)
       this.$apply()
+    },
+    async toNext() {
+      let param = {projectId: wx.getStorageSync('pId')}
+      if (this.publicFlag == 0) {
+        param.customerList0 = this.saveTimeDistribution
+        param.customerList1 = this.natureDistribution
+        param.customerList2 = this.scaleDistribution
+        param.customerList3 = this.industryDistribution
+      } else {
+        param.customerList0 = this.ageDistribution
+        param.customerList1 = this.sexDistribution
+        param.customerList2 = this.incomeDistribution
+        param.customerList3 = this.occupationDistribution
+        param.customerList4 = this.featuresDistribution
+      }
+      try {
+        const json = await api.customer({
+          method: 'POST',
+          query: param
+        })
+        if (json.data.code === 'success') {
+          wx.navigateTo({ url: 'draw' })
+        } else {
+          utils.alert(json.data.msg)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+      
     }
   }
 
   events = {
-    saveTime(value) {
-      this.saveTimeDistribution.push(value)
+    saveTime(dataFrom, dataTo, count) {
+      this.saveTimeDistribution.push({
+        'type': 0,
+        'mid': 0,
+        'dataFrom': dataFrom,
+        'dataTo': dataTo,
+        'name': '',
+        'count': count,
+        'code': ''
+      })
       this.saveTimeShow = false
       this.$apply()
     },
-    nature(value) {
-      this.natureDistribution.push(value)
+    nature(code, name, count) {
+      this.natureDistribution.push({
+        'type': 0,
+        'mid': 1,
+        'dataFrom': 0,
+        'dataTo': 0,
+        'name': name,
+        'count': count,
+        'code': code
+      })
       this.showNature = false
       this.$apply()
     },
-    scale(value) {
-      this.scaleDistribution.push(value)
+    scale(dataFrom, dataTo, count) {
+      this.scaleDistribution.push({
+        'type': 0,
+        'mid': 2,
+        'dataFrom': dataFrom,
+        'dataTo': dataTo,
+        'name': '',
+        'count': count,
+        'code': ''
+      })
       this.showScale = false
       this.$apply()
     },
-    industry(value) {
-      this.industryDistribution.push(value)
+    industry(code, name, count) {
+      this.industryDistribution.push({
+        'type': 0,
+        'mid': 3,
+        'dataFrom': 0,
+        'dataTo': 0,
+        'name': name,
+        'count': count,
+        'code': code
+      })
       this.showIndustry = false
       this.$apply()
     },
@@ -351,8 +413,16 @@ export default class Draw extends wepy.page {
       }
       // this.$apply()
     },
-    saveAge(value) {
-      this.ageDistribution.push(value)
+    saveAge(dataFrom, dataTo, count) {
+      this.ageDistribution.push({
+        'type': 1,
+        'mid': 0,
+        'dataFrom': dataFrom,
+        'dataTo': dataTo,
+        'name': '',
+        'count': count,
+        'code': ''
+      })
       this.showAge = false
       this.$apply()
     },
