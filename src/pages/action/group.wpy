@@ -42,6 +42,7 @@ page {
   <van-cell-group custom-class="panel-box">
     <van-field
       id="name"
+      value="{{name}}"
       label="企业名称"
       placeholder="请输入企业名称"
       bind:change="onChange"
@@ -105,8 +106,8 @@ page {
         checked="{{ checked }}"
         bind:change="onChange"
       />
-      <picker id="index2" bindchange="bindPickerChange" value="{{index2}}" range="{{areaList}}" range-key="name">
-        <van-cell title="请输入常驻地" value="{{areaList[index2].name}}" is-link/>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange1" bindcolumnchange="bindMultiPickerColumnChange1" range-key="name" value="{{multiIndex1}}" range="{{listA}}">
+        <van-cell title="请输入籍贯" value="{{nativePlace}}" is-link/>
       </picker>
       <van-switch-cell
         id="checked2"
@@ -114,8 +115,8 @@ page {
         checked="{{ checked2 }}"
         bind:change="onChange"
       />
-      <picker id="index" bindchange="bindPickerChange" value="{{index}}" range="{{areaList}}" range-key="name">
-        <van-cell title="请输入常驻地" value="{{areaList[index].name}}" is-link/>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range-key="name" value="{{multiIndex}}" range="{{listA}}">
+        <van-cell title="请输入常驻地" value="{{address}}" is-link/>
       </picker>
       <van-switch-cell
         id="invitationFlag"
@@ -191,6 +192,9 @@ export default class Project extends wepy.page {
   }
 
   data = {
+    listA: [[],[]],
+    multiIndex: [0, 0],
+    multiIndex1: [0, 0],
     array: ['未选择', '大学本科', '大学硕士', '大学博士', '大学专科', '普通高中', '初中及以下', '其他中等教育经历'],
     array2: ['未选择', '初婚', '未婚', '复婚', '再婚', '离异', '丧偶'],
     showMember: false,
@@ -208,9 +212,35 @@ export default class Project extends wepy.page {
     index2: '',
     checked: true,
     checked2: true,
+    address: '',
+    addressAreaCode: '',
+    nativePlaceAreaCode: '',
+    nativePlace: '',
   }
 
   methods = {
+    bindMultiPickerChange(e) {
+      this.addressAreaCode = this.listA[1][e.detail.value[1]].areaCode
+      this.address = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
+      this.multiIndex = e.detail.value
+      this.$apply()
+    },
+    bindMultiPickerColumnChange: function (e) {
+      if (e.detail.column == 0) {
+        this.changeB(this.listA[0][e.detail.value].id)
+      }
+    },
+    bindMultiPickerChange1(e) {
+      this.nativePlaceAreaCode = this.listA[1][e.detail.value[1]].areaCode
+      this.nativePlace = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
+      this.multiIndex1 = e.detail.value
+      this.$apply()
+    },
+    bindMultiPickerColumnChange1: function (e) {
+      if (e.detail.column == 0) {
+        this.changeB(this.listA[0][e.detail.value].id)
+      }
+    },
     onChange(e) {
       console.log(e)
       this[e.target.id] = e.detail
@@ -241,21 +271,21 @@ export default class Project extends wepy.page {
       }
       try {
         const json = await api.createEEAndMember({
-          method: 'POST',
+          method: 'FORM',
           query: {
             name: this.name,
             creditCode: wx.getStorageSync('enterpriseSocialNum'), 
-            EEMember: this.memberList
+            EEMember: JSON.stringify(this.memberList)
           }
         })
         const json2 = await api.organization({
           method: 'FORM',
           query: {
             projectId: wx.getStorageSync('pId'),
-            nativePlace: '',
-            nativePlaceAreaCode: this.areaList[this.index].areaCode,
-            address: '',
-            addressAreaCode : this.areaList[this.index2].areaCode,
+            nativePlace: this.nativePlace,
+            nativePlaceAreaCode: this.nativePlaceAreaCode,
+            address: this.address,
+            addressAreaCode : this.addressAreaCode,
             invitationFlag: this.invitationFlag ? 0 : 1,
             teamHoldCount: this.teamHoldCount,
             employeeCount: this.employeeCount,
@@ -291,23 +321,48 @@ export default class Project extends wepy.page {
     }
   }
 
-  async getArea() {
+  changeB(id) {
+    this.getCityB(id)
+  }
+
+  async getCity() {
     try {
       const json = await api.loadAllParentArea()
       if (json.data.code === 'success') {
-        this.areaList = json.data.data
+        this.listA[0] = json.data.data
+        if (json.data.data.length > 0) {
+          this.getCityB(json.data.data[0].id)
+        }
         this.$apply()
       } else {
         utils.alert(json.data.msg)
       }
     } catch (e) {
-      console.log(e)
       utils.alert('系统异常')
     }
   }
 
-  onShow () {
-    this.getArea()
+  async getCityB(id) {
+    try {
+      const json = await api.loadAllChildrenAreaByParentId({
+        method: 'GET',
+          query: {parentId: id}
+      })
+      if (json.data.code === 'success') {
+        this.listA[1] = json.data.data
+        console.log(this.listA)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+  
+  onShow() {
+    this.getCity()
   }
 }
 </script>

@@ -1,0 +1,63 @@
+<style>
+
+</style>
+<template>
+<view>
+  <van-cell-group>
+    <van-field
+      id="name"
+      placeholder="请输入资金用途"
+      bind:change="onInput"
+    />
+    <van-field
+      id="spend"
+      label="花费"
+      placeholder="0"
+      bind:change="onInput"
+      use-button-slot
+    >
+      <text slot="button">万元</text>
+    </van-field>
+  </van-cell-group>
+  <view class="fix">
+    <button type="warn" @tap="save">保存</button>
+  </view>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class Nature extends wepy.page {
+  config = {
+    navigationBarTitleText: '性质分布',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index'
+    }
+  }
+
+  data = {
+    name: '',
+    spend: '',
+  }
+
+  methods = {
+    onInput(e) {
+      this[e.target.id] = e.detail
+      this.$apply()
+    },
+    save() {
+      if (!this.name || !this.spend) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      this.$emit('Add1', {name: this.name, spend: this.spend});
+      this.name = ''
+      this.spend = ''
+      this.$apply()
+    }
+  }
+}
+</script>

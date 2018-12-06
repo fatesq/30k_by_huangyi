@@ -70,18 +70,19 @@ page {
 </style>
 
 <template>
-  <view>
+<view>
+  <view wx:if="{{!show}}">
     <van-search value="" placeholder="项目编号/项目名称" />
     <view class="select">
-      <van-cell title="请选择行业" is-link @tap="toSelectIndustry()"/>
+      <van-cell title="{{industryName ? industryName : '请选择行业'}}" is-link @tap="showIndustry()"/>
     </view>
     <view class="item" wx:for="{{list}}" wx:key="index">
       <view class="title">
-        <image class="img" mode="aspectFill" src="https://developers.weixin.qq.com/miniprogram/dev/image/cat/0.jpg?t=18102614" />
+        <image class="img" mode="aspectFill" src="{{item.imageUrl}}" />
         <view class="box">
-          <view class="time">{{item.time}}</view>
+          <view class="time">{{item.createTime}}</view>
           <view class="value">
-            <text>{{item.type}}</text>
+            <text>{{item.industry.name}}</text>
             <text class="price">{{item.price}}</text>
           </view>
         </view>
@@ -111,26 +112,47 @@ page {
       </view>
     </view>
   </view>
+  <SelectIndustry wx:if="{{show}}"/>
+</view>  
 </template>
 
 <script>
 import wepy from 'wepy'
+import api from '../api/api'
+import utils from '@/utils/utils'
+import selectIndustry from '../components/selectIndustry'
 
 export default class Search extends wepy.page {
   config = {
     navigationBarTitleText: '项目检索',
     usingComponents: {
       'van-search': "../components/van/search/index",
-      "van-cell": "../components/van/cell/index",
-      "van-icon": "../components/van/icon/index"
+      "van-icon": "../components/van/icon/index",
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-switch-cell': '../../components/van/switch-cell/index',
+      'van-radio': '../../components/van/radio/index',
+      'van-radio-group': '../../components/van/radio-group/index',
     }
+  }
+
+  components = {
+    SelectIndustry: selectIndustry
   }
 
   data = {
     list: [],
+    show: false,
+    industryId: '',
+    industryName: '',
   }
 
   methods = {
+    showIndustry() {
+      this.show = true
+      this.$apply()
+    },
     toSelectIndustry() {
       wx.navigateTo({
         url: 'selectIndustry'
@@ -144,29 +166,39 @@ export default class Search extends wepy.page {
     }
   }
 
-  onShow() {
-    this.getList()
+  events = {
+    saveIndustry(id, name) {
+       this.getList(id)
+       this.industryId = id
+       this.industryName = name
+       this.show = false
+       this.$apply()
+    }
   }
 
-  getList() {
-    this.list = [{
-      'time': '2020-11-11 11:11:11',
-      'type': '餐饮',
-      'price': '123',
-      'demo1': '8% ~ 20%',
-      'demo2': '熊集枫',
-      'demo3': '上海市普通新区',
-      'demo4': '中影餐饮娱乐公司',
-    },{
-      'time': '2020-11-11 11:11:11',
-      'type': '餐饮',
-      'price': '123',
-      'demo1': '8% ~ 20%',
-      'demo2': '熊集枫',
-      'demo3': '上海市普通新区',
-      'demo4': '中影餐饮娱乐公司',
-    }]
-    this.$apply()
+  onShow() {
+   
+  }
+
+  async getList(id) {
+     try {
+      const json = await api.loadAllProjectByIndustryId({
+        method: 'GET',
+        query: {
+          industryId: id
+        }
+       })
+       console.log(json)
+      if (json.data.code == 'success') {
+        this.list = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
   }
 
 }

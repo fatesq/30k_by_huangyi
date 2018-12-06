@@ -73,6 +73,8 @@ const loadAllOccupation = (params) => wxRequest(params, `${url}/searchProject/lo
 // 获取所有的身份信息 群像
 const loadAllIdentity = (params) => wxRequest(params, `${url}/searchProject/loadAllIdentity`)
 
+const loadAllCalculationInfo = (params) => wxRequest(params, `${url}/searchProject/loadAllCalculationInfo`)
+
 module.exports = {
   url,
   login,
@@ -107,5 +109,6 @@ module.exports = {
   loadAllParentArea,
   loadAllOccupation,
   loadAllIdentity,
-  loadAllChildrenAreaByParentId
+  loadAllChildrenAreaByParentId,
+  loadAllCalculationInfo
 }

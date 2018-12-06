@@ -274,7 +274,8 @@ export default class Manage extends wepy.page {
     show1: false,
     show2: false,
     show3: false,
-    list: []
+    list: [],
+    id: '',
   }
 
   methods = {
@@ -299,11 +300,12 @@ export default class Manage extends wepy.page {
             projectId: wx.getStorageSync('pId'),
             ...this.data.info,
             coreTechnology: JSON.stringify(this.info.coreTechnology),
-            completeAnalysis: JSON.stringify(this.info.completeAnalysis)
+            completeAnalysis: JSON.stringify(this.info.completeAnalysis),
+            industryCareful: JSON.stringify([`${this.id}`])
           }
         })
         if (json.data.code === 'success') {
-          wx.navigateTo({ url: 'manage' })
+          wx.navigateTo({ url: 'consult' })
         } else {
           utils.alert(json.data.description)
         }
@@ -341,6 +343,7 @@ export default class Manage extends wepy.page {
   events = {
     getList(id, name) {
       this.info.industryCareful = name
+      this.id = id
       this.show1 = false
       this.$apply();
     },

@@ -128,12 +128,14 @@
     />
   </van-panel>
   <van-cell-group>
-    <van-field
-      id="local"
-      label="所在地"
-      placeholder="请输入所在地"
-      bind:change="onChange"
-    />
+    <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range-key="name" value="{{multiIndex}}" range="{{listA}}">
+      <van-field
+        value="{{info.areaName}}"
+        label="所在地"
+        placeholder="请输入所在地"
+        readonly="{{ true }}"
+      />
+    </picker>
     <van-field
       id="totalInvestment"
       label="总投资额"
@@ -227,21 +229,35 @@ export default class Project extends wepy.page {
   data = {
     files: [],
     imageUrl: '',
+    listA: [[],[]],
+    multiIndex: [0, 0],
     info: {
       name: '',
-      parentId: '',
+      parentId: 0,
       introduce: '',
-      local: '',
       totalInvestment: '',
       goalInvestment: '',
       deadLine: '',
       sellShares: '',
       investment: '',
-      promiseInvestment: ''
+      promiseInvestment: '',
+      areaName: '',
+      areaCode: '',
     }
   }
 
   methods = {
+     bindMultiPickerChange(e) {
+      this.info.areaCode = this.listA[1][e.detail.value[1]].areaCode
+      this.info.areaName = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
+      this.multiIndex = e.detail.value
+      this.$apply()
+    },
+    bindMultiPickerColumnChange: function (e) {
+      if (e.detail.column == 0) {
+        this.changeB(this.listA[0][e.detail.value].id)
+      }
+    },
     onChange(e) {
       this.info[e.target.id] = e.detail
       this.$apply()
@@ -290,6 +306,9 @@ export default class Project extends wepy.page {
         current: e.currentTarget.id, // 当前显示图片的http链接
         urls: this.data.files // 需要预览的图片http链接列表
       })
+    },
+    changeB(id) {
+      this.getCityB(id)
     }
   }
 
@@ -313,6 +332,46 @@ export default class Project extends wepy.page {
       utils.alert('系统异常')
     }
     this.$apply()
+  }
+
+  async getCity() {
+    try {
+      const json = await api.loadAllParentArea()
+      if (json.data.code === 'success') {
+        this.listA[0] = json.data.data
+        if (json.data.data.length > 0) {
+          this.getCityB(json.data.data[0].id)
+        }
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+  async getCityB(id) {
+    try {
+      const json = await api.loadAllChildrenAreaByParentId({
+        method: 'GET',
+          query: {parentId: id}
+      })
+      if (json.data.code === 'success') {
+        this.listA[1] = json.data.data
+        console.log(this.listA)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+  
+  onShow() {
+    this.getCity()
   }
 }
 </script>

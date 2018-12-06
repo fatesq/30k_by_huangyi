@@ -209,8 +209,8 @@ export default class Project extends wepy.page {
         success: function (res) {
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
           const tempFilePaths = res.tempFilePaths
-          that.imageURL = tempFilePaths[0]
-          that.$apply()
+          // that.imageURL = tempFilePaths[0]
+          // that.$apply()
           wx.uploadFile({
             url: `${api.url}/file/upload`,
             header: {
@@ -220,10 +220,14 @@ export default class Project extends wepy.page {
             filePath: tempFilePaths[0],
             name: 'file',
             formData: {},
-            success (res) {
-              console.log(res)
-              const data = res.data
-              // do something
+            success (res2) {
+              const data = JSON.parse(res2.data)
+              if (data.code == 'success') {
+          
+                that.imageURL = data.data;
+              
+                that.$apply()
+              }
             },
             fail (res) {
               console.log(res)
@@ -250,7 +254,7 @@ export default class Project extends wepy.page {
         imageURL: this.imageURL,
         marriage: this.marriage,
         education: this.education,
-        isRepresentative: this.isRepresentative
+        isRepresentative: this.isRepresentative ? 1 : 0
       });
       this.name = ''
       this.position = ''

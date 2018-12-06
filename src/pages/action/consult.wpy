@@ -54,24 +54,27 @@ page {
 </style>
 <template>
 <view>
+<view wx:if="{{!show1 && !show2}}" style="padding-bottom: 50px">
   <van-panel custom-class="panel-box" title="全部资金用途">
     <view>
-      <view class="item" wx:for="{{areaInfo}}" wx:key="index">
-        {{item.positionName}}占{{item.count}}%
+      <view class="item" wx:for="{{spendPurpose}}" wx:key="index">
+        {{item.name}}花费{{item.spend}}万元
       </view>
     </view>
-    <view class="item add" @tap="show('Area')">
+    <view class="item add" @tap="show('show1')">
       <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加资金用途
     </view>
   </van-panel>
 
   <van-panel custom-class="panel-box" title="估算试值">
     <view>
-      <view class="item" wx:for="{{areaInfo}}" wx:key="index">
-        {{item.positionName}}占{{item.count}}%
+      <view class="item" wx:for="{{trialCalculation}}" wx:key="index">
+        {{item.name}}估值法
+        预测年营业收入{{item.yearSale}}万元
+        参考率{{item.saleRate}}%
       </view>
     </view>
-    <view class="item add" @tap="show('Area')">
+    <view class="item add" @tap="showList">
       <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加估算试值
     </view>
   </van-panel>
@@ -83,15 +86,126 @@ page {
     <van-cell title="所在地" value="{{areaName}}" is-link/>
     <van-cell title="所在地" value="{{areaName}}" is-link/>
   </van-panel>
+
+  <van-panel custom-class="panel-box"  title="融资宣传文案">
+    <van-field
+      id="document"
+      value="{{ document }}"
+      type="textarea"
+      autosize
+      placeholder="请输入融资宣传文案"
+      bind:change="onChange"
+    />
+  </van-panel>
+  <view class="fix">
+    <button type="warn" @tap="toNext">保存</button>
+  </view>
+</view>
+<Add1 wx:if="{{show1}}" />
+<Add2 wx:if="{{show2}}" :list.sync="list" />
 </view>
 </template>
 <script>
 import wepy from 'wepy';
 import api from '../../api/api'
 import utils from '../../utils/utils'
+import add1 from '../../components/consult/add1'
+import add2 from '../../components/consult/add2'
 
 export default class BrandAbout extends wepy.page {
-  
+  config = {
+    navigationBarTitleText: '投资参考信息',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+      'van-stepper': '../../components/van/stepper/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index',
+      'van-radio': '../../components/van/radio/index',
+      'van-radio-group': '../../components/van/radio-group/index',
+      interval: '../../components/interval/index'
+    }
+  }
+
+  components = {
+    Add1: add1,
+    Add2: add2,
+  }
+
+  data = {
+    show1: false,
+    show2: false,
+    list: [],
+    spendPurpose: [],
+    trialCalculation: [],
+    document: '',
+  }
+
+  methods = {
+    show(name) {
+      this[name] = true
+      this.$apply()
+    },
+    onChange(e) {
+      this[e.target.id] = e.detail
+      this.$apply()
+    },
+    async toNext() {
+      try {
+        const json = await api.investment({
+          method: 'FORM',
+          query: {
+            projectId: wx.getStorageSync('pId'),
+            spendPurpose:  JSON.stringify(this.spendPurpose),
+            trialCalculation: JSON.stringify(this.trialCalculation),
+            document: this.document
+          }
+        })
+        if (json.data.code === 'success') {
+          wx.reLaunch({ url: 'search' })
+        } else {
+          utils.alert(json.data.msg)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+      
+    }
+  }
+
+   async showList() {
+    try {
+      const json = await api.loadAllCalculationInfo()
+      if (json.data.code === 'success') {
+        this.list = json.data.data
+        this.show2 = true
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+    // this.$apply()
+  }
+
+  events = {
+    Add1(value) {
+      this.spendPurpose.push(value)
+      this.show1 = false
+      this.$apply()
+    },
+    Add2(value) {
+      this.trialCalculation.push(value)
+      this.show2 = false
+      this.$apply()
+    }
+  }
 }
 </script>
 

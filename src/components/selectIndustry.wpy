@@ -5,17 +5,7 @@
 .van-cell__title {
   // font-size: 18px !important;
 }
-.select {
-  position: fixed;
-  width: 100%;
-  background-color: #E64340;
-  color: #FFF;
-  text-align: center;
-  height: 50px;
-  line-height: 50px;
-  font-size: 20px;
-  bottom:0;
-}
+
 </style>
 <template>
   <view style="padding-bottom: 60px">
@@ -26,8 +16,8 @@
         </van-cell>
       </van-cell-group>
     </van-radio-group>
-    <view class="select" @tap="goBack">
-      确定
+    <view class="fix">
+      <button type="warn" @tap="goBack">下一步</button>
     </view>
   </view>  
 </template>
