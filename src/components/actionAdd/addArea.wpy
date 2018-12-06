@@ -4,7 +4,7 @@
 <template>
 <view>
   <van-cell-group>
-    <van-cell title="{{area.length < 1 ? '请选择绩优门店周边环境分布' : areaString}}" @tap="showAreaList" is-link/>
+    <van-cell title="{{area == '' ? '请选择绩优门店周边环境分布' : area}}" @tap="showAreaList" is-link/>
     <van-field
       id="areaPoint"
       value="{{areaPoint}}"
@@ -38,14 +38,9 @@ export default class AddArea extends wepy.page {
   }
 
   data = {
-    area: [],
+    area: '',
     areaPoint: '',
-  }
-
-  computed  = {
-    areaString() {
-      return this.area.join(',')
-    }
+    id: ''
   }
 
   methods = {
@@ -58,7 +53,7 @@ export default class AddArea extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('addArea', `${this.areaString}占${this.areaPoint}%`);
+      this.$emit('addArea', {positionCode: this.id, positionName: this.area, count: this.areaPoint});
       this.area = [];
       this.areaPoint = '';
       this.$apply();
@@ -66,9 +61,10 @@ export default class AddArea extends wepy.page {
     showAreaList() {
       this.$emit('showAreaList')
     },
-    getList(value) {
+    getList(id, value) {
       console.log(value)
       this.area = value
+      this.id = id
       this.$apply()
     }
   }

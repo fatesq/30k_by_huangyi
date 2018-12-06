@@ -256,25 +256,25 @@ export default class Draw extends wepy.page {
     },
     async toNext() {
       let param = {projectId: wx.getStorageSync('pId')}
-      if (this.publicFlag == 0) {
-        param.customerList0 = this.saveTimeDistribution
-        param.customerList1 = this.natureDistribution
-        param.customerList2 = this.scaleDistribution
-        param.customerList3 = this.industryDistribution
+      if (this.publicFlag === 0) {
+        param.customerList0 = JSON.stringify(this.saveTimeDistribution)
+        param.customerList1 = JSON.stringify(this.natureDistribution)
+        param.customerList2 = JSON.stringify(this.scaleDistribution)
+        param.customerList3 = JSON.stringify(this.industryDistribution)
       } else {
-        param.customerList0 = this.ageDistribution
-        param.customerList1 = this.sexDistribution
-        param.customerList2 = this.incomeDistribution
-        param.customerList3 = this.occupationDistribution
-        param.customerList4 = this.featuresDistribution
+        param.customerList0 = JSON.stringify(this.ageDistribution)
+        param.customerList1 = JSON.stringify(this.sexDistribution)
+        param.customerList2 = JSON.stringify(this.incomeDistribution)
+        param.customerList3 = JSON.stringify(this.occupationDistribution)
+        param.customerList4 = JSON.stringify(this.featuresDistribution)
       }
       try {
         const json = await api.customer({
-          method: 'POST',
+          method: 'FORM',
           query: param
         })
         if (json.data.code === 'success') {
-          wx.navigateTo({ url: 'draw' })
+          wx.navigateTo({ url: 'manage' })
         } else {
           utils.alert(json.data.msg)
         }

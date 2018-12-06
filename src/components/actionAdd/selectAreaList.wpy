@@ -3,7 +3,7 @@
 </style>
 <template>
 <view show="{{ showList }}" title="选择绩优门店周边环境分布" bind:close="onClose('List')">
-  <van-checkbox-group value="{{ area }}" bind:change="select">
+  <van-checkbox-group value="{{ area }}" bind:change="select" max="1">
     <van-cell-group>
       <van-cell
         wx:for="{{ list }}"
@@ -11,7 +11,7 @@
         title="{{ item.name }}"
         clickable
       >
-        <van-checkbox name="{{ item.name }}" checked-color="#E64340"/>
+        <van-checkbox name="{{ item.id }}" checked-color="#E64340"/>
       </van-cell>
     </van-cell-group>
   </van-checkbox-group> 
@@ -59,12 +59,14 @@ export default class SelectAreaList extends wepy.page {
       this.$apply()
     },
     save() {
+      let name = ''
       if (this.area.length < 1) {
         utils.alert('选择一个地区')
         return
       }
+      this.list.map(i =>{if (i.id == this.area[0]) name = i.name})
       this.$emit('addList', this.area);
-      this.$invoke('../AddArea', 'getList', this.area);
+      this.$invoke('../AddArea', 'getList', this.area[0], name);
       this.$apply();
     },
   }

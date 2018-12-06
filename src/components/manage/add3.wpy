@@ -1,0 +1,57 @@
+<style>
+
+</style>
+<template>
+<view>
+  <van-cell-group custom-class="panel-box" >
+    <van-field
+      id="name"
+      label="竞品门店名称"
+      placeholder="请输入内容"
+      bind:change="onInput"
+    />
+  </van-cell-group>
+  
+  <view class="fix">
+    <button type="warn" @tap="save">保存</button>
+  </view>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+
+export default class Add extends wepy.page {
+  config = {
+    navigationBarTitleText: '性质分布',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index'
+    }
+  }
+
+  data = {
+    count: '',
+    completion: '',
+    name: ''
+  }
+
+  methods = {
+    onInput(e) {
+      this[e.target.id] = e.detail
+      console.log(this.name)
+      this.$apply()
+    },
+    save() {
+      if (!this.name) {
+        utils.alert('有未填写的项目')
+        return
+      }
+      this.$emit('Add3', this.name);
+      this.name = ''
+      this.$apply()
+    },
+  }
+}
+</script>

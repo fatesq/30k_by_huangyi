@@ -23,6 +23,8 @@ const info = (params) => wxRequest(params, `${url}/saveProject/info`)
 const organization = (params) => wxRequest(params, `${url}/saveProject/organization`)
 // 进件项目行业相关/行业经营信息
 const industry = (params) => wxRequest(params, `${url}/saveProject/industry`)
+
+const diningIndustry = (params) => wxRequest(params, `${url}/saveProject/diningIndustry`)
 // 进件投资参考信息
 const investment = (params) => wxRequest(params, `${url}/saveProject/investment`)
 // 进件保存客户群体
@@ -55,11 +57,16 @@ const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/
 const loadAllPosition = (params) => wxRequest(params, `${url}/searchProject/loadAllPosition`)
 // 获取行业列表
 const loadAllIndustryCarefulInfo = (params) => wxRequest(params, `${url}/searchProject/loadAllIndustryCarefulInfo`)
+// 获取更细致的行业列表
+const loadAllIndustryCarefulInfoById = (params) => wxRequest(params, `${url}/searchProject/loadAllIndustryCarefulInfoById`)
 
 // 新增企业成员
 const createEEAndMember = (params) => wxRequest(params, `${url}/enterprise/createEEAndMember`)
 // 获取地区
 const loadAllParentArea = (params) => wxRequest(params, `${url}/searchProject/loadAllParentArea`)
+
+const loadAllChildrenAreaByParentId = (params) => wxRequest(params, `${url}/searchProject/loadAllChildrenAreaByParentId`)
+
 
 // 获取行业列表 群像
 const loadAllOccupation = (params) => wxRequest(params, `${url}/searchProject/loadAllOccupation`)
@@ -80,6 +87,7 @@ module.exports = {
   info,
   organization,
   industry,
+  diningIndustry,
   investment,
   customer,
   loadAllProjectByIndustryId,
@@ -94,8 +102,10 @@ module.exports = {
   selectFirstLevelIndustry,
   loadAllPosition,
   loadAllIndustryCarefulInfo,
+  loadAllIndustryCarefulInfoById,
   createEEAndMember,
   loadAllParentArea,
   loadAllOccupation,
-  loadAllIdentity
+  loadAllIdentity,
+  loadAllChildrenAreaByParentId
 }

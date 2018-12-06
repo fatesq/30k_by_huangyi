@@ -106,9 +106,16 @@
     bind:change="onChange"
   />
   <van-panel title="宣传形象图">
-    <view class="uploadBox">
+    <view class="uploadBox" wx:if="{{!imageUrl}}" bindtap="chooseImage('imageUrl')">
       <view class="img">+</view>
       <view class="info">支持jpg,png,gif三种格式，图片大小5MB以内</view>
+    </view>
+    <view class="weui-uploader__bd" wx:if="{{imageUrl}}">
+      <view class="weui-uploader__files" id="uploaderFiles">
+        <view class="weui-uploader__file" bindtap="chooseImage('imageUrl')">
+            <image class="weui-uploader__img" src="{{imageUrl}}" mode="aspectFill" />
+        </view>
+      </view>
     </view>
   </van-panel>
   <van-panel title="项目概述">
@@ -182,7 +189,7 @@
           </block>
         </view>
         <view class="weui-uploader__input-box">
-            <view class="weui-uploader__input" bindtap="chooseImage"></view>
+            <view class="weui-uploader__input" bindtap="chooseImage('files')"></view>
         </view>
       </view>
     </van-panel>
@@ -239,7 +246,7 @@ export default class Project extends wepy.page {
       this.info[e.target.id] = e.detail
       this.$apply()
     },
-    chooseImage: function (e) {
+    chooseImage: function (name) {
       var that = this
       wx.chooseImage({
         sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -247,9 +254,9 @@ export default class Project extends wepy.page {
         success: function (res) {
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
           const tempFilePaths = res.tempFilePaths
-          that.files = tempFilePaths
-          that.$apply()
-          console.log(typeof tempFilePaths[0])
+          // that.files = tempFilePaths
+          // that.$apply()
+          // console.log(typeof tempFilePaths[0])
           wx.uploadFile({
             url: `${api.url}/file/upload`,
             header: {
@@ -259,18 +266,22 @@ export default class Project extends wepy.page {
             filePath: tempFilePaths[0],
             name: 'file',
             formData: {},
-            success (res) {
-              console.log(res)
-              const data = res.data
-              // do something
+            success (res2) {
+              const data = JSON.parse(res2.data)
+              if (data.code == 'success') {
+                if (name == 'imageUrl') {
+                  console.log(111)
+                  that[name] = data.data;
+                } else {
+                  that[name].push(data.data);
+                }
+                that.$apply()
+              }
             },
             fail (res) {
               console.log(res)
             }
           })
-          // that.setData({
-          //   files: that.data.files.concat(res.tempFilePaths)
-          // })
         }
       })
     },
@@ -289,7 +300,8 @@ export default class Project extends wepy.page {
         query: {
           projectId: wx.getStorageSync('pId'),
           ...this.info,
-          imageUrls: this.files
+          imageUrl: this.imageUrl,
+          imageUrls: JSON.stringify(this.files)
         }
       })
       if (json.data.code === 'success') {

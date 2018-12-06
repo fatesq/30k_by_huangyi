@@ -4,12 +4,9 @@
 <template>
   <view>
     <van-cell-group>
-      <van-field
-        id="hqLocal"
-        value="{{hqLocal}}"
-        placeholder="请输入所在地"
-        bind:change="onChange"
-      />
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range-key="name" value="{{multiIndex}}" range="{{listA}}">
+        <van-cell title="所在地" value="{{areaName}}" is-link/>
+      </picker>
       <view class="item">
         <van-field
           id="direStore"
@@ -55,10 +52,22 @@ export default class Demo extends wepy.page {
     }
   }
 
+  props = {
+    listA: {
+        type: Array,
+        twoWay: true,
+        default: [[],[]]
+    },
+    
+  }
+
   data = {
     hqLocal: '',
     joinStore: '',
     direStore: '',
+    multiIndex: [0,0],
+    areaCode: '',
+    areaName: '',
   }
 
   methods = {
@@ -67,15 +76,25 @@ export default class Demo extends wepy.page {
       this.$apply();
     },
     addShop() {
-      if (!this.hqLocal || !this.direStore || !this.joinStore) {
+      if (!this.areaCode || !this.direStore || !this.joinStore) {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('addShop', `${this.hqLocal}共${parseInt(this.direStore) + parseInt(this.joinStore)}家, 加盟店${this.joinStore}家, 直营店${this.direStore}家`);
-      this.hqLocal = '';
+      this.$emit('addShop', {areaCode: this.areaCode, areaName: this.areaName, direStore: parseInt(this.direStore), joinStore: parseInt(this.joinStore)});
       this.direStore = '';
       this.joinStore = '';
       this.$apply();
+    },
+    bindMultiPickerChange(e) {
+      this.areaCode = this.listA[1][e.detail.value[1]].areaCode
+      this.areaName = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
+      this.multiIndex = e.detail.value
+      this.$apply()
+    },
+    bindMultiPickerColumnChange: function (e) {
+      if (e.detail.column == 0) {
+        this.$emit('changeB', this.listA[0][e.detail.value].id)
+      }
     },
   }
 

@@ -102,6 +102,7 @@ export default class action extends wepy.page {
         wx.setStorageSync('pId', json.data.data)
         wx.setStorageSync('chainFlag', this.checked ? 0 : 1)
         wx.setStorageSync('enterpriseSocialNum', this.enterpriseSocialNum)
+        wx.setStorageSync('industryId', this.industryId)
         wx.navigateTo({ url: this.checked ? 'brand' : 'project' })
       } else {
         utils.alert(json.data.msg)

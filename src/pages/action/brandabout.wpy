@@ -58,7 +58,7 @@ page {
     <van-panel custom-class="panel-box" title="门店所在地分布">
       <view>
         <view class="item" wx:for="{{shopInfo}}" wx:key="index">
-          {{item}}
+          {{item.areaName}}共{{item.direStore + item.joinStore}}家, 加盟店{{item.joinStore}}家, 直营店{{item.direStore}}家
         </view>
       </view>
       <view class="item add" @tap="show('Shop')">
@@ -68,7 +68,7 @@ page {
     <van-panel custom-class="panel-box" title="绩优门店周边环境分布">
       <view>
         <view class="item" wx:for="{{areaInfo}}" wx:key="index">
-          {{item}}
+          {{item.positionName}}占{{item.count}}%
         </view>
       </view>
       <view class="item add" @tap="show('Area')">
@@ -100,9 +100,9 @@ page {
       <button type="warn" @tap="toNext">下一步</button>
     </view>
   </view>
-  <AddShop wx:if="{{showShop}}"/>
+  <AddShop wx:if="{{showShop}}" :listA.sync="listA"/>
   <AddArea wx:if="{{showArea}}"/>
-  <SelectAreaList wx:if="{{showList}}" :list.sync="list">
+  <SelectAreaList wx:if="{{showList}}" :list.sync="list" />
 </view>  
 </template>
 <script>
@@ -145,6 +145,7 @@ export default class BrandAbout extends wepy.page {
     storeCustomer: '',
     storeEfficiency1: '',
     storeEfficiency2: '',
+    listA: [[],[]],
   }
   
   methods = {
@@ -182,8 +183,8 @@ export default class BrandAbout extends wepy.page {
         method: 'FORM',
         query: {
           projectId: wx.getStorageSync('pId'),
-          storeLocal: this.shopInfo.join(','),
-          storeEnviroment : this.areaInfo.join(','),
+          storeLocal: JSON.stringify(this.shopInfo),
+          storeEnviroment : JSON.stringify(this.areaInfo),
           storePeople: this.storePeople,
           storeCustomer: this.storeCustomer, 
           storeEfficiencyFrom: this.storeEfficiency1,
@@ -203,6 +204,7 @@ export default class BrandAbout extends wepy.page {
 
   events = {
     addShop(value) {
+      console.log(value)
       this.shopInfo.push(value);
       this.showShop = false;
       this.$apply();
@@ -234,8 +236,50 @@ export default class BrandAbout extends wepy.page {
         utils.alert('系统异常')
       }
       this.$apply()
+    },
+    changeB(id) {
+      this.getCityB(id)
     }
   }
+
+  async getCity() {
+    try {
+      const json = await api.loadAllParentArea()
+      if (json.data.code === 'success') {
+        this.listA[0] = json.data.data
+        if (json.data.data.length > 0) {
+          this.getCityB(json.data.data[0].id)
+        }
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+  async getCityB(id) {
+    try {
+      const json = await api.loadAllChildrenAreaByParentId({
+        method: 'GET',
+          query: {parentId: id}
+      })
+      if (json.data.code === 'success') {
+        this.listA[1] = json.data.data
+        console.log(this.listA)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
   
+  onShow() {
+    this.getCity()
+  }
 }
 </script>

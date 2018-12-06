@@ -1,0 +1,97 @@
+<style lang="less">
+page {
+  background-color: #f4f4f4;
+}
+.panel-box {
+  margin-bottom: 20px;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
+.van-cell {
+  align-items: center;
+}
+.fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  button {
+    border-radius: 0px;
+  }
+}
+.item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 24px;
+  align-items: center;
+  &:after {
+    content: ' ';
+    position: absolute;
+    pointer-events: none;
+    box-sizing: border-box;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    top: auto;
+    left: 15px;
+    right: 0;
+    bottom: 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    border-bottom: 1px solid #eee;
+  }
+}
+</style>
+<template>
+<view>
+  <van-panel custom-class="panel-box" title="全部资金用途">
+    <view>
+      <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        {{item.positionName}}占{{item.count}}%
+      </view>
+    </view>
+    <view class="item add" @tap="show('Area')">
+      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加资金用途
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="估算试值">
+    <view>
+      <view class="item" wx:for="{{areaInfo}}" wx:key="index">
+        {{item.positionName}}占{{item.count}}%
+      </view>
+    </view>
+    <view class="item add" @tap="show('Area')">
+      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加估算试值
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="要素评估结果">
+    <van-cell title="核心团队能力" value="{{areaName}}" is-link/>
+    <van-cell title="行业市场规模" value="{{areaName}}" is-link/>
+    <van-cell title="产品(技术)" value="{{areaName}}" is-link/>
+    <van-cell title="所在地" value="{{areaName}}" is-link/>
+    <van-cell title="所在地" value="{{areaName}}" is-link/>
+  </van-panel>
+</view>
+</template>
+<script>
+import wepy from 'wepy';
+import api from '../../api/api'
+import utils from '../../utils/utils'
+
+export default class BrandAbout extends wepy.page {
+  
+}
+</script>
+

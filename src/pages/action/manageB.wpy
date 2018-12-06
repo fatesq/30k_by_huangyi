@@ -1,0 +1,263 @@
+<style lang="less">
+page {
+  background-color: #f4f4f4;
+}
+.panel-box {
+  margin-bottom: 20rpx;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
+.title {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  image {
+    width: 110rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: #CCC;
+  }
+}
+</style>
+<template>
+<view>
+  <view wx:if="{{!show1 && !show2 && !show3}}" style="padding-bottom: 50px">
+    <van-cell-group custom-class="panel-box" >
+      <van-cell title="周边环境" value="{{info.industryCareful}}" @tap="showList" is-link/>
+      <van-cell title="业态细分" value="{{info.industryCareful}}" @tap="showAreaList" is-link/>
+    </van-cell-group>
+
+    <van-cell-group custom-class="panel-box" >
+      <van-field
+        id="diningSpeed"
+        value="{{info.diningSpeed}}"
+        type="number"
+        label="出餐速度"
+        placeholder="请输入出餐速度"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">分钟</text>
+      </van-field>
+      <van-field
+        id="diningType"
+        value="{{info.diningType}}"
+        type="number"
+        label="菜品分类"
+        placeholder="请输入菜品分类"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">种</text>
+      </van-field>
+      <van-field
+        id="diningUpdateRate"
+        value="{{info.diningUpdateRate}}"
+        type="number"
+        label="菜品年更新率"
+        placeholder="请输入年更新率"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">%</text>
+      </van-field>
+      <van-field
+        id="areaEffiency"
+        value="{{info.areaEffiency}}"
+        type="number"
+        label="设计坪效"
+        placeholder="请输入设计坪效"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">元/平米/月</text>
+      </van-field>
+      <van-field
+        id="singleInvestment"
+        value="{{info.singleInvestment}}"
+        type="number"
+        label="单店装修投入"
+        placeholder="请输入装修投入"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">万元</text>
+      </van-field>
+      <interval type="number" start='周边人流量' startId="peopleCountFrom"  end="万人/月" endId="peopleCountTo" bind:change='onChildChange' />
+      <interval type="number" start='预测客流量' startId="forecastPersonFrom"  end="万人/月" endId="forecasePersonTo" bind:change='onChildChange' />
+    </van-cell-group>
+
+    <van-panel custom-class="panel-box" title="周边竞争情况">
+      <view wx:for="{{info.name}}" wx:key="index">
+        <view class="title">{{item}}</view>
+      </view>
+      <view class="item add" @tap="show('show3')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加周边竞争门店
+      </view>
+    </van-panel>
+
+    
+    <view class="fix">
+      <button type="warn" @tap="toNext">保存</button>
+    </view>
+  </view>
+  <List wx:if="{{show1}}" :list.sync="list" />
+  <SelectAreaList wx:if="{{show2}}" :list.sync="area" />
+  <Add3 wx:if="{{show3}}"/>
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
+import list from '../../components/manage/list'
+import selectAreaList from '../../components/actionAdd/selectAreaList'
+import add3 from '../../components/manage/add3'
+
+export default class Manage extends wepy.page {
+  config = {
+    navigationBarTitleText: '行业经营信息',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+      'van-stepper': '../../components/van/stepper/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index',
+      interval: '../../components/interval/index'
+    }
+  }
+
+  components = {
+    List: list,
+    SelectAreaList: selectAreaList,
+    Add3: add3
+  }
+
+  data = {
+    info: {
+      industryCarefulId: '',
+      diningSpeed: '',
+      diningType: '',
+      diningUpdateRate: '',
+      areaEffiency: '',
+      singleInvestment: '',
+      peopleCountFrom: '',
+      peopleCountFrom: '',
+      forecastPersonFrom: '',
+      forecasePersonTo: '',
+      name: []
+    },
+    show1: false,
+    show2: false,
+    show3: false,
+    list: [],
+    area: []
+  }
+
+  methods = {
+    show(name) {
+      this[name] = true
+      this.$apply()
+    },
+    onChange(e) {
+      this.info[e.target.id] = e.detail
+      this.$apply()
+    },
+    onChildChange(e) {
+      const { detail } = e
+      this.info[detail.target.id] = detail.detail.value
+      this.$apply()
+    },
+    async toNext() {
+      try {
+        const json = await api.diningIndustry({
+          method: 'FORM',
+          query: {
+            projectId: wx.getStorageSync('pId'),
+            ...this.data.info,
+            name: JSON.stringify(this.info.name)
+          }
+        })
+        if (json.data.code === 'success') {
+          wx.navigateTo({ url: 'manage' })
+        } else {
+          utils.alert(json.data.description)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+    }
+  }
+  async showAreaList() {
+    try {
+      const json = await api.loadAllPosition()
+      if (json.data.code === 'success') {
+        // this.showList = true
+        this.area = json.data.data
+        this.show2 = true
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+    // this.$apply()
+  }
+
+  async showList() {
+    try {
+      const json = await api.loadAllIndustryCarefulInfoById({
+        method: 'GET',
+        query: {
+          industryId: wx.getStorageSync('industryId')
+        }
+      })
+      if (json.data.code === 'success') {
+        // this.showList = true
+        this.list = json.data.data
+        this.show1 = true
+        console.log(this.list)
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+    // this.$apply()
+  }
+
+  events = {
+    getList(id, name) {
+      this.info.industryCareful = name
+      this.info.industryCarefulId = id
+      this.show1 = false
+      this.$apply();
+    },
+    getArea() {
+      this.show2 = false
+      this.$apply();
+    },
+    Add3(name) {
+      this.info.name.push(name)
+      this.show3 = false
+      this.$apply()
+    }
+  }
+}
+</script>

@@ -85,9 +85,9 @@ page {
           readonly="{{ true }}"
         />  
       </picker>
-      <picker mode="region" bindchange="bindRegionChange">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range-key="name" value="{{multiIndex}}" range="{{listA}}">
         <van-field
-          value="{{hqLocal}}"
+          value="{{areaName}}"
           label="总部所在地"
           placeholder="请输入所在地"
           readonly="{{ true }}"
@@ -173,7 +173,8 @@ export default class Brand extends wepy.page {
     createUserPhone: '',
     createUserIdCard: '',
     createDate: '',
-    hqLocal: '',
+    areaName: '',
+    areaCode: '',
     hqSocialNum: '',
     direStore: '',
     joinStore: '',
@@ -190,6 +191,7 @@ export default class Brand extends wepy.page {
     yearProfileTo: '', 
     backWeekFrom: '',
     backWeekTo: '',
+    listA: [[],[]]
   }
 
   methods = {
@@ -210,9 +212,20 @@ export default class Brand extends wepy.page {
       this.$apply()
     },
     bindRegionChange(e) {
-      this.hqLocal = e.detail.value.join(' ')
+      this.areaName = e.detail.value.join(' ')
       this.$apply()
-    }
+    },
+    bindMultiPickerChange(e) {
+      this.areaCode = this.listA[1][e.detail.value[1]].areaCode
+      this.areaName = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
+      this.multiIndex = e.detail.value
+      this.$apply()
+    },
+    bindMultiPickerColumnChange: function (e) {
+      if (e.detail.column == 0) {
+        this.changeB(this.listA[0][e.detail.value].id)
+      }
+    },
   }
 
   async toNext() {
@@ -228,6 +241,7 @@ export default class Brand extends wepy.page {
           ...this.data,
           createDate: moment(this.createDate).format('X'),
           failureRate: 1,
+          listA: '',
           // chainFlag:  wx.getStorageSync('chainFlag'),
         }
       })
@@ -240,6 +254,50 @@ export default class Brand extends wepy.page {
       utils.alert('系统异常')
     }
     this.$apply()
+  }
+
+  changeB(id) {
+    this.getCityB(id)
+  }
+
+  async getCity() {
+    try {
+      const json = await api.loadAllParentArea()
+      if (json.data.code === 'success') {
+        this.listA[0] = json.data.data
+        if (json.data.data.length > 0) {
+          this.getCityB(json.data.data[0].id)
+        }
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+  async getCityB(id) {
+    try {
+      const json = await api.loadAllChildrenAreaByParentId({
+        method: 'GET',
+          query: {parentId: id}
+      })
+      if (json.data.code === 'success') {
+        this.listA[1] = json.data.data
+        console.log(this.listA)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+  
+  onShow() {
+    this.getCity()
   }
 }
 </script>

@@ -29,81 +29,196 @@ page {
 </style>
 <template>
 <view>
-  <van-cell-group custom-class="panel-box" >
-    <van-cell title="业态细分" value="" is-link/>
-  </van-cell-group>
+  <view wx:if="{{!show1 && !show2 && !show3}}" style="padding-bottom: 50px">
+    <van-cell-group custom-class="panel-box" >
+      <van-cell title="业态细分" value="{{info.industryCareful}}" @tap="showList" is-link/>
+    </van-cell-group>
 
-  <van-panel custom-class="panel-box" title="行业市场规模">
-    <van-field
-      id=""
-      label="规模总量"
-      placeholder="请输入规模总量"
-      bind:change="onChange"
-      use-button-slot
-    >
-      <text slot="button">亿元</text>
-    </van-field>
-    <van-field
-      id=""
-      label="近三年平均增长率"
-      placeholder="请输入平均增长率"
-      bind:change="onChange"
-      use-button-slot
-    >
-      <text slot="button">%</text>
-    </van-field>
-    <van-cell title="评估分值">
-      <van-stepper
-        id="score"
-        value="{{ score }}"
-        integer
-        min="1"
-        max="5"
-        step="1"
+    <van-panel custom-class="panel-box" title="行业市场规模">
+      <van-field
+        id="scale"
+        value="{{info.scale}}"
+        type="number"
+        label="规模总量"
+        placeholder="请输入规模总量"
         bind:change="onChange"
-      />
-    </van-cell>
-  </van-panel>
+        use-button-slot
+      >
+        <text slot="button">亿元</text>
+      </van-field>
+      <van-field
+        id="riseRate"
+        value="{{info.riseRate}}"
+        type="number"
+        label="近三年平均增长率"
+        placeholder="请输入平均增长率"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">%</text>
+      </van-field>
+      <van-cell title="评估分值">
+        <van-stepper
+          id="score1"
+          value="{{ info.score1 }}"
+          integer
+          min="1"
+          max="5"
+          step="1"
+          bind:change="onChange"
+        />
+      </van-cell>
+    </van-panel>
 
-  <van-panel custom-class="panel-box" title="主要产品(技术)">
-    <view wx:for="{{memberList}}" wx:key="index">
-      <view class="title">
-        <van-cell title="{{item.name}}" style="width: 100%" border="{{false}}">
-          <van-icon
-            slot="right-icon"
-            name="delete"
-            class="van-cell__right-icon"
-            bindtap="delete({{index}})"
-          />
-        </van-cell>
+    <van-panel custom-class="panel-box" title="主要产品(技术)">
+      <view wx:for="{{info.coreTechnology}}" wx:key="index">
+        <view class="title">
+          <van-cell title="{{item.name}}" style="width: 100%" border="{{false}}">
+            <van-icon
+              slot="right-icon"
+              name="delete"
+              class="van-cell__right-icon"
+              bindtap="delete({{index}})"
+            />
+          </van-cell>
+        </view>
+        <view class="title">{{item.value}}</view>
       </view>
-      <view class="title">{{item.profile}}</view>
-    </view>
-    <view class="item add" @tap="show('showMember')">
-      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加成员
-    </view>
-  </van-panel>
+      <view class="item add" @tap="show('show2')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加成员
+      </view>
+    </van-panel>
 
-  <van-cell-group custom-class="panel-box" >
-    <van-cell title="产品(技术)评估">
-      <van-stepper
-        id="score"
-        value="{{ score }}"
-        integer
-        min="1"
-        max="5"
-        step="1"
+    <van-cell-group custom-class="panel-box" >
+      <van-cell title="产品(技术)评估">
+        <van-stepper
+          id="score2"
+          value="{{ info.score2 }}"
+          integer
+          min="1"
+          max="5"
+          step="1"
+          bind:change="onChange"
+        />
+      </van-cell>
+      <van-panel title="预测用户数">
+        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="monthFrom"  end="位" endId="forecastCustomerTo" bind:change='onChildChange' />
+      </van-panel>
+      <van-panel title="预测用户活跃度(产品或服务使用频率)">
+        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="activeMonthFrom"  end="人次/天" endId="forecastActiveCustomerTo" bind:change='onChildChange' />
+      </van-panel>
+    </van-cell-group>
+
+    <van-cell-group custom-class="panel-box" >
+      <interval type="number" start='产品持续研发成本' startId="keepDevelopmentCostFrom"  end="万元/月" endId="keepDevelopmentCostTo" bind:change='onChildChange' />
+      <interval type="number" start='基础设施维护成本' startId="basicEquipmentCostFrom"  end="万元/月" endId="basicEquipmentCostTo" bind:change='onChildChange' />
+      <interval type="number" start='营销推广成本' startId="spreadCostFrom"  end="万元/月" endId="spreadCostTo" bind:change='onChildChange' />
+      <interval type="number" start='预测访问流量' startId="forecastPersonFrom"  end="万元/月" endId="forecastPersonTo" bind:change='onChildChange' />
+      <van-cell type="number" title="营销能力评估">
+        <van-stepper
+          id="score3"
+          value="{{ info.score3 }}"
+          integer
+          min="1"
+          max="5"
+          step="1"
+          bind:change="onChange"
+        />
+      </van-cell>
+    </van-cell-group>
+
+    <van-panel custom-class="panel-box" title="竞品分析">
+      <view wx:for="{{info.completeAnalysis}}" wx:key="index">
+        <view class="title">{{item.name}} 现存用户数{{item.count}}位</view>
+      </view>
+      <view class="item add" @tap="show('show3')">
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加成员
+      </view>
+    </van-panel>
+
+    <van-cell-group custom-class="panel-box" >
+      <van-field
+        id="nowShare"
+        value="{{ info.nowShare }}"
+        type="number"
+        label="当前市场份额"
+        placeholder="请输入当前市场份额"
         bind:change="onChange"
-      />
-    </van-cell>
-    <interval startWidth="0" centerWidth="100"  center='个月后达成' startId="areaFrom"  end="位" endId="areaTo" bind:change='onChildChange' />
-  </van-cell-group>
+        use-button-slot
+      >
+        <text slot="button">%</text>
+      </van-field>
+      <van-field
+        id="nowIndustryRanking"
+        value="{{ info.nowIndustryRanking }}"
+        type="number"
+        label="业内排名"
+        placeholder="请输入业内排名"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">位</text>
+      </van-field>
+      <van-field
+        id="goalShare"
+        value="{{ info.goalShare }}"
+        type="number"
+        label="目标市场份额"
+        placeholder="请输入目标市场份额"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">%</text>
+      </van-field>
+      <van-field
+        id="goalIndustryRanking"
+        value="{{ info.goalIndustryRanking }}"
+        type="number"
+        label="业内排名"
+        placeholder="请输入业内排名"
+        bind:change="onChange"
+        use-button-slot
+      >
+        <text slot="button">位</text>
+      </van-field>
+      <van-panel title="核心竞争力">
+        <van-field
+          id="coreComplete"
+          value="{{ info.coreComplete }}"
+          type="textarea"
+          autosize
+          placeholder="请输入核心竞争力"
+          bind:change="onChange"
+        />
+      </van-panel>
+      <van-cell title="竞争环境评估">
+        <van-stepper
+          id="score4"
+          value="{{ info.score4 }}"
+          integer
+          min="1"
+          max="5"
+          step="1"
+          bind:change="onChange"
+        />
+      </van-cell>
+    </van-cell-group>
+    <view class="fix">
+      <button type="warn" @tap="toNext">保存</button>
+    </view>
+  </view>
+  <List wx:if="{{show1}}" :list.sync="list" />
+  <Add1 wx:if="{{show2}}" />
+  <Add2 wx:if="{{show3}}" />
 </view>
 </template>
 <script>
 import wepy from 'wepy'
 import api from '../../api/api'
 import utils from '../../utils/utils'
+import list from '../../components/manage/list'
+import add1 from '../../components/manage/add1'
+import add2 from '../../components/manage/add2'
 
 export default class Manage extends wepy.page {
   config = {
@@ -115,7 +230,136 @@ export default class Manage extends wepy.page {
       'van-field': '../../components/van/field/index',
       'van-panel': '../../components/van/panel/index',
       'van-stepper': '../../components/van/stepper/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index',
       interval: '../../components/interval/index'
+    }
+  }
+
+  components = {
+    List: list,
+    Add1: add1,
+    Add2: add2,
+  }
+
+  data = {
+    info: {
+      industryCareful: '',
+      scale: '',
+      riseRate: '',
+      score1: 3,
+      coreTechnology: [],
+      score2: 3,
+      monthFrom: '',
+      forecastCustomerTo: '',
+      activeMonthFrom: '',
+      forecastActiveCustomerTo: '',
+      keepDevelopmentCostFrom: '',
+      keepDevelopmentCostTo: '',
+      basicEquipmentCostFrom: '',
+      basicEquipmentCostTo: '',
+      spreadCostFrom: '',
+      spreadCostTo: '',
+      forecastPersonFrom: '',
+      forecastPersonTo: '',
+      score3: 3,
+      completeAnalysis: [],
+      nowShare: '',
+      nowIndustryRanking: '',
+      goalShare: '',
+      goalIndustryRanking: '',
+      coreComplete: '',
+      score4: 3,
+    },
+    show1: false,
+    show2: false,
+    show3: false,
+    list: []
+  }
+
+  methods = {
+    show(name) {
+      this[name] = true
+      this.$apply()
+    },
+    onChange(e) {
+      this.info[e.target.id] = e.detail
+      this.$apply()
+    },
+    onChildChange(e) {
+      const { detail } = e
+      this.info[detail.target.id] = detail.detail.value
+      this.$apply()
+    },
+    async toNext() {
+      try {
+        const json = await api.industry({
+          method: 'FORM',
+          query: {
+            projectId: wx.getStorageSync('pId'),
+            ...this.data.info,
+            coreTechnology: JSON.stringify(this.info.coreTechnology),
+            completeAnalysis: JSON.stringify(this.info.completeAnalysis)
+          }
+        })
+        if (json.data.code === 'success') {
+          wx.navigateTo({ url: 'manage' })
+        } else {
+          utils.alert(json.data.description)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+    }
+  }
+
+  async showList() {
+    try {
+      const json = await api.loadAllIndustryCarefulInfoById({
+        method: 'GET',
+        query: {
+          industryId: wx.getStorageSync('industryId')
+        }
+      })
+      if (json.data.code === 'success') {
+        // this.showList = true
+        this.list = json.data.data
+        this.show1 = true
+        console.log(this.list)
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+    // this.$apply()
+  }
+
+  events = {
+    getList(id, name) {
+      this.info.industryCareful = name
+      this.show1 = false
+      this.$apply();
+    },
+    Add1(name, value, completion) {
+      this.info.coreTechnology.push({
+        'name': name,
+        'value': value,
+        'completion': completion,
+      })
+      this.show2 = false
+      this.$apply()
+    },
+    Add2(name, count) {
+      this.info.completeAnalysis.push({
+        'name': name,
+        'count': count,
+      })
+      this.show3 = false
+      this.$apply()
     }
   }
 }
