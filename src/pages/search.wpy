@@ -107,7 +107,7 @@ page {
           </view>
         </view>
         <view class="more">
-          <button @tap="toDetails({{item.code}})"> 详情 </button>
+          <button @tap="toDetails({{item}})"> 详情 </button>
         </view>
       </view>
     </view>
@@ -158,9 +158,9 @@ export default class Search extends wepy.page {
         url: 'selectIndustry'
       })
     },
-    toDetails(id) {
+    toDetails(item) {
       wx.navigateTo({
-        url: `details/index?id=${id}`
+        url: `details/index?id=${item.id}&code=${item.code}`
       })
     }
   }

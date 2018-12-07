@@ -80,11 +80,11 @@ page {
   </van-panel>
 
   <van-panel custom-class="panel-box" title="要素评估结果">
-    <van-cell title="核心团队能力" value="{{areaName}}" is-link/>
-    <van-cell title="行业市场规模" value="{{areaName}}" is-link/>
-    <van-cell title="产品(技术)" value="{{areaName}}" is-link/>
-    <van-cell title="营销能力" value="{{areaName}}" is-link/>
-    <van-cell title="竞争环境" value="{{areaName}}" is-link/>
+    <van-cell title="核心团队能力" value="{{obj.teamScore}}" />
+    <van-cell title="行业市场规模" value="{{obj.industryScore}}" />
+    <van-cell title="产品(技术)" value="{{obj.productScore}}" />
+    <van-cell title="营销能力" value="{{obj.saleScore}}" />
+    <van-cell title="竞争环境" value="{{obj.environmentScore}}" />
   </van-panel>
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">
@@ -142,6 +142,7 @@ export default class BrandAbout extends wepy.page {
     spendPurpose: [],
     trialCalculation: [],
     document: '',
+    obj: {}
   }
 
   methods = {
@@ -165,7 +166,7 @@ export default class BrandAbout extends wepy.page {
           }
         })
         if (json.data.code === 'success') {
-          wx.reLaunch({ url: 'search' })
+          wx.reLaunch({ url: '../search' })
         } else {
           utils.alert(json.data.msg)
         }
@@ -205,6 +206,30 @@ export default class BrandAbout extends wepy.page {
       this.show2 = false
       this.$apply()
     }
+  }
+
+  async getScore() {
+    try {
+      const json = await api.loadScoreByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+      if (json.data.code === 'success') {
+         this.obj = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
+  onShow () {
+    this.getScore()
   }
 }
 </script>

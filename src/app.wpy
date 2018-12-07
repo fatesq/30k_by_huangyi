@@ -61,8 +61,6 @@ export default class extends wepy.app {
       'pages/authorize',
       'pages/action/consult',
       'pages/action/manage',
-      
-     
       'pages/action/group',
       'pages/action/project',
       

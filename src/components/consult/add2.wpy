@@ -79,7 +79,7 @@ export default class Nature extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('Add2', {calculationId: this.radio, name: this.name, saleRate: this.saleRate, yearSale: this.yearSale});
+      this.$emit('Add2', {calculationCode: this.radio, calculationName: this.name, saleRate: this.saleRate, yearSale: this.yearSale});
       this.$apply()
     }
   }

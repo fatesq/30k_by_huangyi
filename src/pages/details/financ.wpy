@@ -31,16 +31,16 @@ page {
 <view>
   <van-panel custom-class="panel-box" title="全部资金用途">
     <view>
-      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
-        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      <view class="item" wx:for="{{info.spendPurpose}}" wx:key="index">
+        {{item.name}}花费{{item.spend}}万元
       </view>
     </view>
   </van-panel>
   
   <van-panel custom-class="panel-box" title="估值试算">
     <view>
-      <view class="item" wx:for="{{trialCalculation}}" wx:key="index">
-        {{item.name}}估值法
+      <view class="item" wx:for="{{info.trialCalculation}}" wx:key="index">
+        {{item.calculationName}}估值法
         预测年营业收入{{item.yearSale}}万元
         参考率{{item.saleRate}}%
       </view>
@@ -49,16 +49,16 @@ page {
 
   <van-panel custom-class="panel-box" title="要素评估结果">
     <van-cell-group>
-      <van-cell title="核心团队能力" value="{{areaName}}" is-link/>
-      <van-cell title="行业市场规模" value="{{areaName}}" is-link/>
-      <van-cell title="产品(技术)" value="{{areaName}}" is-link/>
-      <van-cell title="营销能力" value="{{areaName}}" is-link/>
-      <van-cell title="竞争环境" value="{{areaName}}" is-link/>
+      <van-cell title="核心团队能力" value="{{obj.teamScore}}" />
+      <van-cell title="行业市场规模" value="{{obj.industryScore}}" />
+      <van-cell title="产品(技术)" value="{{obj.productScore}}" />
+      <van-cell title="营销能力" value="{{obj.saleScore}}" />
+      <van-cell title="竞争环境" value="{{obj.environmentScore}}" />
     </van-cell-group>
   </van-panel>  
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">
-    
+     <view class="title">{{info.document}}</view>
   </van-panel>
   
 </view>
@@ -83,11 +83,13 @@ export default class Financ extends wepy.page {
   data = {
     id: '',
     info: {},
+    obj: {},
   }
 
   onLoad(option) {
     this.id = option.id
     this.getInfo(option.id);
+    this.getScore(option.id)
     this.$apply();
   }
 
@@ -111,5 +113,26 @@ export default class Financ extends wepy.page {
       utils.alert('系统异常')
     }
   }
+
+  async getScore(id) {
+    try {
+      const json = await api.loadScoreByProjectId({
+        method: 'GET',
+        query: {
+          projectId: id
+        }
+      })
+      if (json.data.code === 'success') {
+        this.obj = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
 }
 </script>

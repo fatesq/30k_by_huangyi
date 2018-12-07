@@ -1,29 +1,54 @@
 <style lang="less">
 page {
-  background-color: #f2f2f2;
+  background-color: #f4f4f4;
 }
-.van-cell-group {
-  margin-bottom: 30rpx;
+.title {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  image {
+    width: 110rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: #CCC;
+  }
+}
+.panel-box {
+  margin-bottom: 20rpx;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
 }
 </style>
 <template>
 <view>
-  <van-cell-group>
-    <van-cell title="门店所在分布"/>
-    <van-cell title="xxxxxx" value=""/>
-    <van-cell title="xxxxxx" value=""/>
-  </van-cell-group>
+  <van-panel custom-class="panel-box" title="门店所在地分布">
+    <view>
+      <view class="item" wx:for="{{info.storeLocal}}" wx:key="index">
+        {{item.areaName}} 直营店{{item.direStore}}家 加盟店{{item.joinStore}}家
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="绩优门店周边环境分布">
+    <view>
+      <view class="item" wx:for="{{info.storeEnvironmental}}" wx:key="index">
+        {{item.positionName}} 占{{item.count}}%
+      </view>
+    </view>
+  </van-panel>
 
   <van-cell-group>
-    <van-cell title="绩优门店周边环境分布"/>
-    <van-cell title="xxxxxx" value=""/>
-    <van-cell title="xxxxxx" value=""/>
-  </van-cell-group>
-
-  <van-cell-group>
-    <van-cell title="绩优门店平均人流量"/>
-    <van-cell title="绩优门店平均客流量" value=""/>
-    <van-cell title="目标市场份额" value=""/>
+    <van-cell title="绩优门店平均人流量" value="{{info.storePeople}}"/>
+    <van-cell title="绩优门店平均客流量" value="{{info.storeCustomer}}"/>
+    <van-cell title="目标市场份额" value="{{info.storeEfficiencyFrom}}~{{info.storeEfficiencyTo}}"/>
   </van-cell-group>
 </view>  
 </template>
@@ -36,8 +61,10 @@ export default class BrandIndustry extends wepy.page {
   config = {
     navigationBarTitleText: '品牌行业相关',
     usingComponents: {
-      "van-cell": "../../components/van/cell/index",
+      'van-cell': '../../components/van/cell/index',
       'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
     }
   }
 

@@ -30,36 +30,76 @@ page {
 <template>
 <view>
   <van-cell-group custom-class="panel-box">
-    <van-cell title="公司分类" value="{{nativePlace}}" is-link/>
+    <van-cell title="公司分类" value="{{info[0].type == 1 ? '个人': '组织'}}" is-link/>
   </van-cell-group>    
-  <van-panel custom-class="panel-box" title="续存时长分布">
+  <van-panel custom-class="panel-box" title="续存时长分布" wx:if="{{info[0].type == 0}}">
     <view>
-      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
-        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 0 && item.type == 0}}">
+        {{item.dataFrom}}至{{item.dataTo}}年占{{item.count}}%
       </view>
     </view>
   </van-panel>
 
-  <van-panel custom-class="panel-box" title="性质分布">
+  <van-panel custom-class="panel-box" title="性质分布" wx:if="{{info[0].type == 0 }}">
     <view>
-      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
-        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 1 && item.type == 0}}">
+         {{item.name}}占{{item.count}}%
       </view>
     </view>
   </van-panel>
 
-  <van-panel custom-class="panel-box" title="规模分布">
+  <van-panel custom-class="panel-box" title="规模分布" wx:if="{{info[0].type == 0 }}">
     <view>
-      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
-        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 2 && item.type == 0}}">
+        {{item.dataFrom}}至{{item.dataTo}}人占{{item.count}}%
       </view>
     </view>
   </van-panel>
 
-  <van-panel custom-class="panel-box" title="行业分布">
+  <van-panel custom-class="panel-box" title="行业分布" wx:if="{{info[0].type == 0 }}">
     <view>
-      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
-        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 3 && item.type == 0}}">
+         {{item.name}}占{{item.count}}%
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="年龄分布" wx:if="{{info[0].type == 1 }}">
+    <view>
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 0 && item.type == 1}}">
+         {{item.dataFrom}}至{{item.dataTo}}岁占{{item.count}}%
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="性别分布" wx:if="{{info[0].type == 1 }}">
+    <view>
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 1 && item.type == 1}}">
+          女性占{{item.count}}%
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="收入分布" wx:if="{{info[0].type == 1 }}">
+    <view>
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 2 && item.type == 1}}">
+         年入{{item.dataFrom}}至{{this.dataTo}}万元占{{this.count}}%
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="职业分布" wx:if="{{info[0].type == 1 }}">
+    <view>
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 3 && item.type == 1}}">
+          {{item.name}}占{{item.count}}%
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="特征分布" wx:if="{{info[0].type == 1 }}">
+    <view>
+      <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 4 && item.type == 1}}">
+         {{item.name}}占{{item.count}}%
       </view>
     </view>
   </van-panel>
@@ -84,7 +124,7 @@ export default class Client extends wepy.page {
 
   data = {
     id: '',
-    info: {},
+    info: [],
   }
 
   onLoad(option) {

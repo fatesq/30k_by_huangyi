@@ -35,50 +35,44 @@ page {
 
   <van-panel custom-class="panel-box" title="市场行业规模">
     <van-cell-group>
-      <van-cell title="规模总量" value="{{nativePlace}}" is-link/>
-      <van-cell title="近三年平均增长率" value="{{address}}" is-link/>
+      <van-cell title="规模总量" value="{{info.scale}}"/>
+      <van-cell title="近三年平均增长率" value="{{info.riseRate}}"/>
     </van-cell-group>
   </van-panel>  
 
   <van-panel custom-class="panel-box" title="主要产品(技术)">
     <view wx:for="{{info.coreTechnology}}" wx:key="index">
       <view class="title">
-        <van-cell title="{{item.name}}" style="width: 100%" border="{{false}}">
-          <van-icon
-            slot="right-icon"
-            name="delete"
-            class="van-cell__right-icon"
-            bindtap="delete({{index}})"
-          />
-        </van-cell>
+        <van-cell title="{{item.name}}" style="width: 100%"/>
       </view>
       <view class="title">{{item.value}}</view>
     </view>
   </van-panel>
 
   <van-cell-group custom-class="panel-box">
-    <van-cell title="预测客户活跃度" value="{{info.name}}"/>
-    <van-cell title="产品持续研发成本" value="{{info.createUserName}}"/>
-    <van-cell title="基础设施维护成本" value="{{info.createDate}}"/>
-    <van-cell title="营销推广成本" value="{{}}"/>
-    <van-cell title="预测访问流量" value="{{info.brandReference.hqSociaNum}}"/>
+    <van-cell title="预测客户活跃度" value="{{info.forecastActiveCustomerMonthCountFrom}}~{{info.forecastActiveCustomerTo}}"/>
+    <van-cell title="产品持续研发成本" value="{{info.keepDevelopmentCostFrom}}~{{info.keepDevelopmentCostTo}}"/>
+    <van-cell title="基础设施维护成本" value="{{info.basicEquipmentCostFrom}}~{{info.basicEquipmentCostTo}}"/>
+    <van-cell title="营销推广成本" value="{{info.spreadCostFrom}}~{{info.spreadCostTo}}"/>
+    <van-cell title="预测访问流量" value="{{info.forecastPersonFrom}}~{{info.forecastPersonTo}}"/>
   </van-cell-group>
 
   <van-panel custom-class="panel-box" title="竞品分析">
     <view>
-      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
-        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      <view class="item" wx:for="{{info.completeAnalysis}}" wx:key="index">
+        {{item.name}} 现存用户 {{item.count}} 位
       </view>
     </view>
   </van-panel>
 
   <van-panel custom-class="panel-box" title="竞品格局">
     <van-cell-group>
-      <van-cell title="当前市场份额" value="{{info.name}}"/>
-      <van-cell title="业内排名" value="{{info.createUserName}}"/>
-      <van-cell title="目标市场份额" value="{{info.createDate}}"/>
-      <van-cell title="业内排名" value="{{}}"/>
+      <van-cell title="当前市场份额" value="{{info.nowShare}}"/>
+      <van-cell title="业内排名" value="{{info.nowIndustryRanking}}"/>
+      <van-cell title="目标市场份额" value="{{info.goalShare}}"/>
+      <van-cell title="业内排名" value="{{info.goalIndustryRanking}}"/>
       <van-panel title="核心竞争力">
+         <view class="title">{{info.coreComplete}}</view>
       </van-panel>  
     </van-cell-group>
   </van-panel>

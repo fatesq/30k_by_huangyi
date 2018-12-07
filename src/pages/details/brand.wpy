@@ -12,19 +12,19 @@ page {
     <van-cell title="品牌名称" value="{{info.name}}"/>
     <van-cell title="创始人" value="{{info.createUserName}}"/>
     <van-cell title="创立日期" value="{{info.createDate}}"/>
-    <van-cell title="总部所在地" value="{{}}"/>
-    <van-cell title="总部统一社会信用代码" value="{{info.brandReference.hqSociaNum}}"/>
+    <van-cell title="总部所在地" value="{{info.brandReference.areaName}}"/>
+    <van-cell title="总部统一社会信用代码" value="{{info.brandReference.hqSocialNum}}"/>
   </van-cell-group>
   <van-cell-group>
-    <van-cell title="连锁规模" value="{{}}"/>
-    <van-cell title="代表门店" value="{{}}"/>
-    <van-cell title="场地面积" value="{{}}"/>
+    <van-cell title="连锁规模" value="{{info.brandReference.areaFrom}}"/>
+    <van-cell title="代表门店" value="{{info.brandReference.representStore}}"/>
+    <van-cell title="场地面积" value="{{info.brandReference.areaFrom}}~{{info.brandReference.areaTo}}"/>
     <van-cell title="客单价区间" value="{{info.brandReference.priceFrom}}~{{info.brandReference.priceTo}}"/>
-    <van-cell title="单店投资额" value=""/>
-    <van-cell title="月净利润" value=""/>
-    <van-cell title="年化投资回报率" value=""/>
-    <van-cell title="回本周期" value=""/>
-    <van-cell title="项目失败率" value=""/>
+    <van-cell title="单店投资额" value="{{info.brandReference.investmentFrom}}~{{info.brandReference.investmentTo}}"/>
+    <van-cell title="月净利润" value="{{info.brandReference.monthProfileFrom}}~{{info.brandReference.monthProfileTo}}"/>
+    <van-cell title="年化投资回报率" value="{{info.brandReference.yearProfileFrom}}~{{info.brandReference.yearProfileTo}}"/>
+    <van-cell title="回本周期" value="{{info.brandReference.backWeekFrom}}~{{info.brandReference.backWeekTo}}"/>
+    <van-cell title="项目失败率" value="{{info.brandReference.failureRate}}"/>
   </van-cell-group>
 </view>  
 </template>

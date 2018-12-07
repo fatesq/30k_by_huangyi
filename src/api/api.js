@@ -75,6 +75,8 @@ const loadAllIdentity = (params) => wxRequest(params, `${url}/searchProject/load
 
 const loadAllCalculationInfo = (params) => wxRequest(params, `${url}/searchProject/loadAllCalculationInfo`)
 
+const loadScoreByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadScoreByProjectId`)
+
 module.exports = {
   url,
   login,
@@ -110,5 +112,6 @@ module.exports = {
   loadAllOccupation,
   loadAllIdentity,
   loadAllChildrenAreaByParentId,
-  loadAllCalculationInfo
+  loadAllCalculationInfo,
+  loadScoreByProjectId
 }

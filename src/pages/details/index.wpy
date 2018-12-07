@@ -121,7 +121,7 @@ export default class Details extends wepy.page {
 
   onLoad(option) {
     this.id = option.id
-    this.getInfo(option.id);
+    this.getInfo(option.code);
     this.$apply();
   }
 
