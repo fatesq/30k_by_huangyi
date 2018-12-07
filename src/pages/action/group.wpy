@@ -275,7 +275,8 @@ export default class Project extends wepy.page {
           query: {
             name: this.name,
             creditCode: wx.getStorageSync('enterpriseSocialNum'), 
-            EEMember: JSON.stringify(this.memberList)
+            EEMember: JSON.stringify(this.memberList),
+            industry: wx.getStorageSync('industryId')
           }
         })
         const json2 = await api.organization({

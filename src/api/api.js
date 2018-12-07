@@ -52,7 +52,7 @@ const loadProjectIndustryByProjectId = (params) => wxRequest(params, `${url}/sea
 const loadInvestmentByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadInvestmentByProjectId`)
 
 // 查询账号关联的一级分类行业列表
-const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectFirstLevelIndustry`)
+const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectCareOrAllIndustry`)
 // 获取位置列表
 const loadAllPosition = (params) => wxRequest(params, `${url}/searchProject/loadAllPosition`)
 // 获取行业列表
@@ -76,6 +76,10 @@ const loadAllIdentity = (params) => wxRequest(params, `${url}/searchProject/load
 const loadAllCalculationInfo = (params) => wxRequest(params, `${url}/searchProject/loadAllCalculationInfo`)
 
 const loadScoreByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadScoreByProjectId`)
+
+const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/selectEEMemberByCCode`) 
+
+const createIndustryInfo = (params) => wxRequest(params, `${url}/customer/createIndustryInfo`)
 
 module.exports = {
   url,
@@ -113,5 +117,7 @@ module.exports = {
   loadAllIdentity,
   loadAllChildrenAreaByParentId,
   loadAllCalculationInfo,
-  loadScoreByProjectId
+  loadScoreByProjectId,
+  selectEEMemberByCCode,
+  createIndustryInfo
 }

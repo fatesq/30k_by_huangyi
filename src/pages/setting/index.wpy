@@ -2,21 +2,98 @@
 .setting {}
 </style>
 <template>
-  <van-cell-group>
-    <van-cell title="目标行业" is-link value="测试行业" url="forget" />
+<view>
+  <van-cell-group wx:if="{{!showList}}">
+    <van-cell title="目标行业" is-link @tap="showList"/>
     <van-cell title="修改口令" is-link/>
   </van-cell-group>
+  <List wx:if="{{showList}}" :list.sync="list"/>
+</view>  
 </template>
 <script>
 import wepy from 'wepy'
+import api from '@/api/api'
+import utils from '@/utils/utils'
+import ilist from '@/components/ilist'
 
 export default class Setting extends wepy.page {
   config = {
     navigationBarTitleText: '设置',
     usingComponents: {
+      'van-icon': '../../components/van/icon/index',
       'van-cell': '../../components/van/cell/index',
       'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+      'van-switch-cell': '../../components/van/switch-cell/index',
+      'van-radio': '../../components/van/radio/index',
+      'van-radio-group': '../../components/van/radio-group/index',
+      'van-collapse': '../../components/van/collapse/index',
+      'van-collapse-item': '../../components/van/collapse-item/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index'
     }
-  };
+  }
+
+  components = {
+    List: ilist
+  }
+
+  data = {
+    list: [],
+    showList: false,
+  }
+
+  methods = {
+    async showList() {
+      try {
+        const json = await api.selectFirstLevelIndustry({
+          method: 'POST',
+          query: {
+            actorId: wx.getStorageSync('id')
+          }
+        })
+        if (json.data.code === 'success') {
+          this.list = json.data.data
+          this.showList = true
+          this.$apply()
+        } else {
+          utils.alert(json.data.description)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+      // this.$apply()
+    },
+  }
+
+  async save (value) {
+    try {
+      const json = await api.createIndustryInfo({
+        method: 'FORM',
+        query: {
+          actorId: wx.getStorageSync('id'),
+          industryId: JSON.stringify(value)
+        }
+      })
+      if (json.data.code === 'success') {
+        this.showList = false
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
+  events = {
+    saveList(value) {
+      console.log(value)
+      this.save(value)
+    }
+  }
 }
 </script>

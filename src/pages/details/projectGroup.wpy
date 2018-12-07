@@ -65,16 +65,16 @@ page {
 
   <van-panel custom-class="panel-box" title="投资人条件">
     <van-cell-group>
-      <van-cell title="籍贯" value="{{nativePlace}}" is-link/>
-      <van-cell title="常驻地" value="{{address}}" is-link/>
-      <van-cell title="邀请参与" value="{{address}}" is-link/>
+      <van-cell title="籍贯" value="{{info.nativePlace}}" is-link/>
+      <van-cell title="常驻地" value="{{info.address}}" is-link/>
+      <van-cell title="邀请参与" value="{{info.invitationFlag == 1 ? '是': '否'}}" is-link/>
     </van-cell-group>
   </van-panel>  
 
   <van-cell-group custom-class="panel-box">
-    <van-cell title="经营团队持股" value="{{nativePlace}}" is-link/>
-    <van-cell title="预计员工数" value="{{address}}" is-link/>
-    <van-cell title="场地面积" value="{{address}}" is-link/>
+    <van-cell title="经营团队持股" value="{{info.teamHoldCount}}" is-link/>
+    <van-cell title="预计员工数" value="{{info.employeeCount}}" is-link/>
+    <van-cell title="场地面积" value="{{info.area}}" is-link/>
   </van-cell-group>
 </view>
 </template>
@@ -98,6 +98,7 @@ export default class ProjectGroup extends wepy.page {
   data = {
     id: '',
     info: {},
+    memberList: {},
   }
 
   onLoad(option) {
@@ -117,6 +118,7 @@ export default class ProjectGroup extends wepy.page {
         console.log(json)
       if (json.data.code == 'success') {
         this.info = json.data.data
+        this.member(this.info.enterpriseSocialNum)
         this.$apply()
       } else {
         utils.alert(json.data.msg)
@@ -126,5 +128,28 @@ export default class ProjectGroup extends wepy.page {
       utils.alert('系统异常')
     }
   }
+
+  async member(id) {
+    try {
+      const json = await api.selectEEMemberByCCode({
+        method: 'FORM',
+        query: {
+          creditCode: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.memberList = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
+
 }
 </script>
