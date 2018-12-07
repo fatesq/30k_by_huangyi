@@ -93,6 +93,8 @@ page {
 </template>
 <script>
 import wepy from 'wepy'
+import api from '@/api/api'
+import utils from '@/utils/utils'
 
 export default class Details extends wepy.page {
   config = {
@@ -105,34 +107,43 @@ export default class Details extends wepy.page {
   }
 
   data = {
+    id: '',
     info: {},
   }
 
    methods = {
     router(page) {
       wx.navigateTo({
-        url: `${page}`
+        url: `${page}?id=${this.id}`
       })
     }
   }
 
   onLoad(option) {
-    console.log(option.query)
-    this.getInfo();
+    this.id = option.id
+    this.getInfo(option.id);
+    this.$apply();
   }
 
-  getInfo() {
-    this.info = {
-      'id': 'No.11111111111111',
-      'time': '2020-11-11 11:11:11',
-      'type': '餐饮',
-      'price': '123',
-      'demo1': '8% ~ 20%',
-      'demo2': '熊集枫',
-      'demo3': '上海市普通新区',
-      'demo4': '中影餐饮娱乐公司',
+  async getInfo(id) {
+    try {
+      const json = await api.loadProjectByCodeOrName({
+        method: 'GET',
+        query: {
+          codeOrName: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.list = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
     }
-    this.$apply();
   }
 }
 </script>

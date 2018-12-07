@@ -9,17 +9,17 @@ page {
 <template>
 <view>
   <van-cell-group>
-    <van-cell title="品牌名称" value=""/>
-    <van-cell title="创始人" value=""/>
-    <van-cell title="创立日期" value=""/>
-    <van-cell title="总部所在地" value=""/>
-    <van-cell title="总部统一社会信用代码" value=""/>
+    <van-cell title="品牌名称" value="{{info.name}}"/>
+    <van-cell title="创始人" value="{{info.createUserName}}"/>
+    <van-cell title="创立日期" value="{{info.createDate}}"/>
+    <van-cell title="总部所在地" value="{{}}"/>
+    <van-cell title="总部统一社会信用代码" value="{{info.brandReference.hqSociaNum}}"/>
   </van-cell-group>
   <van-cell-group>
-    <van-cell title="连锁规模" value=""/>
-    <van-cell title="代表门店" value=""/>
-    <van-cell title="场地面积" value=""/>
-    <van-cell title="客单价区间" value=""/>
+    <van-cell title="连锁规模" value="{{}}"/>
+    <van-cell title="代表门店" value="{{}}"/>
+    <van-cell title="场地面积" value="{{}}"/>
+    <van-cell title="客单价区间" value="{{info.brandReference.priceFrom}}~{{info.brandReference.priceTo}}"/>
     <van-cell title="单店投资额" value=""/>
     <van-cell title="月净利润" value=""/>
     <van-cell title="年化投资回报率" value=""/>
@@ -30,6 +30,8 @@ page {
 </template>
 <script>
 import wepy from 'wepy'
+import api from '@/api/api'
+import utils from '@/utils/utils'
 
 export default class Brand extends wepy.page {
   config = {
@@ -37,6 +39,38 @@ export default class Brand extends wepy.page {
     usingComponents: {
       "van-cell": "../../components/van/cell/index",
       'van-cell-group': '../../components/van/cell-group/index',
+    }
+  }
+
+  data = {
+    id: '',
+    info: {},
+  }
+
+  onLoad(option) {
+    this.id = option.id
+    this.getInfo(option.id);
+    this.$apply();
+  }
+
+  async getInfo(id) {
+    try {
+      const json = await api.loadBrandByProjectId({
+        method: 'GET',
+        query: {
+          projectId: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.info = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
     }
   }
 }
