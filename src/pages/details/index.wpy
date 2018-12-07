@@ -48,9 +48,9 @@ page {
 <view>
   <view class="item">
     <view class="title">
-      <image class="img" mode="aspectFill" src="https://developers.weixin.qq.com/miniprogram/dev/image/cat/0.jpg?t=18102614" />
+      <image class="img" mode="aspectFill" src="{{info.imageUrl}}" />
       <view class="box">
-        <view class="time">{{info.time}}</view>
+        <view class="time">{{info.createTime}}</view>
         <view class="value">
           <text>{{info.type}}</text>
           <text class="price">{{info.price}}</text>
@@ -71,7 +71,7 @@ page {
         </view>
         <view>
           <van-icon name="more-o" />
-          {{info.demo3}}
+          {{info.areaName}}
         </view>
         <view>
           <van-icon name="more-o" />
@@ -85,7 +85,7 @@ page {
     <van-cell title="品牌行业相关" is-link  @tap="router('brandIndustry')"/>
     <van-cell title="项目概况" is-link @tap="router('project')"/>
     <van-cell title="项目组织情况" is-link @tap="router('projectGroup')"/>
-    <van-cell title="客户群体画像" is-link @tap="router('clint')"/>
+    <van-cell title="客户群体画像" is-link @tap="router('client')"/>
     <van-cell title="行业项目相关" is-link @tap="router('industry')"/>
     <van-cell title="融资经营信息" is-link @tap="router('financ')"/>
   </van-cell-group>
@@ -135,7 +135,7 @@ export default class Details extends wepy.page {
       })
         console.log(json)
       if (json.data.code == 'success') {
-        this.list = json.data.data
+        this.info = json.data.data
         this.$apply()
       } else {
         utils.alert(json.data.msg)

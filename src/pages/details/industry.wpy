@@ -1,12 +1,137 @@
 <style lang="less">
+page {
+  background-color: #f4f4f4;
+}
+.title {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  image {
+    width: 110rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: #CCC;
+  }
+}
+.panel-box {
+  margin-bottom: 20rpx;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
 </style>
 <template>
-  
+<view>
+  <van-cell-group custom-class="panel-box">
+    <van-cell title="业态细分" value="{{nativePlace}}" is-link/>
+  </van-cell-group>
+
+  <van-panel custom-class="panel-box" title="市场行业规模">
+    <van-cell-group>
+      <van-cell title="规模总量" value="{{nativePlace}}" is-link/>
+      <van-cell title="近三年平均增长率" value="{{address}}" is-link/>
+    </van-cell-group>
+  </van-panel>  
+
+  <van-panel custom-class="panel-box" title="主要产品(技术)">
+    <view wx:for="{{info.coreTechnology}}" wx:key="index">
+      <view class="title">
+        <van-cell title="{{item.name}}" style="width: 100%" border="{{false}}">
+          <van-icon
+            slot="right-icon"
+            name="delete"
+            class="van-cell__right-icon"
+            bindtap="delete({{index}})"
+          />
+        </van-cell>
+      </view>
+      <view class="title">{{item.value}}</view>
+    </view>
+  </van-panel>
+
+  <van-cell-group custom-class="panel-box">
+    <van-cell title="预测客户活跃度" value="{{info.name}}"/>
+    <van-cell title="产品持续研发成本" value="{{info.createUserName}}"/>
+    <van-cell title="基础设施维护成本" value="{{info.createDate}}"/>
+    <van-cell title="营销推广成本" value="{{}}"/>
+    <van-cell title="预测访问流量" value="{{info.brandReference.hqSociaNum}}"/>
+  </van-cell-group>
+
+  <van-panel custom-class="panel-box" title="竞品分析">
+    <view>
+      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
+        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="竞品格局">
+    <van-cell-group>
+      <van-cell title="当前市场份额" value="{{info.name}}"/>
+      <van-cell title="业内排名" value="{{info.createUserName}}"/>
+      <van-cell title="目标市场份额" value="{{info.createDate}}"/>
+      <van-cell title="业内排名" value="{{}}"/>
+      <van-panel title="核心竞争力">
+      </van-panel>  
+    </van-cell-group>
+  </van-panel>
+
+</view>
 </template>
 <script>
 import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
 
 export default class Industry extends wepy.page {
+  config = {
+    navigationBarTitleText: '行业经营信息',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
 
+  data = {
+    id: '',
+    info: {},
+  }
+
+  onLoad(option) {
+    this.id = option.id
+    this.getInfo(option.id);
+    this.$apply();
+  }
+
+  async getInfo(id) {
+    try {
+      const json = await api.loadProjectIndustryByProjectId({
+        method: 'GET',
+        query: {
+          projectId: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.info = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
 }
 </script>

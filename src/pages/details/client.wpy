@@ -1,12 +1,117 @@
 <style lang="less">
+page {
+  background-color: #f4f4f4;
+}
+.title {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  image {
+    width: 110rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: #CCC;
+  }
+}
+.panel-box {
+  margin-bottom: 20rpx;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
 </style>
 <template>
-  
+<view>
+  <van-cell-group custom-class="panel-box">
+    <van-cell title="公司分类" value="{{nativePlace}}" is-link/>
+  </van-cell-group>    
+  <van-panel custom-class="panel-box" title="续存时长分布">
+    <view>
+      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
+        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="性质分布">
+    <view>
+      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
+        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="规模分布">
+    <view>
+      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
+        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="行业分布">
+    <view>
+      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
+        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      </view>
+    </view>
+  </van-panel>
+</view>  
 </template>
 <script>
 import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
 
 export default class Client extends wepy.page {
+  config = {
+    navigationBarTitleText: '客户群体画像',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
 
+  data = {
+    id: '',
+    info: {},
+  }
+
+  onLoad(option) {
+    this.id = option.id
+    this.getInfo(option.id);
+    this.$apply();
+  }
+
+  async getInfo(id) {
+    try {
+      const json = await api.loadCustomerByProjectId({
+        method: 'GET',
+        query: {
+          projectId: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.info = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
 }
 </script>

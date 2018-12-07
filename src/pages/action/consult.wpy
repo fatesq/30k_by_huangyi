@@ -83,8 +83,8 @@ page {
     <van-cell title="核心团队能力" value="{{areaName}}" is-link/>
     <van-cell title="行业市场规模" value="{{areaName}}" is-link/>
     <van-cell title="产品(技术)" value="{{areaName}}" is-link/>
-    <van-cell title="所在地" value="{{areaName}}" is-link/>
-    <van-cell title="所在地" value="{{areaName}}" is-link/>
+    <van-cell title="营销能力" value="{{areaName}}" is-link/>
+    <van-cell title="竞争环境" value="{{areaName}}" is-link/>
   </van-panel>
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">

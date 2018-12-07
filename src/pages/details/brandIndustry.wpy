@@ -29,6 +29,8 @@ page {
 </template>
 <script>
 import wepy from 'wepy'
+import api from '@/api/api'
+import utils from '@/utils/utils'
 
 export default class BrandIndustry extends wepy.page {
   config = {
@@ -36,6 +38,38 @@ export default class BrandIndustry extends wepy.page {
     usingComponents: {
       "van-cell": "../../components/van/cell/index",
       'van-cell-group': '../../components/van/cell-group/index',
+    }
+  }
+
+  data = {
+    id: '',
+    info: {},
+  }
+
+  onLoad(option) {
+    this.id = option.id
+    this.getInfo(option.id);
+    this.$apply();
+  }
+
+  async getInfo(id) {
+    try {
+      const json = await api.loadBrandIndustryByProjectId({
+        method: 'GET',
+        query: {
+          projectId: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.info = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
     }
   }
 }

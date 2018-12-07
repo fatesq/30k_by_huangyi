@@ -1,12 +1,115 @@
 <style lang="less">
+page {
+  background-color: #f4f4f4;
+}
+.title {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  image {
+    width: 110rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    background-color: #CCC;
+  }
+}
+.panel-box {
+  margin-bottom: 20rpx;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
 </style>
 <template>
+<view>
+  <van-panel custom-class="panel-box" title="全部资金用途">
+    <view>
+      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
+        {{item.name}} 曾经营同类项目 {{item.experience}} 例
+      </view>
+    </view>
+  </van-panel>
   
+  <van-panel custom-class="panel-box" title="估值试算">
+    <view>
+      <view class="item" wx:for="{{trialCalculation}}" wx:key="index">
+        {{item.name}}估值法
+        预测年营业收入{{item.yearSale}}万元
+        参考率{{item.saleRate}}%
+      </view>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="panel-box" title="要素评估结果">
+    <van-cell-group>
+      <van-cell title="核心团队能力" value="{{areaName}}" is-link/>
+      <van-cell title="行业市场规模" value="{{areaName}}" is-link/>
+      <van-cell title="产品(技术)" value="{{areaName}}" is-link/>
+      <van-cell title="营销能力" value="{{areaName}}" is-link/>
+      <van-cell title="竞争环境" value="{{areaName}}" is-link/>
+    </van-cell-group>
+  </van-panel>  
+
+  <van-panel custom-class="panel-box"  title="融资宣传文案">
+    
+  </van-panel>
+  
+</view>
 </template>
 <script>
 import wepy from 'wepy'
+import api from '../../api/api'
+import utils from '../../utils/utils'
 
 export default class Financ extends wepy.page {
+  config = {
+    navigationBarTitleText: '投资参考信息',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+    }
+  }
 
+  data = {
+    id: '',
+    info: {},
+  }
+
+  onLoad(option) {
+    this.id = option.id
+    this.getInfo(option.id);
+    this.$apply();
+  }
+
+  async getInfo(id) {
+    try {
+      const json = await api.loadInvestmentByProjectId({
+        method: 'GET',
+        query: {
+          projectId: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.info = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
 }
 </script>

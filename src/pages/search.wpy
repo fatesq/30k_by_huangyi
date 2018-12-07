@@ -107,7 +107,7 @@ page {
           </view>
         </view>
         <view class="more">
-          <button @tap="toDetails({{item.id}})"> 详情 </button>
+          <button @tap="toDetails({{item.code}})"> 详情 </button>
         </view>
       </view>
     </view>
