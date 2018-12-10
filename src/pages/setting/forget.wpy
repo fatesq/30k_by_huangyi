@@ -118,8 +118,8 @@ export default class Forget extends wepy.page {
           mobileNumber: this.mobileNumber
         }
       })
-      if (json.data.status === '00') {
-        wx.switchTab({ url: 'setting' })
+      if (json.data.status === 'success') {
+        wx.switchTab({ url: 'index' })
       } else {
         utils.alert(json.data.msg)
       }
