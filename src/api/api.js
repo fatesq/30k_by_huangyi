@@ -27,6 +27,8 @@ const industry = (params) => wxRequest(params, `${url}/saveProject/industry`)
 const diningIndustry = (params) => wxRequest(params, `${url}/saveProject/diningIndustry`)
 // 进件投资参考信息
 const investment = (params) => wxRequest(params, `${url}/saveProject/investment`)
+// 保存实体项目投资参考信息
+const saveStaticProfile = (params) => wxRequest(params, `${url}/saveProject/saveStaticProfile`)
 // 进件保存客户群体
 const customer = (params) => wxRequest(params, `${url}/saveProject/customer`)
 
@@ -81,6 +83,8 @@ const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/s
 
 const createIndustryInfo = (params) => wxRequest(params, `${url}/customer/createIndustryInfo`)
 
+
+
 module.exports = {
   url,
   login,
@@ -119,5 +123,6 @@ module.exports = {
   loadAllCalculationInfo,
   loadScoreByProjectId,
   selectEEMemberByCCode,
-  createIndustryInfo
+  createIndustryInfo,
+  saveStaticProfile
 }
