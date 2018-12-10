@@ -1,6 +1,7 @@
 import { wxRequest } from '../utils/wxRequest'
 
-const url = 'http://121.199.63.157:134'
+// const url = 'http://121.199.63.157:134'
+const url = 'https://litdev.linktou.com'
 // 获取登陆授权
 const login = (params) => wxRequest(params, `${url}/login/go`)
 // 校验
@@ -9,6 +10,8 @@ const checktoken = (params) => wxRequest(params, `${url}/login/checktoken`)
 const bind = (params) => wxRequest(params, `${url}/login/bind`)
 // 忘记密码
 const forgetPwd = (params) => wxRequest(params, `${url}/login/forgetPwd`)
+// 发短信
+const sendCheckCode = (params) => wxRequest(params, `${url}/login/sendCheckCode`)
 // 登出
 const loginOut = (params) => wxRequest(params, `${url}/login/out`)
 // 进件开始
@@ -124,5 +127,6 @@ module.exports = {
   loadScoreByProjectId,
   selectEEMemberByCCode,
   createIndustryInfo,
-  saveStaticProfile
+  saveStaticProfile,
+  sendCheckCode
 }
