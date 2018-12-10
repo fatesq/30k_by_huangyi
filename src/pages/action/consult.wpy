@@ -165,6 +165,15 @@ export default class BrandAbout extends wepy.page {
             document: this.document
           }
         })
+        const risk = await api.addRisk({
+          method: 'FORM',
+          query: {
+            projectId: wx.getStorageSync('pId'),
+            creditCode:  wx.getStorageSync('enterpriseSocialNum'),
+            financingAmount: wx.getStorageSync('financingAmount'),
+            belongIndustry: wx.getStorageSync('belongIndustry')
+          }
+        })
         if (json.data.code === 'success') {
           wx.reLaunch({ url: '../search' })
         } else {

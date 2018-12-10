@@ -324,6 +324,7 @@ export default class Project extends wepy.page {
         }
       })
       if (json.data.code === 'success') {
+        wx.setStorageSync('financingAmount', this.info.goalInvestment)
         wx.navigateTo({ url: 'group' })
       } else {
         utils.alert(json.data.msg)

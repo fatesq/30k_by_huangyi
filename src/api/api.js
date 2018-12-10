@@ -86,7 +86,9 @@ const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/s
 
 const createIndustryInfo = (params) => wxRequest(params, `${url}/customer/createIndustryInfo`)
 
+const addRisk = (params) => wxRequest(params, `${url}/risk/addRisk`) 
 
+const getRisk = (params) => wxRequest(params, `${url}/risk/getRisk`) 
 
 module.exports = {
   url,
@@ -128,5 +130,7 @@ module.exports = {
   selectEEMemberByCCode,
   createIndustryInfo,
   saveStaticProfile,
-  sendCheckCode
+  sendCheckCode,
+  addRisk,
+  getRisk
 }
