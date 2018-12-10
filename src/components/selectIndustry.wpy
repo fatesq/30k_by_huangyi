@@ -41,16 +41,18 @@ export default class SelectIndustry extends wepy.page {
     list: [],
     radio: '',
     name: '',
+    belongIndustry: '',
   }
 
   methods = {
     onChange(e) {
      this.radio = e.detail
      this.name = this.list.find(res => res.id == e.detail).name
+     this.belongIndustry = this.list.find(res=> res.id == e.detail).belongIndustry
      this.$apply()
     },
     goBack() {
-      this.$emit('saveIndustry', this.radio, this.name);
+      this.$emit('saveIndustry', this.radio, this.name, this.belongIndustry);
     }
   }
 

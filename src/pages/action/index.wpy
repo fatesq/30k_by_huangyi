@@ -61,7 +61,8 @@ export default class action extends wepy.page {
     enterpriseSocialNum: '',
     industryId: '',
     industryName: '',
-    show: false
+    show: false,
+    belongIndustry: '',
   }
 
   methods = {
@@ -104,6 +105,7 @@ export default class action extends wepy.page {
         wx.setStorageSync('chainFlag', this.checked ? 0 : 1)
         wx.setStorageSync('enterpriseSocialNum', this.enterpriseSocialNum)
         wx.setStorageSync('industryId', this.industryId)
+        wx.setStorageSync('belongIndustry', this.belongIndustry)
         wx.navigateTo({ url: this.checked ? 'brand' : 'project' })
       } else {
         utils.alert(json.data.msg)
@@ -115,10 +117,11 @@ export default class action extends wepy.page {
   }
 
   events = {
-    saveIndustry(id, name) {
+    saveIndustry(id, name, belongIndustry) {
       console.log(id, name)
        this.industryId = id
        this.industryName = name
+       this.belongIndustry = belongIndustry
        this.show = false
        this.$apply()
     }

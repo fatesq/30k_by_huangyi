@@ -9,23 +9,31 @@ page {
 <template>
 <view>
   <van-cell-group>
-    <van-cell title="品牌名称" value=""/>
-    <van-cell title="创始人" value=""/>
-    <van-cell title="创立日期" value=""/>
-    <van-cell title="总部所在地" value=""/>
-    <van-cell title="总部统一社会信用代码" value=""/>
+    <van-field
+      value="{{ value }}"
+      label="原口令"
+      placeholder=""
+      bind:change="onChange"
+    />
+    <van-field
+      value="{{ sms }}"
+      center
+      clearable
+      label="验证码"
+      placeholder="请输入短信验证码"
+      border="{{ false }}"
+      use-button-slot
+    >
+      <van-button slot="button" size="small" type="primary">获取验证码</van-button>
+    </van-field>
+    <van-field
+      value="{{ value }}"
+      label="新口令"
+      placeholder=""
+      bind:change="onChange"
+    />
   </van-cell-group>
-  <van-cell-group>
-    <van-cell title="连锁规模" value=""/>
-    <van-cell title="代表门店" value=""/>
-    <van-cell title="场地面积" value=""/>
-    <van-cell title="客单价区间" value=""/>
-    <van-cell title="单店投资额" value=""/>
-    <van-cell title="月净利润" value=""/>
-    <van-cell title="年化投资回报率" value=""/>
-    <van-cell title="回本周期" value=""/>
-    <van-cell title="项目失败率" value=""/>
-  </van-cell-group>
+
 </view>  
 </template>
 <script>
@@ -37,6 +45,7 @@ export default class Forget extends wepy.page {
     usingComponents: {
       "van-cell": "../../components/van/cell/index",
       'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
     }
   }
 }
