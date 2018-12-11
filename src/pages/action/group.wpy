@@ -289,7 +289,7 @@ export default class Project extends wepy.page {
             name: this.name,
             creditCode: wx.getStorageSync('enterpriseSocialNum'), 
             EEMember: JSON.stringify(this.memberList),
-            industry: wx.getStorageSync('industryId')
+            industry: wx.getStorageSync('belongIndustry')
           }
         })
         const json2 = await api.organization({
@@ -364,7 +364,6 @@ export default class Project extends wepy.page {
       })
       if (json.data.code === 'success') {
         this.listA[1] = json.data.data
-        console.log(this.listA)
         this.$apply()
       } else {
         utils.alert(json.data.msg)
@@ -374,9 +373,59 @@ export default class Project extends wepy.page {
     }
   }
 
+  async getInfo(id) {
+    try {
+      const json = await api.loadProjectOrganizationByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        const i = json.data.data
+        this.nativePlace = i.nativePlace
+        this.address = i.address
+        this.invitationFlag = i.invitationFlag == 0 ? true : false
+        this.teamHoldCount = i.teamHoldCount
+        this.employeeCount = i.employeeCount
+        this.area = i.area
+        this.member(i.enterpriseSocialNum)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
+  async member(id) {
+    try {
+      const json = await api.selectEEMemberByCCode({
+        method: 'FORM',
+        query: {
+          creditCode: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.memberList = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   
   onShow() {
     this.getCity()
+    this.getInfo()
   }
 }
 </script>

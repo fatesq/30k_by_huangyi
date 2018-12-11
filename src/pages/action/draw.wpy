@@ -330,6 +330,41 @@ export default class Draw extends wepy.page {
     }
   }
 
+  async getInfo(id) {
+    try {
+      const json = await api.loadCustomerByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+      if (json.data.code == 'success') {
+        const i = json.data.data
+        if (i.length > 0) {
+          if (i[0].type == 0) {
+            this.saveTimeDistribution = i.filter(res => res.mId == 0)
+            this.natureDistribution = i.filter(res => res.mId == 1)
+            this.scaleDistribution = i.filter(res => res.mId == 2)
+            this.industryDistribution = i.filter(res => res.mId == 3)
+          }
+          if (i[0].type == 1) {
+            this.ageDistribution = i.filter(res => res.mId == 0)
+            this.sexDistribution = i.filter(res => res.mId == 1)
+            this.incomeDistribution = i.filter(res => res.mId == 2)
+            this.occupationDistribution = i.filter(res => res.mId == 3)
+            this.featuresDistribution = i.filter(res => res.mId == 4)
+          }
+        }
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   events = {
     saveTime(dataFrom, dataTo, count) {
       this.saveTimeDistribution.push({

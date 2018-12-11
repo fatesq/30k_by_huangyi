@@ -291,9 +291,37 @@ export default class BrandAbout extends wepy.page {
     }
   }
 
+  async getInfo() {
+    try {
+      const json = await api.loadBrandIndustryByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        const i = json.data.data
+        this.shopInfo = i.storeLocal 
+        this.areaInfo = i.storeEnviroment
+        this.storePeople = i.storePeople
+        this.storeCustomer = i.storeCustomer 
+        this.storeEfficiency1 = i.storeEfficiencyFrom
+        this.storeEfficiency2 = i.storeEfficiencyTo  
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   
   onShow() {
     this.getCity()
+    this.getInfo()
   }
 }
 </script>
