@@ -57,9 +57,12 @@ page {
 <view wx:if="{{!show1 && !show2}}" style="padding-bottom: 50px">
   <van-panel custom-class="panel-box" title="全部资金用途">
     <view>
-      <view class="item" wx:for="{{spendPurpose}}" wx:key="index">
+      <van-swipe-cell right-width="{{ 65 }}" wx:for="{{spendPurpose}}" wx:key="index" async-close bind:close="closeSwiper({{index}},spendPurpose)">
+      <view class="item">
         {{item.name}}花费{{item.spend}}万元
       </view>
+      <view slot="right">删除</view>
+      </van-swipe-cell>
     </view>
     <view class="item add" @tap="show('show1')">
       <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加资金用途
@@ -68,11 +71,14 @@ page {
 
   <van-panel custom-class="panel-box" title="估算试值">
     <view>
-      <view class="item" wx:for="{{trialCalculation}}" wx:key="index">
+      <van-swipe-cell right-width="{{ 65 }}" wx:for="{{trialCalculation}}" wx:key="index" async-close bind:close="closeSwiper({{index}},trialCalculation)">
+      <view class="item">
         {{item.name}}估值法
         预测年营业收入{{item.yearSale}}万元
         参考率{{item.saleRate}}%
       </view>
+      <view slot="right">删除</view>
+      </van-swipe-cell>
     </view>
     <view class="item add" @tap="showList">
       <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加估算试值
@@ -146,6 +152,15 @@ export default class BrandAbout extends wepy.page {
   }
 
   methods = {
+    closeSwiper(index,name,event) {
+      const { position, instance } = event.detail;
+      switch (position) {
+        case 'right':
+          this[name].splice(index,1)
+          instance.close();
+          break;
+      }
+    },
     show(name) {
       this[name] = true
       this.$apply()

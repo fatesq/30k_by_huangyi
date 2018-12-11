@@ -52,22 +52,22 @@ page {
       <view class="box">
         <view class="time">{{info.createTime}}</view>
         <view class="value">
-          <text>{{info.type}}</text>
-          <text class="price">{{info.price}}</text>
+          <text>{{info.industry.name}}</text>
+          <text class="price" style="text-align:right">{{info.projectReference.totalInvestment}}万元</text>
         </view>
-        <view>{{info.demo3}}</view>
-        <view>{{info.id}}</view>
+        <view>No.{{info.code}}</view>
+        <view>{{info.introduce}}</view>
       </view>
     </view>
     <view class="detail">
       <view class="list">
         <view>
           <van-icon name="more-o" />
-          {{info.demo1}}
+          {{info.projectReference.totalInvestment}}
         </view>
         <view>
           <van-icon name="more-o" />
-          {{info.demo2}}
+          {{info.enterpriseMember}}
         </view>
         <view>
           <van-icon name="more-o" />
@@ -75,7 +75,7 @@ page {
         </view>
         <view>
           <van-icon name="more-o" />
-          {{info.demo4}}
+          {{info.enterpriseName}}
         </view>
       </view>
     </view>

@@ -313,6 +313,10 @@ export default class Project extends wepy.page {
   }
 
   async toNext() {
+    if (!this.imageUrl || this.files.length < 1) {
+      utils.alert('有未上传图片')
+      return false
+    }
     try {
       const json = await api.info({
         method: 'FORM',
@@ -370,6 +374,40 @@ export default class Project extends wepy.page {
     }
   }
 
+  async getInfo() {
+    try {
+      const json = await api.loadProjectByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+      if (json.data.code == 'success') {
+        const i = json.data.data
+        this.info = {
+          name: '',
+          parentId: 0,
+          introduce: i.introduce,
+          totalInvestment: i.projectReference.totalInvestment,
+          goalInvestment: i.projectReference.goalInvestment,
+          deadLine: i.projectReference.deadLine,
+          sellShares: i.projectReference.sellShares,
+          investment: i.projectReference.investment,
+          promiseInvestment: '',
+          areaName: i.areaName,
+          areaCode: i.areaCode,
+        }
+        this.files = i.imageUrls
+        this.imageUrl = i.imageUrl
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
   
   onShow() {
     this.getCity()

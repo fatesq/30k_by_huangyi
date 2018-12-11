@@ -96,9 +96,12 @@ page {
     </van-cell-group>
 
     <van-panel custom-class="panel-box" title="周边竞争情况">
-      <view wx:for="{{info.name}}" wx:key="index">
+      <van-swipe-cell right-width="{{ 65 }}" wx:for="{{info.name}}" wx:key="index" async-close bind:close="closeSwiper({{index}},name)">
+      <view>
         <view class="title">{{item}}</view>
       </view>
+      <view slot="right">删除</view>
+      </van-swipe-cell>
       <view class="item add" @tap="show('show3')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加周边竞争门店
       </view>
@@ -166,6 +169,15 @@ export default class Manage extends wepy.page {
   }
 
   methods = {
+    closeSwiper(index,name,event) {
+      const { position, instance } = event.detail;
+      switch (position) {
+        case 'right':
+          this.info.name.splice(index,1)
+          instance.close();
+          break;
+      }
+    },
     show(name) {
       this[name] = true
       this.$apply()
@@ -180,6 +192,9 @@ export default class Manage extends wepy.page {
       this.$apply()
     },
     async toNext() {
+      if (this.info.name.length < 1) {
+        utils.alert('请填写完整')
+      }
       try {
         const json = await api.diningIndustry({
           method: 'FORM',

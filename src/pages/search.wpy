@@ -27,6 +27,7 @@ page {
     .box {
       display: flex;
       flex-direction: column-reverse;
+      width: 100%;
       .time {
         color: #ccc;
       }
@@ -83,27 +84,30 @@ page {
           <view class="time">{{item.createTime}}</view>
           <view class="value">
             <text>{{item.industry.name}}</text>
-            <text class="price">{{item.price}}</text>
+            <text class="price" style="text-align:right">{{item.projectReference.totalInvestment}}万元</text>
           </view>
+          <view class="value">
+             {{item.introduce}}
+          </view>  
         </view>
       </view>
       <view class="detail">
         <view class="list">
           <view>
             <van-icon name="more-o" />
-            {{item.demo1}}
+            {{item.projectReference.totalInvestment}}
           </view>
           <view>
             <van-icon name="more-o" />
-            {{item.demo2}}
+            {{item.enterpriseMember}}
           </view>
           <view>
             <van-icon name="more-o" />
-            {{item.demo3}}
+            {{item.areaName}}
           </view>
           <view>
             <van-icon name="more-o" />
-            {{item.demo4}}
+            {{item.enterpriseName}}
           </view>
         </view>
         <view class="more">

@@ -76,9 +76,12 @@ page {
 
   <van-panel custom-class="panel-box" title="团队经验">
     <view>
-      <view class="item" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}">
-        {{item.name}} 曾经营同类项目 {{item.experience}} 例
-      </view>
+      <van-swipe-cell right-width="{{ 65 }}" wx:for="{{memberList}}" wx:key="index" wx:if="{{item.experience}}" async-close bind:close="closeSwiper({{index}},memberList)">
+        <view class="item">
+          {{item.name}} 曾经营同类项目 {{item.experience}} 例
+        </view>
+        <view slot="right">删除</view>
+      </van-swipe-cell>
     </view>
     <view class="item add" @tap="show('showExp')">
       <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加团队经验
@@ -219,6 +222,16 @@ export default class Project extends wepy.page {
   }
 
   methods = {
+    closeSwiper(index,name,event) {
+      console.log(index,name,event);
+      const { position, instance } = event.detail;
+      switch (position) {
+        case 'right':
+          this[name].splice(index,1)
+          instance.close();
+          break;
+      }
+    },
     bindMultiPickerChange(e) {
       this.addressAreaCode = this.listA[1][e.detail.value[1]].areaCode
       this.address = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
@@ -276,7 +289,7 @@ export default class Project extends wepy.page {
             name: this.name,
             creditCode: wx.getStorageSync('enterpriseSocialNum'), 
             EEMember: JSON.stringify(this.memberList),
-            industry: wx.getStorageSync('industryId')
+            industry: wx.getStorageSync('belongIndustry')
           }
         })
         const json2 = await api.organization({
@@ -351,7 +364,6 @@ export default class Project extends wepy.page {
       })
       if (json.data.code === 'success') {
         this.listA[1] = json.data.data
-        console.log(this.listA)
         this.$apply()
       } else {
         utils.alert(json.data.msg)
@@ -361,9 +373,59 @@ export default class Project extends wepy.page {
     }
   }
 
+  async getInfo(id) {
+    try {
+      const json = await api.loadProjectOrganizationByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        const i = json.data.data
+        this.nativePlace = i.nativePlace
+        this.address = i.address
+        this.invitationFlag = i.invitationFlag == 0 ? true : false
+        this.teamHoldCount = i.teamHoldCount
+        this.employeeCount = i.employeeCount
+        this.area = i.area
+        this.member(i.enterpriseSocialNum)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
+  async member(id) {
+    try {
+      const json = await api.selectEEMemberByCCode({
+        method: 'FORM',
+        query: {
+          creditCode: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.memberList = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   
   onShow() {
     this.getCity()
+    this.getInfo()
   }
 }
 </script>

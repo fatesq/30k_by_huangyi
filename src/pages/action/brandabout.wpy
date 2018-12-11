@@ -57,9 +57,12 @@ page {
   <view wx:if="{{!showShop && !showArea && !showList}}">
     <van-panel custom-class="panel-box" title="门店所在地分布">
       <view>
-        <view class="item" wx:for="{{shopInfo}}" wx:key="index">
-          {{item.areaName}}共{{item.direStore + item.joinStore}}家, 加盟店{{item.joinStore}}家, 直营店{{item.direStore}}家
-        </view>
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{shopInfo}}" wx:key="index" async-close bind:close="closeSwiper({{index}},shopInfo)">
+          <view class="item">
+            {{item.areaName}}共{{item.direStore + item.joinStore}}家, 加盟店{{item.joinStore}}家, 直营店{{item.direStore}}家
+          </view>
+          <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('Shop')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加门店所在地分布
@@ -67,9 +70,12 @@ page {
     </van-panel>
     <van-panel custom-class="panel-box" title="绩优门店周边环境分布">
       <view>
-        <view class="item" wx:for="{{areaInfo}}" wx:key="index">
-          {{item.positionName}}占{{item.count}}%
-        </view>
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{areaInfo}}" wx:key="index" async-close bind:close="closeSwiper({{index}},areaInfo)">
+          <view class="item">
+            {{item.positionName}}占{{item.count}}%
+          </view>
+          <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('Area')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加绩优门店周边环境分布
@@ -166,7 +172,15 @@ export default class BrandAbout extends wepy.page {
       this[detail.target.id] = detail.detail.value
       this.$apply()
     },
-    
+    closeSwiper(index,name,event) {
+      const { position, instance } = event.detail;
+      switch (position) {
+        case 'right':
+          this[name].splice(index,1)
+          instance.close();
+          break;
+      }
+    }
   };
 
   async toNext() {
@@ -277,9 +291,37 @@ export default class BrandAbout extends wepy.page {
     }
   }
 
+  async getInfo() {
+    try {
+      const json = await api.loadBrandIndustryByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        const i = json.data.data
+        this.shopInfo = i.storeLocal 
+        this.areaInfo = i.storeEnviroment
+        this.storePeople = i.storePeople
+        this.storeCustomer = i.storeCustomer 
+        this.storeEfficiency1 = i.storeEfficiencyFrom
+        this.storeEfficiency2 = i.storeEfficiencyTo  
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   
   onShow() {
     this.getCity()
+    this.getInfo()
   }
 }
 </script>

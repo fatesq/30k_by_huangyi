@@ -55,12 +55,14 @@ page {
     <van-cell-group>
       <van-field
         id="name"
+        value="{{name}}"
         label="品牌名称"
         placeholder="请输入品牌名称"
         bind:change="onChange"
       />
       <van-field
         id="createUserName"
+        value="{{createUserName}}"
         label="创始人名称"
         placeholder="请输入姓名"
         bind:change="onChange"
@@ -161,10 +163,6 @@ export default class Brand extends wepy.page {
       'van-panel': '../../components/van/panel/index',
       'interval': '../../components/interval/index'
     }
-  }
-
-  onShow() {
-    console.log(this)
   }
 
   data = {
@@ -297,9 +295,50 @@ export default class Brand extends wepy.page {
     }
   }
 
+  async getInfo(id) {
+    try {
+      const json = await api.loadBrandByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+      if (json.data.code == 'success') {
+        const i = json.data.data
+        this.name = i.name
+        this.createUserName = i.createUserName
+        this.createUserPhone = i.createUserPhone
+        this.createUserIdCard = i.createUserIdCard
+        this.createDate = i.createDate
+        this.direStore = i.brandReference.direStore
+        this.joinStore = i.brandReference.joinStore
+        this.representStore = i.brandReference.representStore
+        this.areaFrom = i.brandReference.areaFrom
+        this.areaTo = i.brandReference.areaTo
+        this.priceFrom = i.brandReference.priceFrom
+        this.priceTo = i.brandReference.priceTo
+        this.investmentFrom = i.brandReference.investmentFrom
+        this.investmentTo = i.brandReference.investmentTo
+        this.monthProfileFrom = i.brandReference.monthProfileFrom
+        this.monthProfileTo = i.brandReference.monthProfileTo 
+        this.yearProfileFrom = i.brandReference.yearProfileFrom 
+        this.yearProfileTo = i.brandReference.yearProfileTo 
+        this.backWeekFrom = i.brandReference.backWeekFrom
+        this.backWeekTo = i.brandReference.backWeekTo
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   
   onShow() {
     this.getCity()
+    this.getInfo()
   }
 }
 </script>
