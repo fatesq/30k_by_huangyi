@@ -54,6 +54,7 @@ page {
 import wepy from 'wepy'
 import api from '../../api/api'
 import utils from '../../utils/utils'
+let t
 export default class Forget extends wepy.page {
   config = {
     navigationBarTitleText: '修改口令',
@@ -79,6 +80,10 @@ export default class Forget extends wepy.page {
       this[e.target.id] = e.detail
       this.$apply()
     },
+  }
+
+  onShow () {
+    clearTimeout(t)
   }
 
   async code() {
@@ -107,7 +112,7 @@ export default class Forget extends wepy.page {
   reload() {
     if (this.time > 0) {
       this.time --
-      setTimeout(()=> this.reload(), 1000)
+      t = setTimeout(()=> this.reload(), 1000)
     } else {
       this.time = 60
     }
