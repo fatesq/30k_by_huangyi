@@ -44,9 +44,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="存续时长分布">
       <view>
-        <view class="item" wx:for="{{saveTimeDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{saveTimeDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},saveTimeDistribution)">
+        <view class="item">
           {{item.dataFrom}}至{{item.dataTo}}年占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('saveTimeShow')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加存续时长分布
@@ -55,9 +58,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="性质分布">
       <view>
-        <view class="item" wx:for="{{natureDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{natureDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},natureDistribution)">
+        <view class="item">
           {{item.name}}占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showNature')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加性质分布
@@ -66,9 +72,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="规模分布">
       <view>
-        <view class="item" wx:for="{{scaleDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{scaleDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},scaleDistribution)">
+        <view class="item">
           {{item.dataFrom}}至{{item.dataTo}}人占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showScale')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加规模分布
@@ -77,9 +86,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 0}}" custom-class="panel-box" title="行业分布">
       <view>
-        <view class="item" wx:for="{{industryDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{industryDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},industryDistribution)">
+        <view class="item">
           {{item.name}}占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showIndustry')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加行业分布
@@ -88,9 +100,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="年龄分布">
       <view>
-        <view class="item" wx:for="{{ageDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{ageDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},ageDistribution)">
+        <view class="item">
           {{item.dataFrom}}至{{item.dataTo}}岁占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showAge')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加年龄分布
@@ -99,9 +114,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="性别分布">
       <view>
-        <view class="item" wx:for="{{sexDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{sexDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},sexDistribution)">
+        <view class="item">
           女性占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showSex')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加性别分布
@@ -110,9 +128,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="收入分布">
       <view>
-        <view class="item" wx:for="{{incomeDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{incomeDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},incomeDistribution)">
+        <view class="item">
           年入{{item.dataFrom}}至{{this.dataTo}}万元占{{this.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showIncome')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加收入分布
@@ -121,9 +142,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="职业分布">
       <view>
-        <view class="item" wx:for="{{occupationDistribution}}" wx:key="index">
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{occupationDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},occupationDistribution)">
+        <view class="item">
           {{item.name}}占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showJob')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加职业分布
@@ -132,9 +156,12 @@ page {
 
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="特征分布">
       <view>
+        <van-swipe-cell right-width="{{ 65 }}" wx:for="{{featuresDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},featuresDistribution)">
         <view class="item" wx:for="{{featuresDistribution}}" wx:key="index">
          {{item.name}}占{{item.count}}%
         </view>
+        <view slot="right">删除</view>
+        </van-swipe-cell>
       </view>
       <view class="item add" @tap="show('showSp')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加特征分布
@@ -246,6 +273,15 @@ export default class Draw extends wepy.page {
   }
 
   methods = {
+    closeSwiper(index,name,event) {
+      const { position, instance } = event.detail;
+      switch (position) {
+        case 'right':
+          this[name].splice(index,1)
+          instance.close();
+          break;
+      }
+    },
     show(name) {
       this[name] = true
       this.$apply()
@@ -257,11 +293,19 @@ export default class Draw extends wepy.page {
     async toNext() {
       let param = {projectId: wx.getStorageSync('pId')}
       if (this.publicFlag === 0) {
+        if (this.saveTimeDistribution.length < 1 || this.natureDistribution.length < 1 || this.scaleDistribution.length < 1 || this.industryDistribution.length < 1) {
+          utils.alert('请完善信息')
+          return false
+        }
         param.customerList0 = JSON.stringify(this.saveTimeDistribution)
         param.customerList1 = JSON.stringify(this.natureDistribution)
         param.customerList2 = JSON.stringify(this.scaleDistribution)
         param.customerList3 = JSON.stringify(this.industryDistribution)
       } else {
+        if (this.featuresDistribution.length < 1 || this.ageDistribution.length < 1 || this.sexDistribution.length < 1 || this.incomeDistribution.length < 1 || this.occupationDistribution.length < 1) {
+          utils.alert('请完善信息')
+          return false
+        }
         param.customerList0 = JSON.stringify(this.ageDistribution)
         param.customerList1 = JSON.stringify(this.sexDistribution)
         param.customerList2 = JSON.stringify(this.incomeDistribution)

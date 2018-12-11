@@ -313,6 +313,10 @@ export default class Project extends wepy.page {
   }
 
   async toNext() {
+    if (!this.imageUrl || this.imageUrls.length < 1) {
+      utils.alert('有未上传图片')
+      return false
+    }
     try {
       const json = await api.info({
         method: 'FORM',

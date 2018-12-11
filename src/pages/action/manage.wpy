@@ -85,7 +85,7 @@ page {
         <view class="title">{{item.value}}</view>
       </view>
       <view class="item add" @tap="show('show2')">
-        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加成员
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加主要产品
       </view>
     </van-panel>
 
@@ -128,11 +128,14 @@ page {
     </van-cell-group>
 
     <van-panel custom-class="panel-box" title="竞品分析">
-      <view wx:for="{{info.completeAnalysis}}" wx:key="index">
+      <van-swipe-cell right-width="{{ 65 }}" wx:for="{{info.completeAnalysis}}" wx:key="index" async-close bind:close="closeSwiper({{index}},featuresDistribution)">
+      <view>
         <view class="title">{{item.name}} 现存用户数{{item.count}}位</view>
       </view>
+      <view slot="right">删除</view>
+      </van-swipe-cell>
       <view class="item add" @tap="show('show3')">
-        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加成员
+        <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加竞品分析
       </view>
     </van-panel>
 
@@ -279,6 +282,20 @@ export default class Manage extends wepy.page {
   }
 
   methods = {
+    closeSwiper(index,name,event) {
+      const { position, instance } = event.detail;
+      switch (position) {
+        case 'right':
+          this.info.completeAnalysis.splice(index,1)
+          instance.close();
+          break;
+      }
+    },
+    delete(index) {
+      this.info.coreTechnology.splice(index,1)
+      this.$apply()
+      console.log(index)
+    },
     show(name) {
       this[name] = true
       this.$apply()
@@ -293,6 +310,9 @@ export default class Manage extends wepy.page {
       this.$apply()
     },
     async toNext() {
+      if (this.info.coreTechnology.length < 1 || this.info.completeAnalysis.length < 1) {
+        utils.alert('请填写完整')
+      }
       try {
         const json = await api.industry({
           method: 'FORM',
