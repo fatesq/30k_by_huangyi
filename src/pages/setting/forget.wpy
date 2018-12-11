@@ -28,16 +28,18 @@ page {
        bind:change="onChange"
       use-button-slot
     >
-      <van-button slot="button" size="small" type="default" @tap="code">获取验证码</van-button>
+      <van-button slot="button" size="small" disabled="{{time != 60}}" type="default" bind:click="code">{{time  != 60 ? time : '获取验证码'}}</van-button>
     </van-field>
     <van-field
       id="loginPassword"
       label="新口令"
+      type="password"
       placeholder=""
       bind:change="onChange"
     />
     <van-field
       id="loginPassword2"
+      type="password"
       label="口令确认"
       placeholder=""
       bind:change="onChange"
@@ -67,7 +69,8 @@ export default class Forget extends wepy.page {
     identCode: '',
     loginPassword: '', 
     loginPassword2: '',
-    mobileNumber: ""
+    mobileNumber: "",
+    time: 60,
   }
 
   methods = {
@@ -79,6 +82,7 @@ export default class Forget extends wepy.page {
   }
 
   async code() {
+    this.reload()
     if (!this.mobileNumber || this.mobileNumber.length != 11) {
       utils.alert('请输入手机号')
        return false
@@ -100,6 +104,16 @@ export default class Forget extends wepy.page {
     }
   }
 
+  reload() {
+    if (this.time > 0) {
+      this.time --
+      setTimeout(()=> this.reload(), 1000)
+    } else {
+      this.time = 60
+    }
+    this.$apply()
+  }
+
   async join() {
     if (this.loginPassword != this.loginPassword2) {
        utils.alert('两次密码不一致')
@@ -119,6 +133,7 @@ export default class Forget extends wepy.page {
         }
       })
       if (json.data.status === 'success') {
+        utils.alert('修改成功')
         wx.switchTab({ url: 'index' })
       } else {
         utils.alert(json.data.msg)
