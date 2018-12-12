@@ -76,11 +76,11 @@ export default class List extends wepy.page {
           method: 'FORM',
           query: {
             actorId: wx.getStorageSync('id'),
-            industryId: JSON.stringify(this.value1)
+            industryIds: JSON.stringify(this.value1)
           }
         })
         if (json.data.code === 'success') {
-          this.showList = false
+          wx.navigateBack()
           this.$apply()
         } else {
           utils.alert(json.data.msg || json.data.description)
@@ -95,16 +95,23 @@ export default class List extends wepy.page {
   async showList() {
     try {
       const json = await api.selectFirstLevelIndustry({
-        method: 'POST',
+        method: 'FORM',
         query: {
           actorId: wx.getStorageSync('id')
         }
       })
+      const json2 = await api.loadAllIndustry()
       if (json.data.code === 'success') {
-        this.list = json.data.data
+        this.value2 = json2.data.data.map(res => res.id)
+        this.value1 = json2.data.data.map(res => {
+          if (json.some(i => res.id)) {
+            return res.id
+          }
+        })
+        this.list = json2.data.data
         this.$apply()
       } else {
-        utils.alert(json.data.description)
+        utils.alert(json.data.description || json.data.msg)
       }
     } catch (e) {
       console.log(e)

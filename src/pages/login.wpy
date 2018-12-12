@@ -55,6 +55,10 @@ export default class Login extends wepy.page {
     loginPassword: '',
   }
 
+  onShow() {
+    wx.clearStorageSync()
+  }
+
   methods = {
     onChange(e) {
       console.log(e)
@@ -85,6 +89,7 @@ export default class Login extends wepy.page {
             }
           });
           if (json.data.code === 'success') {
+            wx.setStorageSync('token', json.data.token)
             wx.switchTab({ url: 'search' })
             this.$apply()
           } else {
