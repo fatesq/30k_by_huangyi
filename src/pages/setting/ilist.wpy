@@ -104,7 +104,7 @@ export default class List extends wepy.page {
       if (json.data.code === 'success') {
         this.value2 = json2.data.data.map(res => res.id)
         this.value1 = json2.data.data.map(res => {
-          if (json.some(i => res.id)) {
+          if (json.data.data.some(i =>i.id == res.id)) {
             return res.id
           }
         })
