@@ -72,6 +72,7 @@ export default class Forget extends wepy.page {
     loginPassword2: '',
     mobileNumber: "",
     time: 60,
+    url: ''
   }
 
   methods = {
@@ -80,6 +81,11 @@ export default class Forget extends wepy.page {
       this[e.target.id] = e.detail
       this.$apply()
     },
+  }
+
+  onLoad(option) {
+    this.url = option.url
+    this.$apply()
   }
 
   onShow () {
@@ -139,7 +145,10 @@ export default class Forget extends wepy.page {
       })
       if (json.data.status === 'success') {
         utils.alert('修改成功')
-        wx.switchTab({ url: 'index' })
+        if (this.url = 'setting') {
+          const out = await api.loginOut({method: 'FORM'})
+        }
+        wx.reLaunch({ url: '../login' })
       } else {
         utils.alert(json.data.msg)
       }

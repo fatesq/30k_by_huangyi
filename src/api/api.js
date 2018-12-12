@@ -72,7 +72,6 @@ const loadAllParentArea = (params) => wxRequest(params, `${url}/searchProject/lo
 
 const loadAllChildrenAreaByParentId = (params) => wxRequest(params, `${url}/searchProject/loadAllChildrenAreaByParentId`)
 
-
 // 获取行业列表 群像
 const loadAllOccupation = (params) => wxRequest(params, `${url}/searchProject/loadAllOccupation`)
 // 获取所有的身份信息 群像
@@ -86,9 +85,9 @@ const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/s
 
 const createIndustryInfo = (params) => wxRequest(params, `${url}/customer/createIndustryInfo`)
 
-const addRisk = (params) => wxRequest(params, `${url}/risk/addRisk`) 
+const addRisk = (params) => wxRequest(params, `${url}/risk/addRisk`)
 
-const getRisk = (params) => wxRequest(params, `${url}/risk/getRisk`) 
+const getRisk = (params) => wxRequest(params, `${url}/risk/getRisk`)
 
 module.exports = {
   url,

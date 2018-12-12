@@ -5,7 +5,7 @@
 <view>
   <van-cell-group wx:if="{{!showList}}">
     <van-cell title="目标行业" is-link @tap="showList"/>
-    <van-cell title="修改口令" is-link url="forget"/>
+    <van-cell title="修改口令" is-link url="forget?url=setting"/>
   </van-cell-group>
   <List wx:if="{{showList}}" :list.sync="list"/>
 </view>  
