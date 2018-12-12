@@ -143,7 +143,7 @@ export default class Details extends wepy.page {
         this.info = json.data.data
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

@@ -208,7 +208,7 @@ export default class BrandAbout extends wepy.page {
       if (json.data.code === 'success') {
         wx.navigateTo({ url: 'project' })
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -243,7 +243,7 @@ export default class BrandAbout extends wepy.page {
           this.$apply()
           console.log(this.list)
         } else {
-          utils.alert(json.data.msg)
+          utils.alert(json.data.msg || json.data.description)
         }
       } catch (e) {
         console.log(e)
@@ -266,7 +266,7 @@ export default class BrandAbout extends wepy.page {
         }
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -284,7 +284,7 @@ export default class BrandAbout extends wepy.page {
         console.log(this.listA)
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -310,7 +310,7 @@ export default class BrandAbout extends wepy.page {
         this.storeEfficiency2 = i.storeEfficiencyTo  
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

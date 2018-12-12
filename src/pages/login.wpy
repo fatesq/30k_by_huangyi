@@ -32,7 +32,7 @@ page {
         <input id='loginPassword' placeholder="签入口令" password auto-focus bind:change="onChange"/>
       </view>
       <view class="group">
-        <button class="weui-btn login" bindgetuserinfo="bind"  open-type="getUserInfo" form-type="submit"> 人机测试控件 </button>
+        <!-- <button class="weui-btn login" bindgetuserinfo="bind"  open-type="getUserInfo" form-type="submit"> 人机测试控件 </button> -->
         <button class="weui-btn"  bindgetuserinfo="bind" open-type="getUserInfo" type="warn"> 签入 </button>
       </view>
     </view>

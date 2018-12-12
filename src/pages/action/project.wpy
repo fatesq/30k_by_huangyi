@@ -331,7 +331,7 @@ export default class Project extends wepy.page {
         wx.setStorageSync('financingAmount', this.info.goalInvestment)
         wx.navigateTo({ url: 'group' })
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -349,7 +349,7 @@ export default class Project extends wepy.page {
         }
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -367,7 +367,7 @@ export default class Project extends wepy.page {
         console.log(this.listA)
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -401,7 +401,7 @@ export default class Project extends wepy.page {
         this.imageUrl = i.imageUrl
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

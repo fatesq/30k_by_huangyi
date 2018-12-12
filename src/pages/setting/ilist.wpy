@@ -1,0 +1,119 @@
+<style lang="less">
+
+</style>
+<template>
+<view>
+  <van-checkbox-group value="{{ value1 }}" bind:change="onSelect" max="0">
+  <van-collapse value="{{ value2 }}" bind:change="onChange">
+    <view wx:for="{{ list }}"  wx:key="index" >
+      <van-collapse-item title="{{ item.name }}" name="{{ item.id }}">
+        <van-cell-group>
+          <van-cell
+            wx:for="{{ item.childrenList }}"
+            wx:key="index"
+            title="{{ item.name }}"
+            clickable
+            data-name="{{ item.id }}"
+            bind:click="toggle"
+          >
+            <van-checkbox name="{{ item.id }}" checked-color="#E64340" class="checkboxes-{{ item.id }}"/>
+          </van-cell>
+        </van-cell-group>
+      </van-collapse-item>
+    </view>
+  </van-collapse>
+  </van-checkbox-group> 
+  <view class="fix">
+    <button type="warn" @tap="save">保存</button>
+  </view>
+</view>   
+</template>
+<script>
+import wepy from 'wepy'
+import utils from '@/utils/utils'
+import api from '@/api/api'
+
+export default class List extends wepy.page {
+  config = {
+    navigationBarTitleText: '',
+    usingComponents: {
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index',
+      'van-collapse': '../../components/van/collapse/index',
+      'van-collapse-item': '../../components/van/collapse-item/index'
+    }
+  }
+
+  data = {
+    list: [],
+    value1: [],
+    value2: [],
+  }
+  
+  methods = {
+    onSelect(event) {
+      console.log(event)
+      this.value1= event.detail
+      this.$apply()
+    },
+    onChange(event) {
+      console.log(event)
+      this.value2 = event.detail
+      this.$apply()
+    },
+    toggle(event) {
+      const { name } = event.currentTarget.dataset;
+      const checkbox = this.$wxpage.selectComponent(`.checkboxes-${name}`);
+      checkbox.toggle();
+    },
+    async save() {
+      try {
+        const json = await api.createIndustryInfo({
+          method: 'FORM',
+          query: {
+            actorId: wx.getStorageSync('id'),
+            industryId: JSON.stringify(this.value1)
+          }
+        })
+        if (json.data.code === 'success') {
+          this.showList = false
+          this.$apply()
+        } else {
+          utils.alert(json.data.msg || json.data.description)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
+    },
+  }
+
+  async showList() {
+    try {
+      const json = await api.selectFirstLevelIndustry({
+        method: 'POST',
+        query: {
+          actorId: wx.getStorageSync('id')
+        }
+      })
+      if (json.data.code === 'success') {
+        this.list = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
+  onShow() {
+    this.showList()
+  }
+}
+</script>

@@ -320,7 +320,7 @@ export default class Draw extends wepy.page {
         if (json.data.code === 'success') {
           wx.navigateTo({ url: wx.navigateTo({ url: wx.getStorageSync('belongidustry') == 1 ? 'manageB' : 'manage' }) })
         } else {
-          utils.alert(json.data.msg)
+          utils.alert(json.data.msg || json.data.description)
         }
       } catch (e) {
         console.log(e)
@@ -357,7 +357,7 @@ export default class Draw extends wepy.page {
         }
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

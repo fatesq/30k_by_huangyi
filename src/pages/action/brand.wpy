@@ -248,7 +248,7 @@ export default class Brand extends wepy.page {
       if (json.data.code === 'success') {
         wx.navigateTo({ url: 'brandabout' })
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -270,7 +270,7 @@ export default class Brand extends wepy.page {
         }
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -288,7 +288,7 @@ export default class Brand extends wepy.page {
         console.log(this.listA)
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -327,7 +327,7 @@ export default class Brand extends wepy.page {
         this.backWeekTo = i.brandReference.backWeekTo
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

@@ -192,7 +192,7 @@ export default class BrandAbout extends wepy.page {
         if (json.data.code === 'success') {
           wx.reLaunch({ url: '../search' })
         } else {
-          utils.alert(json.data.msg)
+          utils.alert(json.data.msg || json.data.description)
         }
       } catch (e) {
         console.log(e)

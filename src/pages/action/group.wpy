@@ -311,7 +311,7 @@ export default class Project extends wepy.page {
          
           wx.navigateTo({ url: 'draw' })
         } else {
-          utils.alert(json.data.msg)
+          utils.alert(json.data.msg || json.data.description)
         }
       } catch (e) {
         console.log(e)
@@ -349,7 +349,7 @@ export default class Project extends wepy.page {
         }
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -366,7 +366,7 @@ export default class Project extends wepy.page {
         this.listA[1] = json.data.data
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -393,7 +393,7 @@ export default class Project extends wepy.page {
         this.member(i.enterpriseSocialNum)
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)
@@ -414,7 +414,7 @@ export default class Project extends wepy.page {
         this.memberList = json.data.data
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

@@ -108,7 +108,7 @@ export default class action extends wepy.page {
         wx.setStorageSync('belongIndustry', this.belongIndustry)
         wx.navigateTo({ url: this.checked ? 'brand' : 'project' })
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')

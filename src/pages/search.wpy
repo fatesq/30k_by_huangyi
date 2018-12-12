@@ -196,7 +196,7 @@ export default class Search extends wepy.page {
         this.list = json.data.data
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

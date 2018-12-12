@@ -84,6 +84,7 @@ export default class Forget extends wepy.page {
   }
 
   onLoad(option) {
+    console.log(option)
     this.url = option.url
     this.$apply()
   }
@@ -105,10 +106,10 @@ export default class Forget extends wepy.page {
           mobileNumber: this.mobileNumber,
         }
       })
-      if (json.data.status === '00') {
+      if (json.data.status === 'success') {
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')
@@ -143,14 +144,14 @@ export default class Forget extends wepy.page {
           mobileNumber: this.mobileNumber
         }
       })
-      if (json.data.status === 'success') {
+      if (json.data.code === 'success') {
         utils.alert('修改成功')
-        if (this.url = 'setting') {
+        if (this.url == 'setting') {
           const out = await api.loginOut({method: 'FORM'})
         }
         wx.reLaunch({ url: '../login' })
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

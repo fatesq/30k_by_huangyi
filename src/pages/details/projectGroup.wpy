@@ -121,7 +121,7 @@ export default class ProjectGroup extends wepy.page {
         this.member(this.info.enterpriseSocialNum)
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)
@@ -142,7 +142,7 @@ export default class ProjectGroup extends wepy.page {
         this.memberList = json.data.data
         this.$apply()
       } else {
-        utils.alert(json.data.msg)
+        utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)
