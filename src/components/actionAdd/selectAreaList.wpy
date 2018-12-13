@@ -65,7 +65,7 @@ export default class SelectAreaList extends wepy.page {
         return
       }
       this.list.map(i =>{if (i.id == this.area[0]) name = i.name})
-      this.$emit('addList', this.area);
+      this.$emit('addList', name);
       this.$invoke('../AddArea', 'getList', this.area[0], name);
       this.$apply();
     },

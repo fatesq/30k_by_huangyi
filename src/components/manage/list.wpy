@@ -3,7 +3,7 @@
 </style>
 <template>
 <view>
-  <van-checkbox-group value="{{ value1 }}" bind:change="onSelect" max="1">
+  <van-checkbox-group value="{{ value1 }}" bind:change="onSelect" max="0">
     <van-cell-group>
       <van-cell
         wx:for="{{ list }}"
@@ -47,6 +47,11 @@ export default class List extends wepy.page {
         twoWay: true,
         default: []
     },
+    // value1: {
+    //     type: Array,
+    //     twoWay: true,
+    //     default: []
+    // },
   }
 
   data = {
@@ -76,7 +81,7 @@ export default class List extends wepy.page {
         return
       }
       this.list.map(i =>{if (i.id == this.value1[0]) name = i.name})
-      this.$emit('getList', this.value1[0], name);
+      this.$emit('getList', this.value1, name);
       this.$apply();
     },
   }

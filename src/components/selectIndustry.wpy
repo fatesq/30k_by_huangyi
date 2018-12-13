@@ -11,7 +11,7 @@
   <view style="padding-bottom: 60px">
     <van-radio-group value="{{ radio }}" bind:change="onChange">
       <van-cell-group>
-        <van-cell wx:for="{{list}}" wx:key="index" title="{{item.name}}" clickable data-name="{{item.id}}" >
+        <van-cell wx:for="{{list}}" wx:key="index" title="{{item.name}}" clickable data-name="{{item.id}}" bind:click="onClick">
           <van-radio name="{{item.id}}" />
         </van-cell>
       </van-cell-group>
@@ -45,6 +45,10 @@ export default class SelectIndustry extends wepy.page {
   }
 
   methods = {
+    onClick(e) {
+      this.radio = e.target.dataset.name
+      this.$apply()
+    },
     onChange(e) {
      this.radio = e.detail
      this.name = this.list.find(res => res.id == e.detail).name

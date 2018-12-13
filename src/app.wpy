@@ -72,7 +72,7 @@ export default class extends wepy.app {
       'pages/login',
       'pages/action/consultB',
       'pages/action/consult',
-      'pages/action/manageB',
+      'pages/action/manageB',      
       'pages/action/manage',
       'pages/action/draw',
       'pages/action/group',
