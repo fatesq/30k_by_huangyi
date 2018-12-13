@@ -7,13 +7,11 @@
 <view style="padding-bottom: 50px">
   <van-radio-group value="{{ value1 }}" bind:change="onSelect">
   <van-collapse value="{{ value2 }}" bind:change="onChange">
-    <view wx:for="{{ list }}"  wx:key="index" >
-      <van-collapse-item title="{{ item.name }}" name="{{ item.id }}">
-        <van-cell wx:for="{{item.childrenList}}" wx:key="index" title="{{item.name}}" clickable data-name="{{item.id}}" >
-          <van-radio checked-color="#E64340" name="{{item.id}},{{item.name}},{{item.belongIndustry}}" />
-        </van-cell>
-      </van-collapse-item>
-    </view>
+    <van-collapse-item  wx:for="{{ list }}"  wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
+      <van-cell wx:for="{{item.childrenList}}" wx:key="index" title="{{item.name}}" clickable data-name="{{item.id}},{{item.name}},{{item.belongIndustry}}" bind:click="onClick">
+        <van-radio checked-color="#E64340" name="{{item.id}},{{item.name}},{{item.belongIndustry}}" />
+      </van-cell>
+    </van-collapse-item>
   </van-collapse>
   </van-radio-group> 
   <view class="fix">
@@ -49,6 +47,11 @@ export default class List extends wepy.page {
   }
   
   methods = {
+    onClick(e) {
+      console.log(e)
+      this.value1 = e.target.dataset.name
+      this.$apply()
+    },
     onSelect(event) {
       console.log(event.detail)
       const i =  event.detail.split(",")

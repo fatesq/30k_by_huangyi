@@ -224,6 +224,7 @@ export default class BrandAbout extends wepy.page {
       this.$apply();
     },
     addArea(value) {
+      console.log(value)
       this.areaInfo.push(value);
       this.showArea = false;
       this.$apply();
@@ -303,7 +304,7 @@ export default class BrandAbout extends wepy.page {
       if (json.data.code == 'success') {
         const i = json.data.data
         this.shopInfo = i.storeLocal 
-        this.areaInfo = i.storeEnviroment
+        this.areaInfo = i.storeEnvironmental
         this.storePeople = i.storePeople
         this.storeCustomer = i.storeCustomer 
         this.storeEfficiency1 = i.storeEfficiencyFrom
