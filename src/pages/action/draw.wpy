@@ -425,11 +425,11 @@ export default class Draw extends wepy.page {
     },
     async showList(value) {
       try {
-        const json = await api.selectFirstLevelIndustry({
-          method: 'POST',
-          query: {
-            actorId: wx.getStorageSync('id')
-          }
+        const json = await api.loadAllIndustry({
+          method: 'GET',
+          // query: {
+            //actorId: wx.getStorageSync('id')
+          //}
         })
         if (json.data.code === 'success') {
           // this.showList = true

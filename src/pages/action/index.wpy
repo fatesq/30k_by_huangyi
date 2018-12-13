@@ -37,7 +37,7 @@
 import wepy from 'wepy'
 import api from '../../api/api'
 import utils from '../../utils/utils'
-import selectIndustry from '../../components/selectIndustry'
+import selectIndustry from '../../components/ilist'
 
 export default class action extends wepy.page {
   config = {
@@ -49,6 +49,10 @@ export default class action extends wepy.page {
       'van-switch-cell': '../../components/van/switch-cell/index',
       'van-radio': '../../components/van/radio/index',
       'van-radio-group': '../../components/van/radio-group/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index',
+      'van-collapse': '../../components/van/collapse/index',
+      'van-collapse-item': '../../components/van/collapse-item/index'
     }
   };
 
