@@ -51,7 +51,7 @@ page {
 }
 </style>
 <template>
-  <view style="margin-bottom: 50px">
+  <view style="padding-bottom: 50px">
     <van-cell-group>
       <van-field
         id="name"

@@ -98,7 +98,7 @@
 
 </style>
 <template>
-<view style="margin-bottom: 50px">
+<view style="padding-bottom: 50px">
   <van-field
     id="name"
     label="项目名称"

@@ -38,7 +38,7 @@ page {
 </style>
 <template>
 <view>
-<view wx:if="{{!showMember && !showExp}}" style="margin-bottom: 70px">
+<view wx:if="{{!showMember && !showExp}}" style="padding-bottom: 70px">
   <van-cell-group custom-class="panel-box">
     <van-field
       id="name"
