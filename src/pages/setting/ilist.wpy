@@ -69,6 +69,7 @@ export default class List extends wepy.page {
       checkbox.toggle();
     },
     async save() {
+      console.log(this.value1)
       try {
         const json = await api.createIndustryInfo({
           method: 'FORM',
@@ -101,11 +102,12 @@ export default class List extends wepy.page {
       const json2 = await api.loadAllIndustry()
       if (json.data.code === 'success') {
         this.value2 = json2.data.data.map(res => res.id)
-        this.value1 = json2.data.data.map(res => {
+        json2.data.data.map(res => {
           if (json.data.data.some(i =>i.id == res.id)) {
-            return res.id
+            this.value1.push(res.id)
           }
         })
+        console.log(this.value1)
         this.list = json2.data.data
         this.$apply()
       } else {
