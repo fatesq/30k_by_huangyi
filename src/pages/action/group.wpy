@@ -321,6 +321,11 @@ export default class Project extends wepy.page {
   }
 
   events = {
+    cancelAll() {
+      this.showExp = false
+      this.showMember = false
+      this.$apply()
+    },
     saveMember(value) {
       this.memberList.push(value)
       console.log(this.memberList)

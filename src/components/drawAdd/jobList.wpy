@@ -25,6 +25,7 @@
   </van-checkbox-group> 
   <view class="fix">
     <button type="warn" @tap="save">保存</button>
+    <button class="cancel" @tap="cancel">取消</button>
   </view>
 </view>   
 </template>
@@ -61,6 +62,9 @@ export default class List extends wepy.page {
   }
   
   methods = {
+    cancel() {
+      this.$emit('cancelAll')
+    },
     onSelect(event) {
       this.value1= event.detail
       this.$apply()

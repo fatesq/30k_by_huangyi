@@ -220,6 +220,11 @@ export default class BrandAbout extends wepy.page {
   }
 
   events = {
+    cancelAll() {
+      this.show1 = false
+      this.show2 = false
+      this.$apply()
+    },
     Add1(value) {
       this.spendPurpose.push(value)
       this.show1 = false

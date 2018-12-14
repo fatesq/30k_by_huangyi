@@ -31,6 +31,7 @@
     </van-cell-group>  
     <view class="fix">
       <button type="warn" @tap="save">保存</button>
+      <button class="cancel" @tap="cancel">取消</button>
     </view>
   </view>  
 </view>
@@ -65,6 +66,9 @@ export default class Nature extends wepy.page {
   }
 
   methods = {
+    cancel() {
+      this.$emit('cancelAll')
+    },
     onChange(e) {
      this.radio = e.detail
      this.name = this.list.find(res => res.id == e.detail).name

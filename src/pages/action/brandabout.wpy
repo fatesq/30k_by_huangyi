@@ -217,6 +217,13 @@ export default class BrandAbout extends wepy.page {
   }
 
   events = {
+    cancelAll() {
+      this.showArea = false;
+      this.showList = false;
+      this.showAreaList = false;
+      this.showShop = false;
+      this.$apply()
+    },
     addShop(value) {
       console.log(value)
       this.shopInfo.push(value);

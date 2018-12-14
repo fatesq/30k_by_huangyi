@@ -45,8 +45,14 @@ page {
   width: 100%;
   bottom: 0;
   z-index: 99;
+  display: flex;
   button {
     border-radius: 0px;
+    width: 100%;
+  }
+  cancel {
+    background-color: #CCC !important;
+    color: #FFF !important;
   }
 }
 .van-swipe-cell__right {

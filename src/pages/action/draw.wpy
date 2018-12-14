@@ -130,7 +130,7 @@ page {
       <view>
         <van-swipe-cell right-width="{{ 65 }}" wx:for="{{incomeDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},incomeDistribution)">
         <view class="item">
-          年入{{item.dataFrom}}至{{this.dataTo}}万元占{{this.count}}%
+          年入{{item.dataFrom}}至{{item.dataTo}}万元占{{item.count}}%
         </view>
         <view slot="right">删除</view>
         </van-swipe-cell>
@@ -366,6 +366,21 @@ export default class Draw extends wepy.page {
   }
 
   events = {
+    cancelAll() {
+      this.saveTimeShow = false
+      this.showNature = false
+      this.showScale = false
+      this.showIndustry = false
+      this.showList = false
+      this.showAge = false
+      this.showSex = false
+      this.showIncome = false
+      this.showJob = false
+      this.showJobList = false
+      this.showSp = false
+      this.showSpList = false
+      this.$apply()
+    },
     saveTime(dataFrom, dataTo, count) {
       this.saveTimeDistribution.push({
         'type': 0,

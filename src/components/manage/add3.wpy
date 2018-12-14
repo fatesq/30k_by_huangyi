@@ -14,6 +14,7 @@
   
   <view class="fix">
     <button type="warn" @tap="save">保存</button>
+    <button class="cancel" @tap="cancel">取消</button>
   </view>
 </view>
 </template>
@@ -38,6 +39,9 @@ export default class Add extends wepy.page {
   }
 
   methods = {
+    cancel() {
+      this.$emit('cancelAll')
+    },
     onInput(e) {
       this[e.target.id] = e.detail
       console.log(this.name)

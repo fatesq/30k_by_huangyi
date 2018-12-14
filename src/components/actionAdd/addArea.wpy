@@ -18,7 +18,8 @@
     </van-field>
   </van-cell-group>
   <view class="fix">
-  <button type="warn" @tap="addArea">保存</button>
+    <button type="warn" @tap="addArea">保存</button>
+    <button class="cancel" @tap="cancel">取消</button>
   </view>
 </view>
 </template>
@@ -66,6 +67,9 @@ export default class AddArea extends wepy.page {
       this.area = value
       this.id = id
       this.$apply()
+    },
+    cancel() {
+      this.$emit('cancelAll')
     }
   }
 

@@ -32,7 +32,7 @@ page {
   <view wx:if="{{!show1 && !show2 && !show3}}" style="padding-bottom: 50px">
     <van-cell-group custom-class="panel-box" >
       <!-- <van-cell title="业态细分" value="{{info.industryCareful}}" @tap="showList" is-link/> -->
-      <van-cell title="业态细分" @tap="showList" is-link/>
+      <van-cell title="业态细分" @tap="showList" wx:if="{{list.length > 0}}" is-link/>
     </van-cell-group>
 
     <van-panel custom-class="panel-box" title="行业市场规模">
@@ -337,19 +337,24 @@ export default class Manage extends wepy.page {
     }
   }
 
-  async showList() {
-    try {
+  showList() {
+    this.show1 = true
+    this.$apply()
+  }
+
+  async openInfo () {
+     try {
       const json = await api.loadAllIndustryCarefulInfoById({
         method: 'GET',
         query: {
-          industryId: wx.getStorageSync('industryId')
+          belongIndustry: wx.getStorageSync('belongIndustry')
         }
       })
       if (json.data.code === 'success') {
         // this.showList = true
         this.list = json.data.data
-        this.show1 = true
-        console.log(this.list)
+        // this.show1 = true
+        //console.log(this.list)
         this.$apply()
       } else {
         utils.alert(json.data.description)
@@ -358,10 +363,19 @@ export default class Manage extends wepy.page {
       console.log(e)
       utils.alert('系统异常')
     }
-    // this.$apply()
+  }
+
+  onShow () {
+    this.openInfo()
   }
 
   events = {
+    cancelAll() {
+      this.show1 = false
+      this.show2 = false
+      this.show3 = false
+      this.$apply()
+    },
     getList(id, name) {
       this.info.industryCareful = name
       this.id = id
