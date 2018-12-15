@@ -133,13 +133,13 @@ page {
       />
     </van-panel>  
     <van-cell-group>
-      <interval start='场地面积' startId="areaFrom"  end="平方米" endId="areaTo" bind:change='onChildChange' />
-      <interval start='客单价区间' startId="priceFrom" end="元" endId="priceTo" bind:change='onChildChange' />
-      <interval start='单店投资额' startId="investmentFrom" end="万元" endId="investmentTo" bind:change='onChildChange' />
-      <interval start='月净利润' startId="monthProfileFrom" end="万元" endId="monthProfileTo" bind:change='onChildChange'/>
-      <interval start='年华投资回报率' startId="yearProfileFrom" end="%" endId="yearProfileTo" bind:change='onChildChange'/>
-      <interval start='回本周期' startId="backWeekFrom" end="个月" endId="backWeekTo" bind:change='onChildChange'/>
-      <interval start='项目失败率' startId="priceFrom" end="%" endId="priceTo" bind:change='onChildChange'/>
+      <interval start='场地面积' startValue="{{areaFrom}}" startId="areaFrom"  end="平方米" endId="areaTo" endValue="{{areaTo}}" bind:change='onChildChange' />
+      <interval start='客单价区间' startId="priceFrom" startValue="{{priceFrom}}" end="元" endId="priceTo" endValue="{{priceTo}}" bind:change='onChildChange' />
+      <interval start='单店投资额' startId="investmentFrom" startValue="{{investmentFrom}}" end="万元" endId="investmentTo" endValue="{{investmentTo}}" bind:change='onChildChange' />
+      <interval start='月净利润' startId="monthProfileFrom" startValue="{{monthProfileFrom}}" end="万元" endId="monthProfileTo" endValue="{{monthProfileTo}}" bind:change='onChildChange'/>
+      <interval start='年华投资回报率' startId="yearProfileFrom" startValue="{{yearProfileFrom}}" end="%" endId="yearProfileTo" endValue="{{yearProfileTo}}" bind:change='onChildChange'/>
+      <interval start='回本周期' startId="backWeekFrom" startValue="{{backWeekFrom}}" end="个月" endId="backWeekTo" endValue="{{backWeekTo}}" bind:change='onChildChange'/>
+      <interval start='项目失败率' startId="priceFrom" startValue="{{priceFrom}}" end="%" endId="priceTo" endValue="{{priceTo}}" bind:change='onChildChange'/>
     </van-cell-group>  
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
@@ -327,7 +327,7 @@ export default class Brand extends wepy.page {
         this.backWeekTo = i.brandReference.backWeekTo
         this.$apply()
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

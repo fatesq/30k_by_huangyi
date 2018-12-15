@@ -6,7 +6,7 @@ VantComponent({
   props: {
     type: {
       type: String,
-      value: 'text'
+      value: 'number'
     },
     start: String,
     center: {
@@ -27,7 +27,9 @@ VantComponent({
       value: '100rpx'
     },
     startId: String,
-    endId: String
+    endId: String,
+    startValue: String,
+    endValue: String
   },
   computed: {
     startStyle: function titleStyle() {

@@ -124,7 +124,7 @@ page {
 import wepy from 'wepy'
 import api from '../api/api'
 import utils from '@/utils/utils'
-import selectIndustry from '../components/selectIndustry'
+import selectIndustry from '../components/ilist'
 
 export default class Search extends wepy.page {
   config = {
@@ -138,6 +138,8 @@ export default class Search extends wepy.page {
       'van-switch-cell': '../../components/van/switch-cell/index',
       'van-radio': '../../components/van/radio/index',
       'van-radio-group': '../../components/van/radio-group/index',
+      'van-collapse': '../../components/van/collapse/index',
+      'van-collapse-item': '../../components/van/collapse-item/index'
     }
   }
 
@@ -170,10 +172,11 @@ export default class Search extends wepy.page {
   }
 
   events = {
-    saveIndustry(id, name) {
+    saveIndustry(id, name, belongIndustry) {
        this.getList(id)
        this.industryId = id
        this.industryName = name
+       this.belongIndustry = belongIndustry
        this.show = false
        this.$apply()
     }
@@ -203,6 +206,8 @@ export default class Search extends wepy.page {
       utils.alert('系统异常')
     }
   }
+
+   
 
 }
 </script>

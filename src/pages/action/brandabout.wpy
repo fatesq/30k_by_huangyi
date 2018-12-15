@@ -100,7 +100,7 @@ page {
       >
         <text slot="button">万人/月</text>
       </van-field>
-      <interval start='目标市场份额' startId="storeEfficiency1" end="元/平米/月" endId="storeEfficiency2" bind:change='onChildChange' />
+      <interval start='目标市场份额' startId="storeEfficiency1" startValue="{{storeEfficiency1}}" end="元/平米/月" endId="storeEfficiency2" endValue="{{storeEfficiency2}}"  bind:change='onChildChange' />
     </van-cell-group>
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
@@ -318,7 +318,7 @@ export default class BrandAbout extends wepy.page {
         this.storeEfficiency2 = i.storeEfficiencyTo  
         this.$apply()
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

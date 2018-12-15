@@ -103,18 +103,18 @@ page {
         />
       </van-cell>
       <van-panel title="预测用户数">
-        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="monthFrom"  end="位" endId="forecastCustomerTo" bind:change='onChildChange' />
+        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="monthFrom" startValue="{{info.monthFrom}}" end="位" endValue="{{info.forecastCustomerTo}}" endId="forecastCustomerTo" bind:change='onChildChange' />
       </van-panel>
       <van-panel title="预测用户活跃度(产品或服务使用频率)">
-        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="activeMonthFrom"  end="人次/天" endId="forecastActiveCustomerTo" bind:change='onChildChange' />
+        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="activeMonthFrom" startValue="{{info.activeMonthFrom}}" end="人次/天" endId="forecastActiveCustomerTo" endValue="{{info.forecastActiveCustomerTo}}" bind:change='onChildChange' />
       </van-panel>
     </van-cell-group>
 
     <van-cell-group custom-class="panel-box" >
-      <interval type="number" start='产品持续研发成本' startId="keepDevelopmentCostFrom"  end="万元/月" endId="keepDevelopmentCostTo" bind:change='onChildChange' />
-      <interval type="number" start='基础设施维护成本' startId="basicEquipmentCostFrom"  end="万元/月" endId="basicEquipmentCostTo" bind:change='onChildChange' />
-      <interval type="number" start='营销推广成本' startId="spreadCostFrom"  end="万元/月" endId="spreadCostTo" bind:change='onChildChange' />
-      <interval type="number" start='预测访问流量' startId="forecastPersonFrom"  end="万元/月" endId="forecastPersonTo" bind:change='onChildChange' />
+      <interval type="number" start='产品持续研发成本' startId="keepDevelopmentCostFrom" startValue="{{info.keepDevelopmentCostFrom}}" end="万元/月" endId="keepDevelopmentCostTo" endValue="{{info.keepDevelopmentCostTo}}"  bind:change='onChildChange' />
+      <interval type="number" start='基础设施维护成本' startId="basicEquipmentCostFrom" startValue="{{info.basicEquipmentCostFrom}}" end="万元/月" endId="basicEquipmentCostTo" endValue="{{info.basicEquipmentCostTo}}"  bind:change='onChildChange' />
+      <interval type="number" start='营销推广成本' startId="spreadCostFrom" startValue="{{info.spreadCostFrom}}" end="万元/月" endId="spreadCostTo" endValue="{{info.spreadCostTo}}"  bind:change='onChildChange' />
+      <interval type="number" start='预测访问流量' startId="forecastPersonFrom" startValue="{{info.forecastPersonFrom}}" end="万元/月" endId="forecastPersonTo" endValue="{{info.forecastPersonTo}}" bind:change='onChildChange' />
       <van-cell type="number" title="营销能力评估">
         <van-stepper
           id="score3"

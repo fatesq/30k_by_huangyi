@@ -357,7 +357,7 @@ export default class Draw extends wepy.page {
         }
         this.$apply()
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

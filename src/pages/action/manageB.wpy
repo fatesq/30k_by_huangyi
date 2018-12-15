@@ -92,8 +92,8 @@ page {
       >
         <text slot="button">万元</text>
       </van-field>
-      <interval type="number" start='周边人流量' startId="peopleCountFrom"  end="万人/月" endId="peopleCountTo" bind:change='onChildChange' />
-      <interval type="number" start='预测客流量' startId="forecastPersonFrom"  end="万人/月" endId="forecasePersonTo" bind:change='onChildChange' />
+      <interval type="number" start='周边人流量' startId="peopleCountFrom" startValue="{{info.peopleCountFrom}}"  end="万人/月" endId="peopleCountTo" endValue="{{info.peopleCountTo}}" bind:change='onChildChange' />
+      <interval type="number" start='预测客流量' startId="forecastPersonFrom" startValue="{{info.forecastPersonFrom}}" end="万人/月" endId="forecasePersonTo" endValue="{{info.forecasePersonTo}}" bind:change='onChildChange' />
     </van-cell-group>
 
     <van-panel custom-class="panel-box" title="周边竞争情况">

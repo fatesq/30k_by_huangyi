@@ -71,9 +71,9 @@ page {
   </van-panel>
 
   <van-cell-group>
-    <interval start='预测月净利润' startId="forecastMonthProfileFrom" end="万元" endId="forecastMonthProfileTo" bind:change='onChildChange' />
-    <interval start='预测年化投资回报率' startId="forecastYearProfileFrom" end="%" endId="forecastYearProfileTo" bind:change='onChildChange' />
-    <interval start='预测回本周期' startId="backWeekFrom" end="个月" endId="backWeekTo" bind:change='onChildChange' />
+    <interval start='预测月净利润' startId="forecastMonthProfileFrom" startValue="{{forecastMonthProfileFrom}}" end="万元" endValue="{{forecastMonthProfileTo}}" endId="forecastMonthProfileTo" bind:change='onChildChange' />
+    <interval start='预测年化投资回报率' startId="forecastYearProfileFrom" startValue="{{forecastYearProfileFrom}}" end="%" endId="forecastYearProfileTo" endValue="{{forecastYearProfileTo}}" bind:change='onChildChange' />
+    <interval start='预测回本周期' startId="backWeekFrom" startValue="{{backWeekFrom}}" end="个月" endId="backWeekTo" endValue="{{backWeekTo}}" bind:change='onChildChange' />
   </van-cell-group>
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">

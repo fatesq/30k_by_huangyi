@@ -1,28 +1,20 @@
 <style lang="less">
-
+.van-radio__icon--checked {
+  color:#E64340 !important;
+}
 </style>
 <template>
 <view>
-  <van-checkbox-group value="{{ value1 }}" bind:change="onSelect" max="1">
+  <van-radio-group value="{{ value1 }}" bind:change="onSelect" max="1">
   <van-collapse value="{{ value2 }}" bind:change="onChange">
-    <view wx:for="{{ list }}"  wx:key="index" >
-      <van-collapse-item title="{{ item.name }}" name="{{ item.id }}">
-        <van-cell-group>
-          <van-cell
-            wx:for="{{ item.occupationChildrenList }}"
-            wx:key="index"
-            title="{{ item.name }}"
-            clickable
-            data-name="{{ item.id }}"
-            bind:click="toggle"
-          >
-            <van-checkbox name="{{ item.id }}" checked-color="#E64340" class="checkboxes-{{ item.id }}"/>
-          </van-cell>
-        </van-cell-group>
-      </van-collapse-item>
-    </view>
+    
+    <van-collapse-item  wx:for="{{ list }}"  wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
+      <van-cell wx:for="{{item.occupationChildrenList}}" wx:key="index" title="{{item.name}}" clickable data-name="{{item.id}}" bind:click="onClick">
+        <van-radio checked-color="#E64340" name="{{item.id}}" />
+      </van-cell>
+    </van-collapse-item>
   </van-collapse>
-  </van-checkbox-group> 
+  </van-radio-group> 
   <view class="fix">
     <button type="warn" @tap="save">保存</button>
     <button class="cancel" @tap="cancel">取消</button>
@@ -62,6 +54,11 @@ export default class List extends wepy.page {
   }
   
   methods = {
+    onClick(e) {
+      console.log(e)
+      this.value1 = e.target.dataset.name
+      this.$apply()
+    },
     cancel() {
       this.$emit('cancelAll')
     },
@@ -86,10 +83,10 @@ export default class List extends wepy.page {
         return
       }
       this.list.map(res => res.occupationChildrenList.map(i => { 
-        if (i.id == this.value1[0]) name = i.name
+        if (i.id == this.value1) name = i.name
       }))
       this.$emit('saveJobList', this.value1);
-      this.$invoke('../Job', 'getList', this.value1[0], name);
+      this.$invoke('../Job', 'getList', this.value1, name);
      
       this.$apply();
     },

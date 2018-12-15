@@ -401,7 +401,7 @@ export default class Project extends wepy.page {
         this.imageUrl = i.imageUrl
         this.$apply()
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)
