@@ -126,16 +126,16 @@ export default class Details extends wepy.page {
 
   onLoad(option) {
     this.id = option.id
-    this.getInfo(option.code);
+    this.getInfo(option.id);
     this.$apply();
   }
 
   async getInfo(id) {
     try {
-      const json = await api.loadProjectByCodeOrName({
+      const json = await api.loadProjectByProjectId({
         method: 'GET',
         query: {
-          codeOrName: id
+          projectId: id
         }
       })
         console.log(json)

@@ -115,21 +115,21 @@ export default class extends wepy.app {
       list: [
         {
           pagePath: 'pages/search',
-          text: '项目检索'
-          // iconPath: 'images/icon_home.png',
-          // selectedIconPath: 'images/icon_home_active.png'
+          text: '项目检索',
+          iconPath: 'ic/ic_search nor@2x.png',
+          selectedIconPath: 'ic/ic_search pre@2x.png'
         },
         {
           pagePath: 'pages/action/index',
-          text: '项目进件'
-          // iconPath: 'images/icon_home.png',
-          // selectedIconPath: 'images/icon_home_active.png'
+          text: '项目进件',
+          iconPath: 'ic/ic_course nor@2x.png',
+          selectedIconPath: 'ic/ic_course pre@2x.png'
         },
         {
           pagePath: 'pages/setting/index',
-          text: '设置'
-          // iconPath: 'images/icon_info.png',
-          // selectedIconPath: 'images/icon_info_active.png'
+          text: '设置',
+          iconPath: 'ic/ic_set nor@2x.png',
+          selectedIconPath: 'ic/ic_set pre@2x.png'
         }
       ]
     },

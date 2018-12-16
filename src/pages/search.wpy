@@ -73,7 +73,7 @@ page {
 <template>
 <view>
   <view wx:if="{{!show}}">
-    <van-search value="" placeholder="项目编号/项目名称" />
+    <van-search value="" placeholder="项目编号/项目名称" bind:search="search" />
     <view class="select">
       <van-cell title="{{industryName ? industryName : '请选择行业'}}" is-link @tap="showIndustry()"/>
     </view>
@@ -168,6 +168,25 @@ export default class Search extends wepy.page {
       wx.navigateTo({
         url: `details/index?id=${item.id}&code=${item.code}`
       })
+    },
+    async search(e) {
+      try {
+        const json = await api.loadProjectByCodeOrName({
+          method: 'GET',
+          query: {
+            codeOrName : e.detail
+          }
+        })
+        if (json.data.code == 'success') {
+          this.list = json.data.data
+          this.$apply()
+        } else {
+          utils.alert(json.data.msg || json.data.description)
+        }
+      } catch (e) {
+        console.log(e)
+        utils.alert('系统异常')
+      }
     }
   }
 
@@ -187,7 +206,7 @@ export default class Search extends wepy.page {
   }
 
   async getList(id) {
-     try {
+    try {
       const json = await api.loadAllProjectByIndustryId({
         method: 'GET',
         query: {
