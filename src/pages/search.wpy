@@ -202,7 +202,7 @@ export default class Search extends wepy.page {
   }
 
   onShow() {
-   
+    this.showList()
   }
 
   async getList(id) {
@@ -224,6 +224,24 @@ export default class Search extends wepy.page {
       console.log(e)
       utils.alert('系统异常')
     }
+  }
+
+  async showList() {
+     try {
+      const json = await api.loadAllProjectByActorId({
+        method: 'GET'})
+       console.log(json)
+      if (json.data.code == 'success') {
+        this.list = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg || json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+    
   }
 
    
