@@ -80,7 +80,7 @@ export default class extends wepy.app {
       'pages/action/consult',
       'pages/action/manageB',      
       'pages/action/manage',
-      'pages/action/draw',
+       'pages/action/draw',
       'pages/action/group',
       'pages/action/project',
       'pages/action/brandabout',

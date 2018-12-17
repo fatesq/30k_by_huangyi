@@ -30,7 +30,7 @@ page {
 <template>
 <view>
   <van-cell-group custom-class="panel-box">
-    <van-cell title="公司分类" value="{{info[0].type == 1 ? '个人': '组织'}}" is-link/>
+    <van-cell title="公司分类" value="{{info[0].type == 1 ? '个人': '组织'}}"/>
   </van-cell-group>    
   <van-panel custom-class="panel-box" title="续存时长分布" wx:if="{{info[0].type == 0}}">
     <view>

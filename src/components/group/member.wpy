@@ -97,7 +97,7 @@
 }
 </style>
 <template>
-<view>
+<view style="padding-bottom: 50px">
   <van-cell-group>
     <van-panel title="宣传形象图">
       <view class="uploadBox" wx:if="{{!imageURL}}" bindtap="chooseImage">

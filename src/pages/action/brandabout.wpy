@@ -310,13 +310,15 @@ export default class BrandAbout extends wepy.page {
         console.log(json)
       if (json.data.code == 'success') {
         const i = json.data.data
-        this.shopInfo = i.storeLocal 
-        this.areaInfo = i.storeEnvironmental
-        this.storePeople = i.storePeople
-        this.storeCustomer = i.storeCustomer 
-        this.storeEfficiency1 = i.storeEfficiencyFrom
-        this.storeEfficiency2 = i.storeEfficiencyTo  
-        this.$apply()
+        if (i.length) {
+          this.shopInfo = i.storeLocal
+          this.areaInfo = i.storeEnvironmental
+          this.storePeople = i.storePeople
+          this.storeCustomer = i.storeCustomer 
+          this.storeEfficiency1 = i.storeEfficiencyFrom
+          this.storeEfficiency2 = i.storeEfficiencyTo  
+          this.$apply()
+        }
       } else {
         // utils.alert(json.data.msg || json.data.description)
       }

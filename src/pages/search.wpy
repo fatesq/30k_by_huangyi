@@ -46,8 +46,12 @@ page {
     .list {
       width: 500rpx;
       view {
-        padding: 10rpx 0rpx 10rpx 20rpx;
+        padding: 10rpx 0rpx 10rpx 38rpx;
         font-size:14px;
+      }
+      image {
+        vertical-align:middle;
+        display:inline-block;
       }
     }
     .more {
@@ -68,6 +72,10 @@ page {
     }
   }
 }
+.icon {
+  width: 20px;
+  height: 20px;
+}
 </style>
 
 <template>
@@ -84,29 +92,30 @@ page {
           <view class="time">{{item.createTime}}</view>
           <view class="value">
             <text>{{item.industry.name}}</text>
-            <text class="price" style="text-align:right">{{item.projectReference.totalInvestment}}万元</text>
+            <text class="price" style="text-align:right;white-space: nowrap;">{{item.projectReference.totalInvestment}}万元</text>
           </view>
           <view class="value">
-             {{item.introduce}}
+             {{item.name}}
           </view>  
         </view>
       </view>
       <view class="detail">
         <view class="list">
           <view>
-            <van-icon name="more-o" />
+            <image class="icon" src="../ic/ic_date@2x.png"/>
             {{item.projectReference.totalInvestment}}
           </view>
           <view>
-            <van-icon name="more-o" />
+            <image class="icon" src="../ic/ic_mine@2x.png"/>
             {{item.enterpriseMember}}
           </view>
           <view>
-            <van-icon name="more-o" />
+            <image class="icon" src="../ic/ic_place@2x.png"/>
             {{item.areaName}}
           </view>
           <view>
-            <van-icon name="more-o" />
+            
+            <image class="icon" src="../ic/ic_company@2x.png"/>
             {{item.enterpriseName}}
           </view>
         </view>

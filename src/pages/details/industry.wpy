@@ -30,7 +30,7 @@ page {
 <template>
 <view>
   <van-cell-group custom-class="panel-box">
-    <van-cell title="业态细分" value="{{nativePlace}}" is-link/>
+    <van-cell title="业态细分" value="{{nativePlace}}" />
   </van-cell-group>
 
   <van-panel custom-class="panel-box" title="市场行业规模">

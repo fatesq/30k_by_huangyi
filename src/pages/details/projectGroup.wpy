@@ -65,16 +65,16 @@ page {
 
   <van-panel custom-class="panel-box" title="投资人条件">
     <van-cell-group>
-      <van-cell title="籍贯" value="{{info.nativePlace}}" is-link/>
-      <van-cell title="常驻地" value="{{info.address}}" is-link/>
-      <van-cell title="邀请参与" value="{{info.invitationFlag == 1 ? '是': '否'}}" is-link/>
+      <van-cell title="籍贯" value="{{info.nativePlace}}" />
+      <van-cell title="常驻地" value="{{info.address}}"/>
+      <van-cell title="邀请参与" value="{{info.invitationFlag == 1 ? '是': '否'}}"/>
     </van-cell-group>
   </van-panel>  
 
   <van-cell-group custom-class="panel-box">
-    <van-cell title="经营团队持股" value="{{info.teamHoldCount}}" is-link/>
-    <van-cell title="预计员工数" value="{{info.employeeCount}}" is-link/>
-    <van-cell title="场地面积" value="{{info.area}}" is-link/>
+    <van-cell title="经营团队持股" value="{{info.teamHoldCount}}"/>
+    <van-cell title="预计员工数" value="{{info.employeeCount}}"/>
+    <van-cell title="场地面积" value="{{info.area}}"/>
   </van-cell-group>
 </view>
 </template>

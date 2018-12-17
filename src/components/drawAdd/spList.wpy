@@ -84,9 +84,9 @@ export default class List extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.list.map(i =>{if (i.id == this.value1[0]) name = i.name})
+      this.list.map(i =>{if (i.id == this.value1) name = i.name})
       this.$emit('saveSpList', this.value1);
-      this.$invoke('../Sp', 'getList', this.value1[0], name);
+      this.$invoke('../Sp', 'getList', this.value1, name);
      
       this.$apply();
     },
