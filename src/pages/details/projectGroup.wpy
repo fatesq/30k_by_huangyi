@@ -43,12 +43,12 @@ page {
       <view class="title">
         <image src="{{item.imageURL}}" mode="aspectFill"/>
         <van-cell title="{{item.name}}" style="width: 100%" border="{{false}}">
-          <van-icon
+          <!-- <van-icon
             slot="right-icon"
             name="delete"
             class="van-cell__right-icon"
             bindtap="delete({{index}})"
-          />
+          /> -->
         </van-cell>
       </view>
       <view class="title">{{item.profile}}</view>

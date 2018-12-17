@@ -99,6 +99,7 @@ export default class Industry extends wepy.page {
   data = {
     id: '',
     info: {},
+    nativePlace: ''
   }
 
   onLoad(option) {
@@ -118,6 +119,7 @@ export default class Industry extends wepy.page {
         console.log(json)
       if (json.data.code == 'success') {
         this.info = json.data.data
+        this.nativePlace = json.data.data.industryCareful.map(i => i.name).join(',')
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)

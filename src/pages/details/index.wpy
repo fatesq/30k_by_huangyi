@@ -59,7 +59,7 @@ page {
         <view class="time">{{info.createTime}}</view>
         <view class="value">
           <text>{{info.industry.name}}</text>
-          <text class="price" style="text-align:right">{{info.projectReference.totalInvestment}}万元</text>
+          <text class="price" style="text-align:right;white-space: nowrap;">{{info.projectReference.totalInvestment}}万元</text>
         </view>
         <view>No.{{info.code}}</view>
         <view>{{info.name}}</view>
