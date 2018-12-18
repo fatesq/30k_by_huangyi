@@ -87,14 +87,16 @@ export default class Demo extends wepy.page {
       this.$apply();
     },
     bindMultiPickerChange(e) {
-      this.areaCode = this.listA[1][e.detail.value[1]].areaCode
-      this.areaName = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
+      this.areaCode = this.listA[2][e.detail.value[2]].areaCode
+      this.areaName = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name} ${this.listA[2][e.detail.value[2]].name}`
       this.multiIndex = e.detail.value
       this.$apply()
     },
     bindMultiPickerColumnChange: function (e) {
       if (e.detail.column == 0) {
         this.$emit('changeB', this.listA[0][e.detail.value].id)
+      } else {
+        this.$emit('changeC', this.listA[1][e.detail.value].id)
       }
     },
     cancel() {

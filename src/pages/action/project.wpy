@@ -248,14 +248,16 @@ export default class Project extends wepy.page {
 
   methods = {
      bindMultiPickerChange(e) {
-      this.info.areaCode = this.listA[1][e.detail.value[1]].areaCode
-      this.info.areaName = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name}`
+      this.info.areaCode =  this.listA[2][e.detail.value[2]].areaCode
+      this.info.areaName = `${this.listA[0][e.detail.value[0]].name} ${this.listA[1][e.detail.value[1]].name} ${this.listA[2][e.detail.value[2]].name}`
       this.multiIndex = e.detail.value
       this.$apply()
     },
     bindMultiPickerColumnChange: function (e) {
       if (e.detail.column == 0) {
         this.changeB(this.listA[0][e.detail.value].id)
+      } else {
+        this.getCityC(this.listA[1][e.detail.value].id)
       }
     },
     onChange(e) {
@@ -364,6 +366,25 @@ export default class Project extends wepy.page {
       })
       if (json.data.code === 'success') {
         this.listA[1] = json.data.data
+        this.getCityC(json.data.data[0].id)
+        console.log(this.listA)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg || json.data.description)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+   async getCityC(id) {
+    try {
+      const json = await api.loadAllChildrenAreaByParentId({
+        method: 'GET',
+          query: {parentId: id}
+      })
+      if (json.data.code === 'success') {
+        this.listA[2] = json.data.data
         console.log(this.listA)
         this.$apply()
       } else {

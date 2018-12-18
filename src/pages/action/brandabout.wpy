@@ -151,7 +151,7 @@ export default class BrandAbout extends wepy.page {
     storeCustomer: '',
     storeEfficiency1: '',
     storeEfficiency2: '',
-    listA: [[],[]],
+    listA: [[],[],[]],
   }
   
   methods = {
@@ -261,6 +261,9 @@ export default class BrandAbout extends wepy.page {
     },
     changeB(id) {
       this.getCityB(id)
+    },
+    changeC(id) {
+      this.getCityC(id)
     }
   }
 
@@ -289,6 +292,25 @@ export default class BrandAbout extends wepy.page {
       })
       if (json.data.code === 'success') {
         this.listA[1] = json.data.data
+        this.getCityC(json.data.data[0].id)
+        console.log(this.listA)
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg || json.data.description)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
+  async getCityC(id) {
+    try {
+      const json = await api.loadAllChildrenAreaByParentId({
+        method: 'GET',
+          query: {parentId: id}
+      })
+      if (json.data.code === 'success') {
+        this.listA[2] = json.data.data
         console.log(this.listA)
         this.$apply()
       } else {
