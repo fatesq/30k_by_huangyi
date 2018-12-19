@@ -6,7 +6,7 @@ VantComponent({
   props: {
     type: {
       type: String,
-      value: 'number'
+      value: 'digit'
     },
     start: String,
     center: {
