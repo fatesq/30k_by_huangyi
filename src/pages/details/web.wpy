@@ -70,7 +70,7 @@ page {
       <van-row custom-class="B" wx:for="{{creditInfoVerifySummary.verifyEnterpriseInfo.creditInfoVerifyDetailList}}" wx:key='index'>
         <van-col span="8">{{item.verifyItem}}</van-col>
         <van-col span="8">{{item.result}}</van-col>
-        <van-col span="8">{{item.resultMsg}}</van-col>
+        <van-col span="8">{{item.resultMsg }}</van-col>
       </van-row>
     </view>
   </van-panel>
