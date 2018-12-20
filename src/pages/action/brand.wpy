@@ -137,7 +137,7 @@ page {
       <interval start='客单价区间' startId="priceFrom" startValue="{{priceFrom}}" end="元" endId="priceTo" endValue="{{priceTo}}" bind:change='onChildChange' />
       <interval start='单店投资额' startId="investmentFrom" startValue="{{investmentFrom}}" end="万元" endId="investmentTo" endValue="{{investmentTo}}" bind:change='onChildChange' />
       <interval start='月净利润' startId="monthProfileFrom" startValue="{{monthProfileFrom}}" end="万元" endId="monthProfileTo" endValue="{{monthProfileTo}}" bind:change='onChildChange'/>
-      <interval start='年华投资回报率' startId="yearProfileFrom" startValue="{{yearProfileFrom}}" end="%" endId="yearProfileTo" endValue="{{yearProfileTo}}" bind:change='onChildChange'/>
+      <interval start='年化投资回报率' startId="yearProfileFrom" startValue="{{yearProfileFrom}}" end="%" endId="yearProfileTo" endValue="{{yearProfileTo}}" bind:change='onChildChange'/>
       <interval start='回本周期' startId="backWeekFrom" startValue="{{backWeekFrom}}" end="个月" endId="backWeekTo" endValue="{{backWeekTo}}" bind:change='onChildChange'/>
       <interval start='项目失败率' startId="failureRateFrom" startValue="{{failureRateFrom}}" end="%" endId="failureRateTo" endValue="{{failureRateTo}}" bind:change='onChildChange'/>
     </van-cell-group>  

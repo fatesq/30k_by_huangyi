@@ -53,7 +53,7 @@ page {
 }
 </style>
 <template>
-<view>
+<view style="padding-bottom: 50px">
   <view wx:if="{{!showShop && !showArea && !showList}}">
     <van-panel custom-class="panel-box" title="门店所在地分布">
       <view>

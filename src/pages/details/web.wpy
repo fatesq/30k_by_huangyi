@@ -1,8 +1,79 @@
 <style lang="less">
+page {
+  
+}
+.margin {
+  margin-bottom: 20px;
+}
+.cell {
+  padding: 0px 20rpx !important;
+}
+.title {
+  display: flex;
+  justify-content: space-around;
+  flex: 1 1 25% !important;
+}
+.value {
+  flex: 1 1 75% !important;
+  text-align: left !important;
+}
+.tb {
+  padding:10px 15px;
+  .A {
+    background-color: #DDD;
+    .van-col {
+      color: #fff;
+      font-size: 13px;
+      line-height: 30px;
+      text-align: center;
+      background-clip: content-box;
+      border: 1px solid #CCC
+    }
+  }
+  .B {
+    background-color: #FFF;
+    .van-col {
+      color: #000;
+      font-size: 13px;
+      line-height: 30px;
+      text-align: center;
+      background-clip: content-box;
+      border: 1px solid #CCC
+    }
+  }
+  
+}
+
+
 </style>
 <template>
 <view>
-  <view></view>
+  <van-cell-group custom-class="margin">
+    <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="评估对象 :" value="{{tcCreditAntiFraudList.creditAntiFraudReference.companyName}}"/>
+    <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="项目名称 :" value="{{tcCreditAntiFraudList.creditAntiFraudReference.companyName}}"/>
+    <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="评估日期 :" value="{{tcCreditAntiFraudList.createTime}}"/>
+    <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="评估机构 :" value="{{tcCreditAntiFraudList.creditAntiFraudReference.companyName}}"/>
+    <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="反 欺 诈 :" value="{{tcCreditAntiFraudList.antiFraud}}"/>
+    <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业等级 :" value="{{tcCreditAntiFraudList.grade}}"/>
+    <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="评 分 :" value="{{tcCreditAntiFraudList.score}}"/>
+  </van-cell-group>
+  <van-panel custom-class="margin" title="信息验证概要" desc="企业，法人信息验证">
+    <view class="tb">
+      <van-row custom-class="A">
+        <van-col span="8">验证项</van-col>
+        <van-col span="8">是否通过</van-col>
+        <van-col span="8">拒绝原因</van-col>
+      </van-row>
+      <van-row custom-class="B">
+        <van-col span="24">企业</van-col>
+      </van-row>
+      <van-row custom-class="B">
+        <van-col span="8">验证项</van-col>
+        <van-col span="8">是否通过</van-col>
+        <van-col span="8">拒绝原因</van-col>
+      </van-row>
+    </view>
+  </van-panel>
 </view>  
 </template>
 <script>
@@ -24,8 +95,8 @@ export default class Setting extends wepy.page {
       'van-radio-group': '../../components/van/radio-group/index',
       'van-collapse': '../../components/van/collapse/index',
       'van-collapse-item': '../../components/van/collapse-item/index',
-      'van-checkbox': '../../components/van/checkbox/index',
-      'van-checkbox-group': '../../components/van/checkbox-group/index'
+      "van-row": "../../components/van/row/index",
+      "van-col": "../../components/van/col/index"
     }
   }
 

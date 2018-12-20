@@ -331,6 +331,7 @@ export default class Project extends wepy.page {
       this.$apply()
     },
     saveMember(value) {
+      console.log(this.memberList, value)
       this.memberList.push(value)
       console.log(this.memberList)
       this.showMember = false
@@ -451,7 +452,7 @@ export default class Project extends wepy.page {
   }
 
   
-  onShow() {
+  onLoad() {
     this.getCity()
     this.getInfo()
   }

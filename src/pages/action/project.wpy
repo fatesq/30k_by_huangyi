@@ -260,6 +260,7 @@ export default class Project extends wepy.page {
       this.$apply()
     },
     bindMultiPickerColumnChange: function (e) {
+      console.log(e)
       if (e.detail.column == 0) {
         this.changeB(this.listA[0][e.detail.value].id)
       } else if (e.detail.column == 1){
@@ -315,11 +316,12 @@ export default class Project extends wepy.page {
         urls: this.data.files // 需要预览的图片http链接列表
       })
     },
-    changeB(id) {
-      this.getCityB(id)
-    }
   }
 
+  changeB(id) {
+    this.getCityB(id)
+  }
+  
   async toNext() {
     if (!this.imageUrl || this.files.length < 1) {
       utils.alert('有未上传图片')

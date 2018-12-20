@@ -11,7 +11,7 @@
       id="point"
       value="{{point}}"
       type="number"
-      label="占"
+      label="曾经营同类项目"
       placeholder="0"
       bind:change="onChange"
       use-button-slot
