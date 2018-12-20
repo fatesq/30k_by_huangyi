@@ -95,7 +95,7 @@ export default class Demo extends wepy.page {
     bindMultiPickerColumnChange: function (e) {
       if (e.detail.column == 0) {
         this.$emit('changeB', this.listA[0][e.detail.value].id)
-      } else {
+      } else if (e.detail.column == 1) {
         this.$emit('changeC', this.listA[1][e.detail.value].id)
       }
     },

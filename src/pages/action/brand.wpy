@@ -225,7 +225,7 @@ export default class Brand extends wepy.page {
     bindMultiPickerColumnChange: function (e) {
       if (e.detail.column == 0) {
         this.changeB(this.listA[0][e.detail.value].id)
-      } else {
+      } else if (e.detail.column == 1) {
         this.getCityC(this.listA[1][e.detail.value].id)
       }
     },
@@ -308,7 +308,6 @@ export default class Brand extends wepy.page {
       })
       if (json.data.code === 'success') {
         this.listA[2] = json.data.data
-        console.log(this.listA)
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)

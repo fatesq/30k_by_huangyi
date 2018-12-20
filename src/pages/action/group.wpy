@@ -241,6 +241,8 @@ export default class Project extends wepy.page {
     bindMultiPickerColumnChange: function (e) {
       if (e.detail.column == 0) {
         this.changeB(this.listA[0][e.detail.value].id)
+      }  else if (e.detail.column == 1) {
+        this.getCityC(this.listA[1][e.detail.value].id)
       }
     },
     bindMultiPickerChange1(e) {
@@ -252,7 +254,7 @@ export default class Project extends wepy.page {
     bindMultiPickerColumnChange1: function (e) {
       if (e.detail.column == 0) {
         this.changeB(this.listA[0][e.detail.value].id)
-      } else {
+      } else if (e.detail.column == 1) {
         this.getCityC(this.listA[1][e.detail.value].id)
       }
     },

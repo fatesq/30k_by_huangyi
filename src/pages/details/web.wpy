@@ -2,7 +2,7 @@
 </style>
 <template>
 <view>
- 
+  <view></view>
 </view>  
 </template>
 <script>
@@ -29,15 +29,33 @@ export default class Setting extends wepy.page {
     }
   }
 
+  data = {
+    tcCreditAntiFraudList: {},
+  }
+
+  async getInfo(id) {
+    try {
+      const json = await api.getRisk({
+        method: 'GET',
+        query: {
+            projectId: 'a7443bcd-49ca-4349-8aa4-4df90a1935aa' // option.id
+        }
+      })
+      if (json.data.code === 'success') {
+        this.tcCreditAntiFraudList = json.data.data.tcCreditAntiFraudList
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg || json.data.description)
+      }
+    } catch (e) {
+      utils.alert('系统异常')
+    }
+  }
+
 
   onLoad(option) {
     this.id = option.id
-    api.getRisk({
-        method: 'GET',
-        query: {
-            projectId: option.id
-        }
-    })
+    this.getInfo(option.id)
     this.$apply();
   }
 }
