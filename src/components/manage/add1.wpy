@@ -6,7 +6,7 @@
   <van-cell-group custom-class="panel-box" >
     <van-field
       id="name"
-      label="产品技术名"
+      label="产品(技术)名"
       placeholder=""
       bind:change="onInput"
     />

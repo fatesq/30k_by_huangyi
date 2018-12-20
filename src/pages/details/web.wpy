@@ -102,6 +102,7 @@ export default class Setting extends wepy.page {
 
   data = {
     tcCreditAntiFraudList: {},
+    creditInfoVerifySummary: {},
   }
 
   async getInfo(id) {
@@ -114,6 +115,7 @@ export default class Setting extends wepy.page {
       })
       if (json.data.code === 'success') {
         this.tcCreditAntiFraudList = json.data.data.tcCreditAntiFraudList
+        this.creditInfoVerifySummary = json.data.data.creditInfoVerifySummary
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)

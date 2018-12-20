@@ -208,7 +208,7 @@ page {
       </van-cell>
     </van-cell-group>
     <view class="fix">
-      <button type="warn" @tap="toNext">保存</button>
+      <button type="warn" @tap="toNext">下一步</button>
     </view>
   </view>
   <List wx:if="{{show1}}" :list.sync="list"/>
