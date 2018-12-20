@@ -63,7 +63,7 @@ export default class Nature extends wepy.page {
         return
       }
       this.$emit('saveJob', this.id, this.value, this.value2);
-      this.value = ''
+      this.value = '请选择职业分布'
       this.value2 = ''
       this.$apply()
     },

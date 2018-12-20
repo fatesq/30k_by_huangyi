@@ -157,7 +157,7 @@ page {
     <van-panel wx:if="{{publicFlag == 1}}" custom-class="panel-box" title="特征分布">
       <view>
         <van-swipe-cell right-width="{{ 65 }}" wx:for="{{featuresDistribution}}" wx:key="index" async-close bind:close="closeSwiper({{index}},featuresDistribution)">
-        <view class="item" wx:for="{{featuresDistribution}}" wx:key="index">
+        <view class="item">
          {{item.name}}占{{item.count}}%
         </view>
         <view slot="right">删除</view>

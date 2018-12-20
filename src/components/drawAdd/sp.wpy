@@ -40,7 +40,7 @@ export default class Nature extends wepy.page {
   }
 
   data = {
-    value: '请选择职业分布',
+    value: '请选择特征分布',
     value2: '',
     id: ''
   }
@@ -63,7 +63,7 @@ export default class Nature extends wepy.page {
         return
       }
       this.$emit('saveSp', this.id, this.value, this.value2);
-      this.value = '请选择职业分布'
+      this.value = '请选择特征分布'
       this.value2 = ''
       this.$apply()
     },

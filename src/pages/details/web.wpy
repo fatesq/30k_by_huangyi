@@ -10,11 +10,13 @@ page {
 }
 .title {
   display: flex;
-  justify-content: space-around;
-  flex: 1 1 25% !important;
+  text-align: right;
+  justify-content: flex-end;
+  flex: 0 160rpx !important;
 }
 .value {
-  flex: 1 1 75% !important;
+  padding-left: 20rpx;
+  flex: 0 570rpx !important;
   text-align: left !important;
 }
 .tb {
@@ -44,7 +46,9 @@ page {
   
 }
 
-
+.one {
+  white-space: nowrap;text-overflow:ellipsis;overflow: hidden;
+}
 </style>
 <template>
 <view>
@@ -65,14 +69,93 @@ page {
         <van-col span="8">拒绝原因</van-col>
       </van-row>
       <van-row custom-class="B">
-        <van-col span="24">企业</van-col>
+        <van-col span="24">{{creditInfoVerifySummary.verifyEnterpriseInfo.name}}</van-col>
       </van-row>
       <van-row custom-class="B" wx:for="{{creditInfoVerifySummary.verifyEnterpriseInfo.creditInfoVerifyDetailList}}" wx:key='index'>
         <van-col span="8">{{item.verifyItem}}</van-col>
         <van-col span="8">{{item.result}}</van-col>
         <van-col span="8">{{item.resultMsg }}</van-col>
       </van-row>
+      <van-row custom-class="B">
+        <van-col span="24">法人——{{creditInfoVerifySummary.verifyRepresentativeInfo.name}}</van-col>
+      </van-row>
+      <van-row custom-class="B" wx:for="{{creditInfoVerifySummary.verifyRepresentativeInfo.creditInfoVerifyDetailList}}" wx:key='index'>
+        <van-col span="8" custom-class="one">{{item.verifyItem}}</van-col>
+        <van-col span="8">{{item.result}}</van-col>
+        <van-col span="8">{{item.resultMsg }}</van-col>
+      </van-row>
+      <view wx:for="{{creditInfoVerifySummary.verifyEnterpriseMemberInfo}}" wx:key="index">
+        <van-row custom-class="B">
+          <van-col span="24">高管——{{item.name}}</van-col>
+        </van-row>
+        <van-row custom-class="B" wx:for="{{item.creditInfoVerifyDetailList}}" wx:key='index2'>
+          <van-col span="8" custom-class="one">{{item.verifyItem}}</van-col>
+          <van-col span="8">{{item.result}}</van-col>
+          <van-col span="8">{{item.resultMsg }}</van-col>
+        </van-row>
+      </view>
     </view>
+  </van-panel>
+  <van-panel custom-class="margin" title="报告主要内容" desc="● 工商注册信息">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcBasic}}">
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="统一社会信用码:" value="{{tcEnterpriseBusinessInfo.uniformCreditCode}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册名称:" value="{{item.entname}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="法人代表:" value="{{item.frname}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册资本(万元):" value="{{item.regcap}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册日期:" value="{{item.esdate}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="经营期限:" value="{{item.opfrom}}-{{item.opto}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="登记地址:" value="{{item.dom}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册机关:" value="{{item.regorg}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="营业状态:" value="{{item.entstatus}}"/>
+    </van-cell-group>
+  </van-panel>
+
+   <van-panel custom-class="margin" title=" " desc="● 股东构成">
+    <view class="tb">
+     <van-row custom-class="A">
+        <van-col span="8">股东名称</van-col>
+        <van-col span="8">认缴出资金额(万元)</van-col>
+        <van-col span="8">股权占比</van-col>
+      </van-row>
+      <van-row custom-class="B" wx:for="{{tcEnterpriseBusinessInfo.tcShareholder}}" wx:key='index'>
+        <van-col span="8" custom-class="one">{{item.shaname}}</van-col>
+        <van-col span="8">{{item.subconam}}</van-col>
+        <van-col span="8">{{item.fundedratio }}</van-col>
+      </van-row>
+    </view>
+  </van-panel>
+
+  <van-panel custom-class="margin" title=" " desc="● 企业对外投资信息">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcEntinv}}">
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="投资对象企业:" value="{{item.entname}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册资本(万元):" value="{{item.regcap}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="出资金额(万元):" value="{{item.subconam}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="出资比例:" value="{{item.fundedratio}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业状态:" value="{{item.entstatus}}"/>
+    </van-cell-group>
+  </van-panel>
+
+  <van-panel custom-class="margin" title=" " desc="● 法人代表在其他企业任职">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcFrposition}}">
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业名称:" value="{{item.entname}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册资本(万元):" value="{{item.regcap}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="担任职务:" value="{{item.position}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业状态:" value="{{item.entstatus}}"/>
+    </van-cell-group>
+  </van-panel>
+
+  <van-panel custom-class="margin" title=" " desc="● 法人代表对外投资">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcFrposition}}">
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="投资对象企业:" value="{{item.entname}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册资本(万元):" value="{{item.regcap}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="出资金额(万元):" value="{{item.subconam}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="出资比例:" value="{{item.fundedratio}}"/>
+      <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业状态:" value="{{item.entstatus}}"/>
+    </van-cell-group>
   </van-panel>
 </view>  
 </template>
@@ -103,6 +186,7 @@ export default class Setting extends wepy.page {
   data = {
     tcCreditAntiFraudList: {},
     creditInfoVerifySummary: {},
+    tcEnterpriseBusinessInfo: {},
   }
 
   async getInfo(id) {
@@ -116,6 +200,7 @@ export default class Setting extends wepy.page {
       if (json.data.code === 'success') {
         this.tcCreditAntiFraudList = json.data.data.tcCreditAntiFraudList
         this.creditInfoVerifySummary = json.data.data.creditInfoVerifySummary
+        this.tcEnterpriseBusinessInfo = json.data.data.tcEnterpriseBusinessInfo
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)
