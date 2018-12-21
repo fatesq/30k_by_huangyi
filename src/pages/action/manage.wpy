@@ -248,7 +248,7 @@ export default class Manage extends wepy.page {
 
   data = {
     info: {
-      industryCareful: '',
+      industryCareful: [],
       scale: '',
       riseRate: '',
       score1: 3,
@@ -279,7 +279,7 @@ export default class Manage extends wepy.page {
     show2: false,
     show3: false,
     list: [],
-    id: '',
+    id: [],
   }
 
   methods = {
