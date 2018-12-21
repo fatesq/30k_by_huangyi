@@ -65,8 +65,8 @@ page {
 
   <van-panel custom-class="panel-box" title="投资人条件">
     <van-cell-group>
-      <van-cell title="籍贯" value="{{info.nativePlace}}" />
-      <van-cell title="常驻地" value="{{info.address}}"/>
+      <van-cell title="籍贯" value="{{info.nativePlace == 'undefined'? '' : info.nativePlace }}" />
+      <van-cell title="常驻地" value="{{info.address == 'undefined'? '' : info.address }}"/>
       <van-cell title="邀请参与" value="{{info.invitationFlag == 1 ? '否': '是'}}"/>
     </van-cell-group>
   </van-panel>  

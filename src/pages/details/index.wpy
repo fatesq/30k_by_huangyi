@@ -51,7 +51,7 @@ page {
 }  
 </style>
 <template>
-<view>
+<view style="padding-bottom: 50px">
   <view class="item">
     <view class="title">
       <image class="img" mode="aspectFill" src="{{info.imageUrl}}" />
