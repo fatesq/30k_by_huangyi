@@ -97,7 +97,7 @@ page {
     </view>
   </van-panel>
   <van-panel custom-class="margin" title="报告主要内容" desc="● 工商注册信息">
-    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcBasic}}">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcBasic}}" wx:key='index'>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="统一社会信用码:" value="{{tcEnterpriseBusinessInfo.uniformCreditCode}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册名称:" value="{{item.entname}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
@@ -127,7 +127,7 @@ page {
   </van-panel>
 
   <van-panel custom-class="margin" title=" " desc="● 企业对外投资信息">
-    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcEntinv}}">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcEntinv}}" wx:key='index'>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="投资对象企业:" value="{{item.entname}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册资本(万元):" value="{{item.regcap}}"/>
@@ -138,7 +138,7 @@ page {
   </van-panel>
 
   <van-panel custom-class="margin" title=" " desc="● 法人代表在其他企业任职">
-    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcFrposition}}">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcFrposition}}" wx:key='index'>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业名称:" value="{{item.entname}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册资本(万元):" value="{{item.regcap}}"/>
@@ -148,7 +148,7 @@ page {
   </van-panel>
 
   <van-panel custom-class="margin" title=" " desc="● 法人代表对外投资">
-    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcFrposition}}">
+    <van-cell-group custom-class="margin" wx:for="{{tcEnterpriseBusinessInfo.tcFrinv}}" wx:key='index'>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="投资对象企业:" value="{{item.entname}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="企业类型:" value="{{item.enttype}}"/>
       <van-cell custom-class="cell" title-class="title" value-class="value" border="{{false}}" title="注册资本(万元):" value="{{item.regcap}}"/>
@@ -184,9 +184,25 @@ export default class Setting extends wepy.page {
   }
 
   data = {
-    tcCreditAntiFraudList: {},
-    creditInfoVerifySummary: {},
-    tcEnterpriseBusinessInfo: {},
+    tcCreditAntiFraudList: {
+
+    },
+    creditInfoVerifySummary: {
+      // verifyEnterpriseInfo: {
+      //   creditInfoVerifyDetailList: []
+      // },
+      // verifyRepresentativeInfo: {
+      //   creditInfoVerifyDetailList: []
+      // },
+      // verifyEnterpriseMemberInfo: []
+    },
+    tcEnterpriseBusinessInfo: {
+      // tcBasic: [],
+      // tcShareholder: [],
+      // tcEntinv: [],
+      // tcFrposition: [],
+      // tcFrinv: [],
+    },
   }
 
   async getInfo(id) {
@@ -194,7 +210,7 @@ export default class Setting extends wepy.page {
       const json = await api.getRisk({
         method: 'GET',
         query: {
-            projectId: option.id  // 'a7443bcd-49ca-4349-8aa4-4df90a1935aa'
+            projectId: id  // 'a7443bcd-49ca-4349-8aa4-4df90a1935aa'
         }
       })
       if (json.data.code === 'success') {
@@ -206,6 +222,7 @@ export default class Setting extends wepy.page {
         utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
+      console.log(e)
       utils.alert('系统异常')
     }
   }

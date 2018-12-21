@@ -4,10 +4,10 @@
 <template>
 <view>
   <van-cell-group>
-    <picker bindchange="bindPickerChange" range="{{array}}">
+    <picker bindchange="bindPickerChange" range="{{array}}" range-key="name">
       <van-field
         readonly
-        value="{{ array[value] }}"
+        value="{{ array[value].name }}"
         placeholder="请选择性质分布"
         border="{{ false }}"
       />
@@ -61,6 +61,7 @@ export default class Nature extends wepy.page {
       this.$emit('cancelAll')
     },
     bindPickerChange(e) {
+      console.log(e)
      this.value = e.detail.value
      this.$apply()
     },
@@ -73,7 +74,7 @@ export default class Nature extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
-      this.$emit('nature', this.value, this.array[this.value], this.value2);
+      this.$emit('nature', this.array[this.value].code, this.array[this.value].name, this.value2);
       this.value = ''
       this.value2 = ''
       this.$apply()

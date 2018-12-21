@@ -90,6 +90,8 @@ export default class Login extends wepy.page {
           });
           if (json.data.code === 'success') {
             wx.setStorageSync('token', json.data.token)
+            wx.setStorageSync('openId', json.data.openId)
+            wx.setStorageSync('id', json.data.data.id)
             wx.switchTab({ url: 'search' })
             this.$apply()
           } else {

@@ -335,7 +335,7 @@ export default class Draw extends wepy.page {
     try {
       const json = await api.loadAllNature()
       if (json.data.code == 'success') {
-        this.natureList = json.data.data.map(res=> res.name)
+        this.natureList = json.data.data
         this.$apply()
       } else {
          utils.alert(json.data.msg || json.data.description)
