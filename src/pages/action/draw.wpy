@@ -173,7 +173,7 @@ page {
     </view>
   </view>
   <SaveTime wx:if="{{saveTimeShow}}"/>
-  <Nature wx:if="{{showNature}}" />
+  <Nature wx:if="{{showNature}}" :array.sync="natureList" />
   <Scale wx:if="{{showScale}}"/>
   <Industry wx:if="{{showIndustry}}" />
   <List wx:if="{{showList}}" :list.sync="list"/>
@@ -262,7 +262,8 @@ export default class Draw extends wepy.page {
     showJob: false,
     occupationDistribution: [],
     showSp: false,
-    featuresDistribution: []
+    featuresDistribution: [],
+    natureList: []
   }
 
   computed = {
@@ -328,6 +329,25 @@ export default class Draw extends wepy.page {
       }
       
     }
+  }
+
+  async getNature() {
+    try {
+      const json = await api.loadAllNature()
+      if (json.data.code == 'success') {
+        this.natureList = json.data.data.map(res=> res.name)
+        this.$apply()
+      } else {
+         utils.alert(json.data.msg || json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
+  onLoad() {
+    this.getNature()
   }
 
   async getInfo(id) {

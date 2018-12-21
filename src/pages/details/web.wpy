@@ -194,7 +194,7 @@ export default class Setting extends wepy.page {
       const json = await api.getRisk({
         method: 'GET',
         query: {
-            projectId: 'a7443bcd-49ca-4349-8aa4-4df90a1935aa' // option.id
+            projectId: option.id  // 'a7443bcd-49ca-4349-8aa4-4df90a1935aa'
         }
       })
       if (json.data.code === 'success') {

@@ -11,12 +11,14 @@
       id="point"
       value="{{point}}"
       type="number"
+      title-width="110px"
+      maxlength="3"
       label="曾经营同类项目"
       placeholder="0"
       bind:change="onChange"
       use-button-slot
     >
-      <text slot="button">%</text>
+      <text slot="button">例</text>
     </van-field>
   </van-cell-group>
   <view class="fix">

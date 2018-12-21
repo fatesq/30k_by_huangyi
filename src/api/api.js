@@ -91,6 +91,8 @@ const getRisk = (params) => wxRequest(params, `${url}/risk/getRisk`)
 
 const loadAllProjectByActorId = (params) => wxRequest(params, `${url}/searchProject/loadAllProjectByActorId`)
 
+const loadAllNature = (params) => wxRequest(params, `${url}/searchProject/loadAllNature`)
+
 module.exports = {
   url,
   login,
@@ -134,5 +136,6 @@ module.exports = {
   sendCheckCode,
   addRisk,
   getRisk,
-  loadAllProjectByActorId
+  loadAllProjectByActorId,
+  loadAllNature
 }

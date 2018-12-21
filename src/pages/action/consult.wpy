@@ -184,9 +184,9 @@ export default class BrandAbout extends wepy.page {
           method: 'FORM',
           query: {
             projectId: wx.getStorageSync('pId'),
-            creditCode:  wx.getStorageSync('enterpriseSocialNum'),
-            financingAmount: wx.getStorageSync('financingAmount'),
-            belongIndustry: wx.getStorageSync('belongIndustry')
+            // creditCode:  wx.getStorageSync('enterpriseSocialNum'),
+            // financingAmount: wx.getStorageSync('financingAmount'),
+            // belongIndustry: wx.getStorageSync('belongIndustry')
           }
         })
         if (json.data.code === 'success') {

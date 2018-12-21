@@ -42,8 +42,16 @@ export default class Nature extends wepy.page {
     }
   }
 
+  props = {
+    array: {
+        type: Array,
+        twoWay: true,
+        default: [],
+    },
+  }
+
   data = {
-    array: ['机关', '事业单位', '中共编办直接管理机构编制的群众团体', '社会团体'],
+    // array: ['机关', '事业单位', '中共编办直接管理机构编制的群众团体', '社会团体'],
     value: '',
     value2: ''
   }
