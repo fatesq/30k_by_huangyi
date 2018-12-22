@@ -39,7 +39,7 @@ page {
       <van-field
         id="scale"
         value="{{info.scale}}"
-        type="number"
+        type="digit"
         label="规模总量"
         placeholder="请输入规模总量"
         bind:change="onChange"
@@ -50,7 +50,7 @@ page {
       <van-field
         id="riseRate"
         value="{{info.riseRate}}"
-        type="number"
+        type="digit"
         label="近三年平均增长率"
         placeholder="请输入平均增长率"
         bind:change="onChange"
@@ -103,19 +103,19 @@ page {
         />
       </van-cell>
       <van-panel title="预测用户数">
-        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="monthFrom" startValue="{{info.monthFrom}}" end="位" endValue="{{info.forecastCustomerTo}}" endId="forecastCustomerTo" bind:change='onChildChange' />
+        <interval type="digit" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="monthFrom" startValue="{{info.monthFrom}}" end="位" endValue="{{info.forecastCustomerTo}}" endId="forecastCustomerTo" bind:change='onChildChange' />
       </van-panel>
       <van-panel title="预测用户活跃度(产品或服务使用频率)">
-        <interval type="number" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="activeMonthFrom" startValue="{{info.activeMonthFrom}}" end="人次/天" endId="forecastActiveCustomerTo" endValue="{{info.forecastActiveCustomerTo}}" bind:change='onChildChange' />
+        <interval type="digit" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="activeMonthFrom" startValue="{{info.activeMonthFrom}}" end="人次/天" endId="forecastActiveCustomerTo" endValue="{{info.forecastActiveCustomerTo}}" bind:change='onChildChange' />
       </van-panel>
     </van-cell-group>
 
     <van-cell-group custom-class="panel-box" >
-      <interval type="number" start='产品持续研发成本' startId="keepDevelopmentCostFrom" startValue="{{info.keepDevelopmentCostFrom}}" end="万元/月" endId="keepDevelopmentCostTo" endValue="{{info.keepDevelopmentCostTo}}"  bind:change='onChildChange' />
-      <interval type="number" start='基础设施维护成本' startId="basicEquipmentCostFrom" startValue="{{info.basicEquipmentCostFrom}}" end="万元/月" endId="basicEquipmentCostTo" endValue="{{info.basicEquipmentCostTo}}"  bind:change='onChildChange' />
-      <interval type="number" start='营销推广成本' startId="spreadCostFrom" startValue="{{info.spreadCostFrom}}" end="万元/月" endId="spreadCostTo" endValue="{{info.spreadCostTo}}"  bind:change='onChildChange' />
-      <interval type="number" start='预测访问流量' startId="forecastPersonFrom" startValue="{{info.forecastPersonFrom}}" end="万元/月" endId="forecastPersonTo" endValue="{{info.forecastPersonTo}}" bind:change='onChildChange' />
-      <van-cell type="number" title="营销能力评估">
+      <interval type="digit" start='产品持续研发成本' startId="keepDevelopmentCostFrom" startValue="{{info.keepDevelopmentCostFrom}}" end="万元/月" endId="keepDevelopmentCostTo" endValue="{{info.keepDevelopmentCostTo}}"  bind:change='onChildChange' />
+      <interval type="digit" start='基础设施维护成本' startId="basicEquipmentCostFrom" startValue="{{info.basicEquipmentCostFrom}}" end="万元/月" endId="basicEquipmentCostTo" endValue="{{info.basicEquipmentCostTo}}"  bind:change='onChildChange' />
+      <interval type="digit" start='营销推广成本' startId="spreadCostFrom" startValue="{{info.spreadCostFrom}}" end="万元/月" endId="spreadCostTo" endValue="{{info.spreadCostTo}}"  bind:change='onChildChange' />
+      <interval type="digit" start='预测访问流量' startId="forecastPersonFrom" startValue="{{info.forecastPersonFrom}}" end="万元/月" endId="forecastPersonTo" endValue="{{info.forecastPersonTo}}" bind:change='onChildChange' />
+      <van-cell type="digit" title="营销能力评估">
         <van-stepper
           id="score3"
           value="{{ info.score3 }}"
@@ -144,7 +144,7 @@ page {
       <van-field
         id="nowShare"
         value="{{ info.nowShare }}"
-        type="number"
+        type="digit"
         label="当前市场份额"
         placeholder="请输入当前市场份额"
         bind:change="onChange"
@@ -155,7 +155,7 @@ page {
       <van-field
         id="nowIndustryRanking"
         value="{{ info.nowIndustryRanking }}"
-        type="number"
+        type="digit"
         label="业内排名"
         placeholder="请输入业内排名"
         bind:change="onChange"
@@ -166,7 +166,7 @@ page {
       <van-field
         id="goalShare"
         value="{{ info.goalShare }}"
-        type="number"
+        type="digit"
         label="目标市场份额"
         placeholder="请输入目标市场份额"
         bind:change="onChange"
@@ -177,7 +177,7 @@ page {
       <van-field
         id="goalIndustryRanking"
         value="{{ info.goalIndustryRanking }}"
-        type="number"
+        type="digit"
         label="业内排名"
         placeholder="请输入业内排名"
         bind:change="onChange"

@@ -8,6 +8,7 @@
       id="value2"
       label="女性占"
       placeholder="0"
+      type="digit"
       bind:change="onInput"
       use-button-slot
     >

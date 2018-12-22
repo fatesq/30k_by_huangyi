@@ -323,7 +323,7 @@ export default class Project extends wepy.page {
   }
   
   async toNext() {
-    if (!this.imageUrl || this.files.length < 1) {
+    if (!this.imageUrl) {
       utils.alert('有未上传图片')
       return false
     }

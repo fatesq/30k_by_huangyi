@@ -135,6 +135,7 @@ page {
       id="teamHoldCount"
       label="经营团队持股"
       placeholder="请输入经营团队持股"
+      type="digit"
       bind:change="onChange"
       use-button-slot
     >

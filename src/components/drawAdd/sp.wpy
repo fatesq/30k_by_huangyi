@@ -14,6 +14,7 @@
       label="占"
       placeholder="0"
       bind:change="onInput"
+      type="digit"
       use-button-slot
     >
       <text slot="button">%</text>

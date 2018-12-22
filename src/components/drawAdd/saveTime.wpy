@@ -53,7 +53,7 @@
       > 
         年占
       </view>
-      <input id="num" type="{{type}}" placeholder="0" bindinput="onInput"/>
+      <input id="num" type="digit" placeholder="0" bindinput="onInput"/>
       <view
         style="{{ endStyle }}"
         class="van-cell__title title-class"

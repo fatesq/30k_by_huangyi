@@ -15,8 +15,8 @@
     <van-cell-group>
       <van-field
         id="yearSale"
-        label="预测年营业收入"
-        placeholder="请输入年营业收入"
+        label="{{changeName}}"
+        placeholder="请输入"
         bind:change="onInput"
         use-button-slot
       >
@@ -24,7 +24,7 @@
       </van-field>
       <van-field
         id="saleRate"
-        label="参考市销率"
+        label="{{changeName2}}"
         placeholder="请输入参考市销率"
         bind:change="onInput"
       />
@@ -58,6 +58,43 @@ export default class Nature extends wepy.page {
     },
   }
 
+  computed = {
+    changeName: function () {
+       let type = '预测值'
+       switch(this.name) {
+        case 'PER估值法':
+          type = '预估年净利润'
+          break;
+        case 'PSR估值法':
+          type = '预估年营业收入'
+          break;
+        case 'PBR估值法':
+          type = '预估年净资产'
+          break;  
+        default:
+          break;  
+      }
+      return type;
+    },
+    changeName2: function () {
+       let type = '参考率'
+       switch(this.name) {
+        case 'PER估值法':
+          type = '参考市盈率'
+          break;
+        case 'PSR估值法':
+          type = '参考市销率'
+          break;
+        case 'PBR估值法':
+          type = '参考市净率'
+          break;  
+        default:
+          break;  
+      }
+      return type;
+    }
+  }
+
   data = {
     radio: '',
     name: '',
@@ -68,6 +105,7 @@ export default class Nature extends wepy.page {
   methods = {
      onClick(e) {
       this.radio = e.target.dataset.name
+      this.name = this.list.find(res => res.id == e.target.dataset.name).name
       this.$apply()
     },
     cancel() {
