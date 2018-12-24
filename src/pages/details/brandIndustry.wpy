@@ -46,9 +46,9 @@ page {
   </van-panel>
 
   <van-cell-group>
-    <van-cell title="绩优门店平均人流量" value="{{info.storePeople}}"/>
-    <van-cell title="绩优门店平均客流量" value="{{info.storeCustomer}}"/>
-    <van-cell title="目标市场份额" value="{{info.storeEfficiencyFrom}}~{{info.storeEfficiencyTo}}"/>
+    <van-cell title="绩优门店平均人流量" value="{{info.storePeople}}万人/月"/>
+    <van-cell title="绩优门店平均客流量" value="{{info.storeCustomer}}万人/月"/>
+    <van-cell title="目标市场份额" value="{{info.storeEfficiencyFrom}}~{{info.storeEfficiencyTo}}元/平米/月"/>
   </van-cell-group>
 </view>  
 </template>

@@ -72,9 +72,9 @@ page {
   </van-panel>  
 
   <van-cell-group custom-class="panel-box">
-    <van-cell title="经营团队持股" value="{{info.teamHoldCount}}"/>
-    <van-cell title="预计员工数" value="{{info.employeeCount}}"/>
-    <van-cell title="场地面积" value="{{info.area}}"/>
+    <van-cell title="经营团队持股" value="{{info.teamHoldCount}}%"/>
+    <van-cell title="预计员工数" value="{{info.employeeCount}}位"/>
+    <van-cell title="场地面积" value="{{info.area}}平方米"/>
   </van-cell-group>
 </view>
 </template>

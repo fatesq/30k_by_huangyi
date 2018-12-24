@@ -90,12 +90,12 @@ page {
   </van-cell-group>  
   <van-cell-group>
     <van-cell title="融资概况"/>
-    <van-cell title="总投资额" value="{{info.projectReference.totalInvestment}}"/>
-    <van-cell title="目标融资额" value="{{info.projectReference.goalInvestment}}"/>
-    <van-cell title="融资时限" value="{{info.projectReference.deadLine}}"/>
-    <van-cell title="出让股份" value="{{info.projectReference.sellShares}}"/>
-    <van-cell title="已投入资金" value="{{info.projectReference.investment}}"/>
-    <van-cell title="承诺出资" value="{{info.projectReference.promiseInvestment}}"/>
+    <van-cell title="总投资额" value="{{info.projectReference.totalInvestment}}万元"/>
+    <van-cell title="目标融资额" value="{{info.projectReference.goalInvestment}}万元"/>
+    <van-cell title="融资时限" value="{{info.projectReference.deadLine}}天"/>
+    <van-cell title="出让股份" value="{{info.projectReference.sellShares}}%"/>
+    <van-cell title="已投入资金" value="{{info.projectReference.investment}}万元"/>
+    <van-cell title="承诺出资" value="{{info.projectReference.promiseInvestment}}万元"/>
   </van-cell-group>
 
   <van-panel title="已投入凭据影印件">

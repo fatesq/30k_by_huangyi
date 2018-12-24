@@ -35,8 +35,8 @@ page {
 
   <van-panel custom-class="panel-box" title="市场行业规模">
     <van-cell-group>
-      <van-cell title="规模总量" value="{{info.scale}}"/>
-      <van-cell title="近三年平均增长率" value="{{info.riseRate}}"/>
+      <van-cell title="规模总量" value="{{info.scale}}亿元"/>
+      <van-cell title="近三年平均增长率" value="{{info.riseRate}}%"/>
     </van-cell-group>
   </van-panel>  
 
@@ -50,11 +50,11 @@ page {
   </van-panel>
 
   <van-cell-group custom-class="panel-box">
-    <van-cell title="预测客户活跃度" value="{{info.forecastActiveCustomerMonthCountFrom}}~{{info.forecastActiveCustomerTo}}"/>
-    <van-cell title="产品持续研发成本" value="{{info.keepDevelopmentCostFrom}}~{{info.keepDevelopmentCostTo}}"/>
-    <van-cell title="基础设施维护成本" value="{{info.basicEquipmentCostFrom}}~{{info.basicEquipmentCostTo}}"/>
-    <van-cell title="营销推广成本" value="{{info.spreadCostFrom}}~{{info.spreadCostTo}}"/>
-    <van-cell title="预测访问流量" value="{{info.forecastPersonFrom}}~{{info.forecastPersonTo}}"/>
+    <van-cell title="预测客户活跃度" value="{{info.forecastActiveCustomerMonthCountFrom}}至{{info.forecastActiveCustomerTo}}人次/天"/>
+    <van-cell title="产品持续研发成本" value="{{info.keepDevelopmentCostFrom}}至{{info.keepDevelopmentCostTo}}万元/月"/>
+    <van-cell title="基础设施维护成本" value="{{info.basicEquipmentCostFrom}}至{{info.basicEquipmentCostTo}}万元/月"/>
+    <van-cell title="营销推广成本" value="{{info.spreadCostFrom}}至{{info.spreadCostTo}}万元/月"/>
+    <van-cell title="预测访问流量" value="{{info.forecastPersonFrom}}至{{info.forecastPersonTo}}万人/月"/>
   </van-cell-group>
 
   <van-panel custom-class="panel-box" title="竞品分析">
@@ -67,10 +67,10 @@ page {
 
   <van-panel custom-class="panel-box" title="竞品格局">
     <van-cell-group>
-      <van-cell title="当前市场份额" value="{{info.nowShare}}"/>
-      <van-cell title="业内排名" value="{{info.nowIndustryRanking}}"/>
-      <van-cell title="目标市场份额" value="{{info.goalShare}}"/>
-      <van-cell title="业内排名" value="{{info.goalIndustryRanking}}"/>
+      <van-cell title="当前市场份额" value="{{info.nowShare}}%"/>
+      <van-cell title="业内排名" value="{{info.nowIndustryRanking}}位"/>
+      <van-cell title="目标市场份额" value="{{info.goalShare}}%"/>
+      <van-cell title="业内排名" value="{{info.goalIndustryRanking}}位"/>
       <van-panel title="核心竞争力">
          <view class="title">{{info.coreComplete}}</view>
       </van-panel>  
