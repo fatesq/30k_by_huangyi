@@ -83,7 +83,7 @@ page {
   <van-panel custom-class="panel-box" title="收入分布" wx:if="{{info[0].type == 1 }}">
     <view>
       <view class="item" wx:for="{{info}}" wx:key="index" wx:if="{{item.mId == 2 && item.type == 1}}">
-         年入{{item.dataFrom}}至{{this.dataTo}}万元占{{this.count}}%
+         年入{{item.dataFrom}}至{{item.dataTo}}万元占{{item.count}}%
       </view>
     </view>
   </van-panel>

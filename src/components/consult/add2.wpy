@@ -16,7 +16,7 @@
       <van-field
         id="yearSale"
         label="{{changeName}}"
-        placeholder="请输入"
+        placeholder="请输入预估值"
         bind:change="onInput"
         use-button-slot
       >
@@ -25,7 +25,7 @@
       <van-field
         id="saleRate"
         label="{{changeName2}}"
-        placeholder="请输入参考市销率"
+        placeholder="请输入参考率"
         bind:change="onInput"
       />
     </van-cell-group>  
