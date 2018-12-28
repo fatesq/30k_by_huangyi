@@ -140,7 +140,7 @@ page {
       </view>
     </van-panel>
 
-    <van-cell-group custom-class="panel-box" >
+    <van-panel custom-class="panel-box" title="竞争格局">
       <van-field
         id="nowShare"
         value="{{ info.nowShare }}"
@@ -206,7 +206,7 @@ page {
           bind:change="onChange"
         />
       </van-cell>
-    </van-cell-group>
+    </van-panel>
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
     </view>
