@@ -288,8 +288,16 @@ export default class Project extends wepy.page {
         utils.alert('请添加团队核心成员')
         return
       }
-      if (!this.teamHoldCount || !this.employeeCount || !this.area) {
-        utils.alert('有未填选的项目')
+      if (!this.teamHoldCount) {
+        utils.alert('请输入经营团队持股')
+        return
+      }
+      if (!this.employeeCount) {
+        utils.alert('请输入预计员工数')
+        return
+      }
+      if (!this.area) {
+        utils.alert('请输入场地面积')
         return
       }
       try {
