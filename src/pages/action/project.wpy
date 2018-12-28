@@ -323,8 +323,44 @@ export default class Project extends wepy.page {
   }
   
   async toNext() {
+    if (!this.info.name) {
+      utils.alert('请输入项目名称')
+      return false
+    }
     if (!this.imageUrl) {
-      utils.alert('有未上传图片')
+      utils.alert('请上传项目宣传形象图')
+      return false
+    }
+    if (!this.info.introduce) {
+      utils.alert('请输入项目概述')
+      return false
+    }
+    if (!this.info.areaName) {
+      utils.alert('请输入项目所在地')
+      return false
+    }
+    if (!this.info.totalInvestment) {
+      utils.alert('请输入项目总投资额')
+      return false
+    }
+    if (!this.info.goalInvestment) {
+      utils.alert('请输入项目目标投资额')
+      return false
+    }
+    if (!this.info.deadLine) {
+      utils.alert('请输入项目融资时限')
+      return false
+    }
+    if (!this.info.sellShares) {
+      utils.alert('请输入项目出让股份')
+      return false
+    }
+    if (!this.info.investment) {
+      utils.alert('请输入项目已投入资金,若无则填写0')
+      return false
+    }
+    if (!this.info.promiseInvestment) {
+      utils.alert('请输入项目承诺出资')
       return false
     }
     try {

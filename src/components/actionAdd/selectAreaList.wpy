@@ -50,7 +50,8 @@ export default class SelectAreaList extends wepy.page {
         twoWay: true,
         default: []
     },
-    area: []
+    area: [],
+    otherName: '',
   }
 
   methods = {
@@ -68,7 +69,7 @@ export default class SelectAreaList extends wepy.page {
       this.$apply()
     },
     otherChange(event) {
-      this.area = [event.detail]
+      this.otherName = event.detail
       this.$apply()
     },
     save() {
@@ -82,8 +83,10 @@ export default class SelectAreaList extends wepy.page {
           name.push(i.name)
         }
       })
-      console.log(name)
       
+      if (this.otherName) {
+        name.push(this.otherName)
+      }
       console.log(this.area)
       this.$emit('addList', name);
       this.$invoke('../AddArea', 'getList', this.area.join(','), name.join(','));

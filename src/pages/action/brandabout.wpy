@@ -184,12 +184,28 @@ export default class BrandAbout extends wepy.page {
   };
 
   async toNext() {
-    if (this.shopInfo.length < 1 || this.areaInfo.length < 1) {
-      utils.alert('有未添加的分布项目')
+    if (this.shopInfo.length < 1) {
+      utils.alert('请选择品牌所属店面所在地')
       return
     }
-    if (!this.storePeople || !this.storeCustomer || !this.storeEfficiency1 || !this.storeEfficiency2  ) {
-      utils.alert('有未填写的项目')
+    if (this.areaInfo.length < 1) {
+      utils.alert('请选择绩优门店周边环境分布')
+      return
+    }
+    if (!this.storePeople) {
+      utils.alert('请输入绩优门店平均人流量')
+      return
+    }
+    if (!this.storeCustomer) {
+      utils.alert('请输入绩优门店平均客流量')
+      return
+    }
+    if (!this.storePeople) {
+      utils.alert('请输入绩优门店平均人流量')
+      return
+    }
+    if (!this.storeEfficiency1 || !this.storeEfficiency2  ) {
+      utils.alert('请输入绩优门店的坪效')
       return
     }
     try {

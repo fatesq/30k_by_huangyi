@@ -93,7 +93,7 @@ page {
         id="score"
         value="{{ score }}"
         integer
-        min="1"
+        min="0"
         max="5"
         step="1"
         bind:change="onChange"
@@ -280,12 +280,16 @@ export default class Project extends wepy.page {
       console.log(index)
     },
     async toNext() {
-      if (this.memberList.length < 1) {
-        utils.alert('请添加团队成员')
+      if (!this.name) {
+        utils.alert('请输入企业名称')
         return
       }
-      if (!this.name || !this.teamHoldCount || !this.employeeCount || !this.area) {
-        utils.alert('有未填选 的项目')
+      if (this.memberList.length < 1) {
+        utils.alert('请添加团队核心成员')
+        return
+      }
+      if (!this.teamHoldCount || !this.employeeCount || !this.area) {
+        utils.alert('有未填选的项目')
         return
       }
       try {

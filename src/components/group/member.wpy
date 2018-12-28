@@ -102,7 +102,7 @@
     <van-panel title="宣传形象图">
       <view class="uploadBox" wx:if="{{!imageURL}}" bindtap="chooseImage">
         <view class="img">+</view>
-        <view class="info">支持jpg,png,gif三种格式，图片大小5MB以内</view>
+        <view class="info">图片长宽比例1:1,支持jpg,png,gif三种格式，图片大小5MB以内</view>
       </view>
       <view class="weui-uploader__bd" wx:if="{{imageURL}}">
         <view class="weui-uploader__files" id="uploaderFiles">
@@ -180,8 +180,8 @@ import api from '../../api/api'
 
 export default class Project extends wepy.page {
   data = {
-    array: ['未选择', '大学本科', '大学硕士', '大学博士', '大学专科', '普通高中', '初中及以下', '其他中等教育经历'],
-    array2: ['未选择', '初婚', '未婚', '复婚', '再婚', '离异', '丧偶'],
+    array: ['大学本科', '大学硕士', '大学博士', '大学专科', '普通高中', '初中及以下', '其他中等教育经历'],
+    array2: ['初婚', '未婚', '复婚', '再婚', '离异', '丧偶'],
     education: 0,
     marriage: 0,
     imageURL: '',

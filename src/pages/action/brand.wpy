@@ -232,10 +232,75 @@ export default class Brand extends wepy.page {
   }
 
   async toNext() {
-    if (Object.values(this.data).some(k => k == '')) {
-      utils.alert('有未填写的项目')
+    if (!this.name) {
+      utils.alert('请输入品牌名称')
       return
     }
+    if (!this.createUserName) {
+      utils.alert('请输入创始人姓名')
+      return
+    }
+    if (!this.createUserPhone) {
+      utils.alert('请输入创始人手机号')
+      return
+    }
+    if (!this.createUserIdCard) {
+      utils.alert('请输入创始人身份证')
+      return
+    }
+    if (!this.createDate) {
+      utils.alert('请选择创立日期')
+      return
+    }
+    if (!this.areaName) {
+      utils.alert('请选择总部所在地')
+      return
+    }
+    if (!this.direStore) {
+      utils.alert('请输入品牌直营店数量')
+      return
+    }
+    if (!this.joinStore) {
+      utils.alert('请输入品牌加盟店数量')
+      return
+    }
+    if (!this.representStore) {
+      utils.alert('请输入品牌代表门店名称')
+      return
+    }
+    if (!this.areaFrom || !this.areaTo) {
+      utils.alert('请输入品牌所属店面的场地面积')
+      return
+    }
+    if (!this.priceFrom || !this.priceTo) {
+      utils.alert('请输入品牌所属店面的客单价区间')
+      return
+    }
+    if (!this.investmentFrom || !this.investmentTo) {
+      utils.alert('请输入品牌所属店面的单店投资额')
+      return
+    }
+    if (!this.monthProfileFrom || !this.monthProfileTo) {
+      utils.alert('请输入品牌所属店面的月净利润')
+      return
+    }
+    if (!this.yearProfileFrom || !this.yearProfileTo) {
+      utils.alert('请输入品牌所属店面的年化投资回报率')
+      return
+    }
+    if (!this.backWeekFrom || !this.backWeekTo) {
+      utils.alert('请输入品牌所属店面的回本周期')
+      return
+    }
+    if (!this.failureRateFrom || !this.failureRateTo) {
+      utils.alert('请输入品牌所属店面的项目失败率')
+      return
+    }
+    
+    // if (Object.values(this.data).some(k => k == '')) {
+    //   utils.alert('有未填写的项目')
+    //   return
+    // }
     delete this.data.listA; 
     delete this.data.multiIndex; 
     try {
