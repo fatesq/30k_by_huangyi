@@ -315,7 +315,7 @@ export default class Brand extends wepy.page {
         }
       })
       if (json.data.code === 'success') {
-        wx.navigateTo({ url: 'brandabout' })
+        wx.navigateTo({ url: wx.getStorageSync('belongidustry') == 1 ? 'brandabout' : 'project' })
       } else {
         utils.alert(json.data.msg || json.data.description)
       }
