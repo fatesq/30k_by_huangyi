@@ -109,7 +109,7 @@ page {
         checked="{{ checked }}"
         bind:change="onChange"
       />
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange1" bindcolumnchange="bindMultiPickerColumnChange1" range-key="name" value="{{multiIndex1}}" range="{{listA}}">
+      <picker mode="multiSelector" wx:if="{{checked}}" bindchange="bindMultiPickerChange1" bindcolumnchange="bindMultiPickerColumnChange1" range-key="name" value="{{multiIndex1}}" range="{{listA}}">
         <van-cell title="请输入籍贯" value="{{nativePlace}}" is-link/>
       </picker>
       <van-switch-cell
@@ -118,7 +118,7 @@ page {
         checked="{{ checked2 }}"
         bind:change="onChange"
       />
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range-key="name" value="{{multiIndex}}" range="{{listA}}">
+      <picker mode="multiSelector" wx:if="{{checked2}}" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" range-key="name" value="{{multiIndex}}" range="{{listA}}">
         <van-cell title="请输入常驻地" value="{{address}}" is-link/>
       </picker>
       <van-switch-cell
@@ -199,8 +199,8 @@ export default class Project extends wepy.page {
     listA: [[],[]],
     multiIndex: [0, 0],
     multiIndex1: [0, 0],
-    array: ['未选择', '大学本科', '大学硕士', '大学博士', '大学专科', '普通高中', '初中及以下', '其他中等教育经历'],
-    array2: ['未选择', '初婚', '未婚', '复婚', '再婚', '离异', '丧偶'],
+    array: ['大学本科', '大学硕士', '大学博士', '大学专科', '普通高中', '初中及以下', '其他中等教育经历'],
+    array2: ['初婚', '未婚', '复婚', '再婚', '离异', '丧偶'],
     showMember: false,
     showExp: false,
     memberList: [],

@@ -88,11 +88,11 @@ page {
   </view>  
   <van-cell-group>
     <van-cell title="品牌概况" wx:if="{{info.brand.chainFlag == 0}}" is-link @tap="router('brand')"/>
-    <van-cell title="品牌行业相关" wx:if="{{info.brand.chainFlag == 0}}" is-link  @tap="router('brandIndustry')"/>
+    <van-cell title="品牌行业相关" wx:if="{{info.brand.chainFlag == 0 && info.industry.id != '276af76f-5158-457b-a9ae-efd34891d730'}}" is-link  @tap="router('brandIndustry')"/>
     <van-cell title="项目概况" is-link @tap="router('project')"/>
     <van-cell title="项目组织情况" is-link @tap="router('projectGroup')"/>
     <van-cell title="客户群体画像" is-link @tap="router('client')"/>
-    <van-cell title="行业项目相关" is-link @tap="router('industry')"/>
+    <van-cell title="行业项目相关" is-link wx:if="{{info.industry.id != 'c413822a-fbe3-459e-84f4-1a447f520c80'}}" @tap="router('industry')"/>
     <van-cell title="融资经营信息" is-link @tap="router('financ')"/>
   </van-cell-group>
 
