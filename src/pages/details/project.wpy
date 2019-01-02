@@ -118,7 +118,7 @@ import utils from '@/utils/utils'
 
 export default class Project extends wepy.page {
   config = {
-    navigationBarTitleText: '项目组织情况',
+    navigationBarTitleText: '项目概况',
     usingComponents: {
       "van-cell": "../../components/van/cell/index",
       'van-cell-group': '../../components/van/cell-group/index',

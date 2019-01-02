@@ -89,7 +89,7 @@ page {
   <van-cell-group>
     <van-cell title="品牌概况" wx:if="{{info.brand.chainFlag == 0}}" is-link @tap="router('brand')"/>
     <van-cell title="品牌行业相关" wx:if="{{info.brand.chainFlag == 0}}" is-link  @tap="router('brandIndustry')"/>
-    <van-cell title="项目组织情况" is-link @tap="router('project')"/>
+    <van-cell title="项目概况" is-link @tap="router('project')"/>
     <van-cell title="项目组织情况" is-link @tap="router('projectGroup')"/>
     <van-cell title="客户群体画像" is-link @tap="router('client')"/>
     <van-cell title="行业项目相关" is-link @tap="router('industry')"/>
