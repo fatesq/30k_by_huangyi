@@ -178,7 +178,7 @@ import exp from '../../components/group/exp'
 
 export default class Project extends wepy.page {
   config = {
-    navigationBarTitleText: '项目概况',
+    navigationBarTitleText: '项目组织情况',
     usingComponents: {
       'van-icon': '../../components/van/icon/index',
       'van-cell': '../../components/van/cell/index',

@@ -20,7 +20,7 @@ const projectStart = (params) => wxRequest(params, `${url}/saveProject/start`)
 const saveBrandStart = (params) => wxRequest(params, `${url}/saveProject/brandStart`)
 // 进件品牌行业相关
 const brandIndustryStart = (params) => wxRequest(params, `${url}/saveProject/brandIndustryStart`)
-// 进件项目概况
+// 进件项目组织情况
 const info = (params) => wxRequest(params, `${url}/saveProject/info`)
 // 进件项目组织情况
 const organization = (params) => wxRequest(params, `${url}/saveProject/organization`)
@@ -45,7 +45,7 @@ const loadProjectByCodeOrName = (params) => wxRequest(params, `${url}/searchProj
 const loadBrandByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadBrandByProjectId`)
 // 获取品牌行业相关
 const loadBrandIndustryByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadBrandIndustryByProjectId`)
-// 获取项目概况
+// 获取项目组织情况
 const loadProjectByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadProjectByProjectId`)
 // 获取项目组织概况
 const loadProjectOrganizationByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadProjectOrganizationByProjectId`)
