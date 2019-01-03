@@ -88,7 +88,7 @@ export default class SelectAreaList extends wepy.page {
         name.push(this.otherName)
       }
       console.log(this.area)
-      this.$emit('addList', name);
+      this.$emit('addList', this.area, name);
       this.$invoke('../AddArea', 'getList', this.area.join(','), name.join(','));
       this.$apply();
     },

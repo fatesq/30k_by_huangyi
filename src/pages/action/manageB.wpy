@@ -160,7 +160,9 @@ export default class Manage extends wepy.page {
       peopleCountFrom: '',
       forecastPersonFrom: '',
       forecasePersonTo: '',
-      name: []
+      name: [],
+      positionId: '',
+      positionName: '',
     },
     show1: false,
     show2: false,
@@ -202,7 +204,7 @@ export default class Manage extends wepy.page {
           query: {
             projectId: wx.getStorageSync('pId'),
             ...this.data.info,
-            name: JSON.stringify(this.info.name)
+            compelationName: JSON.stringify(this.info.name)
           }
         })
         if (json.data.code === 'success') {
@@ -288,8 +290,11 @@ export default class Manage extends wepy.page {
       this.show3 = false
       this.$apply()
     },
-    addList(name) {
+    addList(id,name) {
       // this.info.industryCareful = name
+      console.log(id, name)
+      this.info.positionId = JSON.stringify(id)
+      this.info.positionName = JSON.stringify(name)
       this.show2 = false;
       this.$apply();
     },
