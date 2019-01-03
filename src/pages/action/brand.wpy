@@ -98,7 +98,7 @@ page {
       <van-field
         id="hqSocialNum"
         label="总部统一社会信用代码"
-        placeholder="请输入信用代码"
+        placeholder="请输入总部统一社会信用代码"
         bind:change="onChange"
       />
     </van-cell-group>    
@@ -254,6 +254,10 @@ export default class Brand extends wepy.page {
     }
     if (!this.areaName) {
       utils.alert('请选择总部所在地')
+      return
+    }
+    if (!this.hqSocialNum) {
+      utils.alert('请输入总部统一社会信用代码')
       return
     }
     if (!this.direStore) {

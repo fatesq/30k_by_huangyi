@@ -189,7 +189,7 @@ export default class BrandAbout extends wepy.page {
       return
     }
     if (this.areaInfo.length < 1) {
-      utils.alert('请选择绩优门店周边环境分布')
+      utils.alert('请选择绩优门店的周边环境')
       return
     }
     if (!this.storePeople) {

@@ -108,7 +108,7 @@
   <van-panel title="宣传形象图">
     <view class="uploadBox" wx:if="{{!imageUrl}}" bindtap="chooseImage('imageUrl')">
       <view class="img">+</view>
-      <view class="info">支持jpg,png,gif三种格式，图片大小5MB以内</view>
+      <view class="info">图片长宽比例8：5，支持jpg,png,gif三种格式，图片大小5MB以内</view>
     </view>
     <view class="weui-uploader__bd" wx:if="{{imageUrl}}">
       <view class="weui-uploader__files" id="uploaderFiles">

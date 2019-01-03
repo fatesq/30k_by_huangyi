@@ -99,7 +99,7 @@
 <template>
 <view style="padding-bottom: 50px">
   <van-cell-group>
-    <van-panel title="宣传形象图">
+    <van-panel title="上传头像">
       <view class="uploadBox" wx:if="{{!imageURL}}" bindtap="chooseImage">
         <view class="img">+</view>
         <view class="info">图片长宽比例1:1,支持jpg,png,gif三种格式，图片大小5MB以内</view>

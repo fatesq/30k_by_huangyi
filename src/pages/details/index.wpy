@@ -147,6 +147,7 @@ export default class Details extends wepy.page {
         console.log(json)
       if (json.data.code == 'success') {
         this.info = json.data.data
+        wx.setStorageSync('industryId', this.info.industry.id)
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)

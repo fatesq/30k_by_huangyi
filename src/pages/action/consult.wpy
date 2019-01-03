@@ -87,10 +87,10 @@ page {
 
   <van-panel custom-class="panel-box" title="要素评估结果">
     <van-cell title="核心团队能力" value="{{obj.teamScore}}" />
-    <van-cell title="行业市场规模" value="{{obj.industryScore}}" />
-    <van-cell title="产品(技术)" value="{{obj.productScore}}" />
-    <van-cell title="营销能力" value="{{obj.saleScore}}" />
-    <van-cell title="竞争环境" value="{{obj.environmentScore}}" />
+    <van-cell title="行业市场规模" wx:if="{{indShow}}" value="{{obj.industryScore}}" />
+    <van-cell title="产品(技术)" wx:if="{{indShow}}" value="{{obj.productScore}}" />
+    <van-cell title="营销能力" wx:if="{{indShow}}" value="{{obj.saleScore}}" />
+    <van-cell title="竞争环境" wx:if="{{indShow}}" value="{{obj.environmentScore}}" />
   </van-panel>
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">
@@ -148,7 +148,8 @@ export default class BrandAbout extends wepy.page {
     spendPurpose: [],
     trialCalculation: [],
     document: '',
-    obj: {}
+    obj: {},
+    indShow: false
   }
 
   methods = {
@@ -258,6 +259,10 @@ export default class BrandAbout extends wepy.page {
   }
 
   onShow () {
+    if (wx.getStorageSync('industryId') == 'c413822a-fbe3-459e-84f4-1a447f520c80') {
+      this.indShow = true
+      this.$apply()
+    }
     this.getScore()
   }
 }
