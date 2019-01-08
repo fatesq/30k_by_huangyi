@@ -8,7 +8,7 @@
   <van-radio-group value="{{ value1 }}" bind:change="onSelect">
   <van-collapse value="{{ value2 }}" bind:change="onChange">
     <van-collapse-item  wx:for="{{ list }}"  wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
-      <van-cell wx:for="{{item.childrenList}}" wx:key="index" title="{{item.name}}" clickable data-name="{{item.id}},{{item.name}},{{item.belongIndustry}}" bind:click="onClick">
+      <van-cell wx:for="{{item.childrenList}}" wx:key="index" wx:if="{{item.isAttention == 1}}" title="{{item.name}}" clickable data-name="{{item.id}},{{item.name}},{{item.belongIndustry}}" bind:click="onClick">
         <van-radio checked-color="#E64340" name="{{item.id}},{{item.name}},{{item.belongIndustry}}" />
       </van-cell>
     </van-collapse-item>
@@ -39,6 +39,9 @@ export default class List extends wepy.page {
     }
   }
 
+  props = {
+    title: ''
+  };
 
   data = {
     list: [],
@@ -90,12 +93,26 @@ export default class List extends wepy.page {
       const json2 = await api.loadAllIndustry()
       if (json.data.code === 'success') {
         // this.value2 = json2.data.data.map(res => res.id)
-        this.value1 = json2.data.data.map(res => {
-          if (json.data.data.some(i =>i.id == res.id)) {
-            return res.id
-          }
-        })
-        this.list = json2.data.data
+        // this.value1 = json2.data.data.map(res => {
+        //   if (json.data.data.some(i =>i.id == res.id)) {
+        //     return res.id
+        //   }
+        // })
+        if (json.data.data.every(i => i.isAttention == 0)) {
+          wx.showModal({
+            title: '提示',
+            content: '请去设置目标行业',
+            success(res) {
+              if (res.confirm) {
+                wx.redirectTo({url: 'setting/ilist'})
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        } else {
+          this.list = json.data.data.filter(i => i.isAttention == 1)
+        }
         this.$apply()
       } else {
         utils.alert(json.data.description || json.data.msg)
@@ -106,7 +123,8 @@ export default class List extends wepy.page {
     }
   }
 
-  onLoad() {
+  onShow() {
+    console.log(this)
     this.showList()
   }
 }

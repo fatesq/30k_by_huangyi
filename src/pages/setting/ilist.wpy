@@ -54,12 +54,10 @@ export default class List extends wepy.page {
   
   methods = {
     onSelect(event) {
-      console.log(event)
       this.value1= event.detail
       this.$apply()
     },
     onChange(event) {
-      console.log(event)
       this.value2 = event.detail
       this.$apply()
     },
@@ -69,7 +67,6 @@ export default class List extends wepy.page {
       checkbox.toggle();
     },
     async save() {
-      console.log(this.value1)
       try {
         const json = await api.createIndustryInfo({
           method: 'FORM',
@@ -99,16 +96,18 @@ export default class List extends wepy.page {
           actorId: wx.getStorageSync('id')
         }
       })
-      const json2 = await api.loadAllIndustry()
+      // const json2 = await api.loadAllIndustry()
       if (json.data.code === 'success') {
-        this.value2 = json2.data.data.map(res => res.id)
-        json2.data.data.map(res => {
-          if (json.data.data.some(i =>i.id == res.id)) {
-            this.value1.push(res.id)
-          }
+        this.value2 = json.data.data.map(res => res.id)
+        json.data.data.map(res => {
+          res.childrenList.map(i => {
+            if(i.isAttention == 1) {
+              this.value1.push(i.id)
+            }
+          })
         })
         console.log(this.value1)
-        this.list = json2.data.data
+        this.list = json.data.data
         this.$apply()
       } else {
         utils.alert(json.data.description || json.data.msg)

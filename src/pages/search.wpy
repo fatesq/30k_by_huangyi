@@ -125,7 +125,7 @@ page {
       </view>
     </view>
   </view>
-  <SelectIndustry wx:if="{{show}}"/>
+  <SelectIndustry wx:if="{{show}}" title="mytitle" />
 </view>  
 </template>
 
@@ -239,7 +239,6 @@ export default class Search extends wepy.page {
      try {
       const json = await api.loadAllProjectByActorId({
         method: 'GET'})
-       console.log(json)
       if (json.data.code == 'success') {
         this.list = json.data.data
         this.$apply()
