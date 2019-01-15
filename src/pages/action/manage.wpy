@@ -326,7 +326,7 @@ export default class Manage extends wepy.page {
           }
         })
         if (json.data.code === 'success') {
-          wx.navigateTo({ url: wx.getStorageSync('belongIndustry') == 6 ? 'consultB' : 'consult' })
+          wx.navigateTo({ url: 'consult' })
         } else {
           utils.alert(json.data.description || json.data.msg)
         }

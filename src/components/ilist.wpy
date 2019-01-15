@@ -8,8 +8,8 @@
   <van-radio-group value="{{ value1 }}" bind:change="onSelect">
   <van-collapse value="{{ value2 }}" bind:change="onChange">
     <van-collapse-item  wx:for="{{ list }}"  wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
-      <van-cell wx:for="{{item.childrenList}}" wx:key="index" wx:if="{{item.isAttention == 1}}" title="{{item.name}}" clickable data-name="{{item.id}},{{item.name}},{{item.belongIndustry}}" bind:click="onClick">
-        <van-radio checked-color="#E64340" name="{{item.id}},{{item.name}},{{item.belongIndustry}}" />
+      <van-cell wx:for="{{item.childrenList}}" wx:key="index" wx:if="{{item.isAttention == 1}}" title="{{item.name}}" clickable data-name="{{item.id}},{{item.name}},{{item.belongIndustry}},{{item.industryType}},{{item.isStatic}}" bind:click="onClick">
+        <van-radio checked-color="#E64340" name="{{item.id}},{{item.name}},{{item.belongIndustry}},{{item.industryType}},{{item.isStatic}}" />
       </van-cell>
     </van-collapse-item>
   </van-collapse>
@@ -75,7 +75,8 @@ export default class List extends wepy.page {
     },
     save() {
       const i = this.value1.split(",")
-      this.$emit('saveIndustry', i[0], i[1], i[2]);
+      console.log(i)
+      this.$emit('saveIndustry', i[0], i[1], i[2], i[3], i[4]);
       // this.$invoke('../Industry', 'getList', this.value1[0], name);
      
       this.$apply();
@@ -123,8 +124,8 @@ export default class List extends wepy.page {
     }
   }
 
-  onShow() {
-    console.log(this)
+  onLoad() {
+    console.log('123', this)
     this.showList()
   }
 }

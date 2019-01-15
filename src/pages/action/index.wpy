@@ -67,6 +67,8 @@ export default class action extends wepy.page {
     industryName: '',
     show: false,
     belongIndustry: '',
+    type: '',
+    isStatic: '',
   }
 
   methods = {
@@ -110,6 +112,8 @@ export default class action extends wepy.page {
         wx.setStorageSync('enterpriseSocialNum', this.enterpriseSocialNum)
         wx.setStorageSync('industryId', this.industryId)
         wx.setStorageSync('belongIndustry', this.belongIndustry)
+        wx.setStorageSync('industryType', this.type)
+        wx.setStorageSync('isStatic', this.isStatic)
         wx.navigateTo({ url: this.checked ? 'brand' : 'project' })
       } else {
         utils.alert(json.data.msg || json.data.description)
@@ -121,11 +125,13 @@ export default class action extends wepy.page {
   }
 
   events = {
-    saveIndustry(id, name, belongIndustry) {
-      console.log(id, name)
+    saveIndustry(id, name, belongIndustry, type, isStatic) {
+      console.log(id, name, type, isStatic)
        this.industryId = id
        this.industryName = name
        this.belongIndustry = belongIndustry
+       this.type = type
+       this.isStatic = isStatic
        this.show = false
        this.$apply()
     }

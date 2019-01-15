@@ -259,7 +259,7 @@ export default class BrandAbout extends wepy.page {
   }
 
   onShow () {
-    if (wx.getStorageSync('industryId') == 'c413822a-fbe3-459e-84f4-1a447f520c80') {
+    if (wx.getStorageSync('industryType') == '2') {
       this.indShow = true
       this.$apply()
     }

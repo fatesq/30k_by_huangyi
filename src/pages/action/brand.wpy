@@ -319,7 +319,7 @@ export default class Brand extends wepy.page {
         }
       })
       if (json.data.code === 'success') {
-        wx.navigateTo({ url: wx.getStorageSync('industryId') == '276af76f-5158-457b-a9ae-efd34891d730' ? 'project' : 'brandabout' })
+        wx.navigateTo({ url: wx.getStorageSync('industryType') != '1' ? 'project' : 'brandabout' })
       } else {
         utils.alert(json.data.msg || json.data.description)
       }

@@ -319,10 +319,12 @@ export default class Draw extends wepy.page {
           query: param
         })
         if (json.data.code === 'success') {
-          if (wx.getStorageSync('industryId') == '276af76f-5158-457b-a9ae-efd34891d730' || wx.getStorageSync('industryId') == 'c413822a-fbe3-459e-84f4-1a447f520c80') {
-            wx.navigateTo({ url: wx.getStorageSync('industryId') == '276af76f-5158-457b-a9ae-efd34891d730' ? 'manageB' : 'manage' })
+          if (wx.getStorageSync('industryType') == '1') {
+            wx.navigateTo({ url: 'manageB' })
+          } else if(wx.getStorageSync('industryType') == '2') {
+            wx.navigateTo({ url: 'manage' })
           } else {
-            wx.navigateTo({ url: wx.getStorageSync('industryId') == 'c413822a-fbe3-459e-84f4-1a447f520c80' ? 'consultB' : 'consult' })
+             wx.navigateTo({ url: wx.getStorageSync('isStatic') == '0' ? 'consultB' : 'consult' })
           }
         } else {
           utils.alert(json.data.msg || json.data.description)
