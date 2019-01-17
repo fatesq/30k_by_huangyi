@@ -124,6 +124,12 @@ export default class List extends wepy.page {
     }
   }
 
+   events = {
+     reload() {
+       this.showList();
+     }
+   }
+
   onLoad() {
     console.log('123', this)
     this.showList()

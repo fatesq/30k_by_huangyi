@@ -212,6 +212,7 @@ export default class Search extends wepy.page {
 
   onShow() {
     this.showList()
+    this.$broadcast('reload');
   }
 
   async getList(id) {

@@ -136,5 +136,10 @@ export default class action extends wepy.page {
        this.$apply()
     }
   }
+
+  onShow() {
+    console.log(123)
+    this.$broadcast('reload');
+  }
 }
 </script>
