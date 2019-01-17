@@ -95,6 +95,8 @@ const loadAllNature = (params) => wxRequest(params, `${url}/searchProject/loadAl
 
 const selectIndustryByActorId = (params) => wxRequest(params, `${url}/searchProject/selectIndustryByActorId`)
 
+const loadDiningIndustryInfoByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadDiningIndustryInfoByProjectId`)
+
 module.exports = {
   url,
   login,
@@ -140,5 +142,6 @@ module.exports = {
   getRisk,
   loadAllProjectByActorId,
   loadAllNature,
-  selectIndustryByActorId
+  selectIndustryByActorId,
+  loadDiningIndustryInfoByProjectId
 }

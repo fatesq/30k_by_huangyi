@@ -94,6 +94,7 @@ export default class extends wepy.app {
       'pages/details/projectGroup',
       'pages/details/client',
       'pages/details/industry',
+      'pages/details/industryB',
       'pages/details/financ',
       'pages/details/web',
       // 'pages/selectIndustry',
