@@ -313,7 +313,7 @@ export default class Brand extends wepy.page {
         query: {
           projectId: wx.getStorageSync('pId'),
           ...this.data,
-          createDate: moment(this.createDate).format('X'),
+          createDate: moment(this.createDate).valueOf(),
           failureRate: 1,
           // chainFlag:  wx.getStorageSync('chainFlag'),
         }
