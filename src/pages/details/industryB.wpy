@@ -31,8 +31,8 @@ page {
 <view>
   <van-cell-group custom-class="panel-box">
     <van-cell title="业态细分" value="{{nativePlace}}" />
+    <van-cell title="周边环境" value="{{positionName}}" />
   </van-cell-group>
-
   <van-panel custom-class="panel-box" title="行业参照指标">
     <van-cell-group>
       <van-cell title="出餐速度" value="{{info.diningSpeed}}分钟"/>
@@ -81,7 +81,8 @@ export default class Industry extends wepy.page {
   data = {
     id: '',
     info: {},
-    nativePlace: ''
+    nativePlace: '',
+    positionName: ''
   }
 
   onLoad(option) {
@@ -102,6 +103,7 @@ export default class Industry extends wepy.page {
       if (json.data.code == 'success') {
         this.info = json.data.data
         this.nativePlace = json.data.data.industryCareful.map(i => i.name).join(',')
+        this.positionName = JSON.parse(json.data.data.positionName).join(',')
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)
