@@ -102,10 +102,11 @@ export default class List extends wepy.page {
         if (json.data.data.every(i => i.isAttention == 0)) {
           wx.showModal({
             title: '提示',
+            showCancel: false,
             content: '请去设置目标行业',
             success(res) {
               if (res.confirm) {
-                wx.redirectTo({url: 'setting/ilist'})
+                wx.switchTab({url: '/pages/setting/index'})
               } else if (res.cancel) {
                 console.log('用户点击取消')
               }
