@@ -347,7 +347,7 @@ export default class Manage extends wepy.page {
       const json = await api.loadAllIndustryCarefulInfoById({
         method: 'GET',
         query: {
-          belongIndustry: wx.getStorageSync('belongIndustry')
+          belongIndustry: wx.getStorageSync('industryType')
         }
       })
       if (json.data.code === 'success') {
