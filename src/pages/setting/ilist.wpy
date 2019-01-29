@@ -66,10 +66,10 @@ export default class List extends wepy.page {
     toggle(event) {
       const { name } = event.currentTarget.dataset;
       const checkbox = this.$wxpage.selectComponent(`.checkboxes-${name}`);
-      console.log(checkbox)
       checkbox.toggle();
     },
     async save() {
+      console.log('提交保存',this.value1)
       try {
         const json = await api.createIndustryInfo({
           method: 'FORM',
@@ -94,7 +94,7 @@ export default class List extends wepy.page {
   async showList() {
     try {
       const json = await api.selectFirstLevelIndustry({
-        method: 'FORM',
+        method: 'GET',
         query: {
           actorId: wx.getStorageSync('id')
         }
@@ -109,7 +109,7 @@ export default class List extends wepy.page {
             }
           })
         })
-        console.log(this.value1)
+        console.log('加载获取',this.value1)
         this.list = json.data.data
         this.$apply()
       } else {

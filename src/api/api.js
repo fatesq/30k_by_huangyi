@@ -57,7 +57,7 @@ const loadProjectIndustryByProjectId = (params) => wxRequest(params, `${url}/sea
 const loadInvestmentByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadInvestmentByProjectId`)
 
 // 查询账号关联的一级分类行业列表
-const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectCareIndustry`)
+const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectIndustryByActorIdForStart`) // selectCareIndustry
 // 获取位置列表
 const loadAllPosition = (params) => wxRequest(params, `${url}/searchProject/loadAllPosition`)
 // 获取行业列表

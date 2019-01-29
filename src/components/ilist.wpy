@@ -86,7 +86,7 @@ export default class List extends wepy.page {
   async showList() {
     try {
       const json = await api.selectFirstLevelIndustry({
-        method: 'FORM',
+        method: 'GET',
         query: {
           actorId: wx.getStorageSync('id')
         }
@@ -99,7 +99,7 @@ export default class List extends wepy.page {
         //     return res.id
         //   }
         // })
-        if (json.data.data.every(i => i.isAttention == 0)) {
+        if (!json.data.data || json.data.data.every(i => i.isAttention == 0)) {
           wx.showModal({
             title: '提示',
             showCancel: false,
