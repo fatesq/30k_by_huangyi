@@ -1,13 +1,15 @@
 <style lang="less">
-
+.value-class {
+  flex: none !important;
+}
 </style>
 <template>
 <view>
   <van-checkbox-group value="{{ value1 }}" bind:change="onSelect" max="0">
   <van-collapse value="{{ value2 }}" bind:change="onChange">
-      <van-collapse-item wx:for="{{ list }}"  wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
-       
+      <van-collapse-item wx:for="{{ list }}" wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
           <van-cell
+            value-class="value-class"
             wx:for="{{ item.childrenList }}"
             wx:key="index"
             title="{{ item.name }}"
@@ -17,7 +19,6 @@
           >
             <van-checkbox catch:tap="noop" name="{{ item.id }}" checked-color="#E64340" class="checkboxes-{{ item.id }}"/>
           </van-cell>
-        
       </van-collapse-item>
   </van-collapse>
   </van-checkbox-group> 
@@ -65,6 +66,7 @@ export default class List extends wepy.page {
     toggle(event) {
       const { name } = event.currentTarget.dataset;
       const checkbox = this.$wxpage.selectComponent(`.checkboxes-${name}`);
+      console.log(checkbox)
       checkbox.toggle();
     },
     async save() {

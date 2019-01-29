@@ -100,7 +100,7 @@ page {
       >
         <text slot="button">万人/月</text>
       </van-field>
-      <interval start='目标市场份额' startId="storeEfficiency1" startValue="{{storeEfficiency1}}" end="元/平米/月" endId="storeEfficiency2" endValue="{{storeEfficiency2}}"  bind:change='onChildChange' />
+      <interval start='绩优门店坪效' startId="storeEfficiency1" startValue="{{storeEfficiency1}}" end="元/平米/月" endId="storeEfficiency2" endValue="{{storeEfficiency2}}"  bind:change='onChildChange' />
     </van-cell-group>
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
