@@ -93,8 +93,8 @@ export default class List extends wepy.page {
 
   async showList() {
     try {
-      const json = await api.selectFirstLevelIndustry({
-        method: 'GET',
+      const json = await api.selectCareIndustry({
+        method: 'FORM',
         query: {
           actorId: wx.getStorageSync('id')
         }

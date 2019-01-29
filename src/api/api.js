@@ -58,6 +58,8 @@ const loadInvestmentByProjectId = (params) => wxRequest(params, `${url}/searchPr
 
 // 查询账号关联的一级分类行业列表
 const selectFirstLevelIndustry = (params) => wxRequest(params, `${url}/customer/selectIndustryByActorIdForStart`) // selectCareIndustry
+
+const selectCareIndustry = (params) => wxRequest(params, `${url}/customer/selectCareIndustry`)
 // 获取位置列表
 const loadAllPosition = (params) => wxRequest(params, `${url}/searchProject/loadAllPosition`)
 // 获取行业列表
@@ -143,5 +145,6 @@ module.exports = {
   loadAllProjectByActorId,
   loadAllNature,
   selectIndustryByActorId,
-  loadDiningIndustryInfoByProjectId
+  loadDiningIndustryInfoByProjectId,
+  selectCareIndustry
 }
