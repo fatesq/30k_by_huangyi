@@ -45,7 +45,7 @@ page {
 
       <van-cell title="周边人流量" value="{{info.peopleCountFrom}}至{{info.peopleCountTo}}万人/月"/>
 
-      <van-cell title="预测客流量" value="{{info.forecasePeopleCountFrom}}至{{info.forecasePeopleCountTo}}万人/月"/>
+      <van-cell title="预测客流量" value="{{info.forecastPersonFrom}}至{{info.forecastPersonTo}}万人/月"/>
 
     </van-cell-group>
   </van-panel>  
