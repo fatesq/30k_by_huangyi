@@ -144,6 +144,7 @@ page {
     <van-field
       id="employeeCount"
       label="预计员工数"
+      type="digit"
       placeholder="请输入员工数"
       bind:change="onChange"
       use-button-slot
@@ -153,6 +154,7 @@ page {
     <van-field
       id="area"
       label="场地面积"
+      type="digit"
       placeholder="请输入场地面积"
       bind:change="onChange"
       use-button-slot
@@ -299,6 +301,9 @@ export default class Project extends wepy.page {
       if (!this.area) {
         utils.alert('请输入场地面积')
         return
+      }
+      if (this.memberList.every(i => i.saveMember == 0)) {
+        this.memberList[0].saveMember = 1
       }
       try {
         const json = await api.createEEAndMember({

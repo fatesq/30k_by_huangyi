@@ -15,6 +15,7 @@
     <van-field
       id="value2"
       label="占"
+      type="digit"
       placeholder="0"
       bind:change="onInput"
       use-button-slot

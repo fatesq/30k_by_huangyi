@@ -88,7 +88,8 @@ export default class SaveTime extends wepy.page {
     endWidth: '50px',
     start: '',
     end: '',
-    num: ''
+    num: '',
+    type: 'digit'
   }
 
   computed = {

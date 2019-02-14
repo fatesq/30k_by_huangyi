@@ -86,7 +86,7 @@ page {
 <template>
 <view>
   <van-cell-group>
-    <van-cell title="融资概况" label="{{info.introduce}}" />
+    <van-cell title="项目概述" label="{{info.introduce}}" />
   </van-cell-group>  
   <van-cell-group>
     <van-cell title="融资概况"/>

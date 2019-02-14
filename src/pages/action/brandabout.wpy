@@ -85,6 +85,7 @@ page {
       <van-field
         id="storePeople"
         label="绩优门店平均人流量"
+        type="digit"
         placeholder="0"
         bind:change="onChange"
         use-button-slot
@@ -94,6 +95,7 @@ page {
       <van-field
         id="storeCustomer"
         label="绩优门店平均客流量"
+        type="digit"
         placeholder="0"
         bind:change="onChange"
         use-button-slot
