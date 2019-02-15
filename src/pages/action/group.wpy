@@ -302,8 +302,8 @@ export default class Project extends wepy.page {
         utils.alert('请输入场地面积')
         return
       }
-      if (this.memberList.every(i => i.saveMember == 0)) {
-        this.memberList[0].saveMember = 1
+      if (this.memberList.every(i => i.isRepresentative == 0)) {
+        this.memberList[0].isRepresentative = 1
       }
       try {
         const json = await api.createEEAndMember({

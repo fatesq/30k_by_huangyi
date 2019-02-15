@@ -131,7 +131,7 @@ export default class List extends wepy.page {
      }
    }
 
-  onLoad() {
+  onShow() {
     console.log('123', this)
     this.showList()
   }
