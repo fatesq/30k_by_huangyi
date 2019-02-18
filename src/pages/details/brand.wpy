@@ -16,7 +16,7 @@ page {
     <van-cell title="总部统一社会信用代码" value="{{info.brandReference.hqSocialNum}}"/>
   </van-cell-group>
   <van-cell-group>
-    <van-cell title="连锁规模" value="{{info.brandReference.areaFrom}}家"/>
+    <van-cell title="连锁规模" value="直营{{info.brandReference.direStore}}家,连锁{{info.brandReference.joinStore}}家"/>
     <van-cell title="代表门店" value="{{info.brandReference.representStore}}"/>
     <van-cell title="场地面积" value="{{info.brandReference.areaFrom}}至{{info.brandReference.areaTo}}平方米"/>
     <van-cell title="客单价区间" value="{{info.brandReference.priceFrom}}至{{info.brandReference.priceTo}}元"/>
