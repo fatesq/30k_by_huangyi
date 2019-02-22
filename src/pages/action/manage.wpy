@@ -114,7 +114,7 @@ page {
       <interval type="digit" start='产品持续研发成本' startId="keepDevelopmentCostFrom" startValue="{{info.keepDevelopmentCostFrom}}" end="万元/月" endId="keepDevelopmentCostTo" endValue="{{info.keepDevelopmentCostTo}}"  bind:change='onChildChange' />
       <interval type="digit" start='基础设施维护成本' startId="basicEquipmentCostFrom" startValue="{{info.basicEquipmentCostFrom}}" end="万元/月" endId="basicEquipmentCostTo" endValue="{{info.basicEquipmentCostTo}}"  bind:change='onChildChange' />
       <interval type="digit" start='营销推广成本' startId="spreadCostFrom" startValue="{{info.spreadCostFrom}}" end="万元/月" endId="spreadCostTo" endValue="{{info.spreadCostTo}}"  bind:change='onChildChange' />
-      <interval type="digit" start='预测访问流量' startId="forecastPersonFrom" startValue="{{info.forecastPersonFrom}}" end="万元/月" endId="forecastPersonTo" endValue="{{info.forecastPersonTo}}" bind:change='onChildChange' />
+      <interval type="digit" start='预测访问流量' startId="forecastPersonFrom" startValue="{{info.forecastPersonFrom}}" end="万人/月" endId="forecastPersonTo" endValue="{{info.forecastPersonTo}}" bind:change='onChildChange' />
       <van-cell type="digit" title="营销能力评估">
         <van-stepper
           id="score3"
