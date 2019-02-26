@@ -66,7 +66,7 @@ page {
         font-size:16px;
         height:32px;
         line-height:32px;
-        width:130rpx;
+        // width:130rpx;
         border-radius:2px;
       }
     }
@@ -120,7 +120,7 @@ page {
           </view>
         </view>
         <view class="more">
-          <button @tap="toDetails({{item}})"> 详情 </button>
+          <button @tap="toDetails({{item}})"> {{item.isFinish == 0 ? '继续进件' : '详情'}} </button>
         </view>
       </view>
     </view>
@@ -174,9 +174,14 @@ export default class Search extends wepy.page {
       })
     },
     toDetails(item) {
-      wx.navigateTo({
-        url: `details/index?id=${item.id}&code=${item.code}`
-      })
+      if (item.isFinish == 1) {
+        wx.navigateTo({
+          url: `details/index?id=${item.id}&code=${item.code}`
+        })
+      } else {
+        wx.setStorageSync('pId', item.id)
+        wx.navigateTo({ url: item.brand ? 'action/brand' : 'action/project' })
+      }
     },
     async search(e) {
       try {
