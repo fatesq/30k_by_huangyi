@@ -157,7 +157,7 @@ export default class Manage extends wepy.page {
       areaEffiency: '',
       singleInvestment: '',
       peopleCountFrom: '',
-      peopleCountFrom: '',
+      peopleCountTo: '',
       forecastPersonFrom: '',
       forecastPersonTo: '',
       name: [],
@@ -264,7 +264,49 @@ export default class Manage extends wepy.page {
     }
   }
 
+  async getInfo() {
+    try {
+      const json = await api.loadDiningIndustryInfoByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+      if (json.data.code === 'success') {
+        const i = json.data.data
+        if (i.compelationName) {
+          this.info = {
+            industryCarefulId: i.industryCareful,
+            diningSpeed: i.diningSpeed,
+            diningType: i.diningType,
+            diningUpdateRate: i.diningUpdateRate,
+            areaEffiency: i.areaEffiency,
+            singleInvestment: i.singleInvestment,
+            peopleCountFrom: i.peopleCountFrom,
+            peopleCountTo: i.peopleCountTo,
+            forecastPersonFrom: i.forecastPersonFrom,
+            forecastPersonTo: i.forecastPersonTo,
+            name: i.compelationName,
+            positionId: i.positionCode,
+            positionName: i.positionName,
+          }
+        }
+        // this.showList = true
+        // this.list = json.data.data
+        // this.show1 = true
+        //console.log(this.list)
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   onShow () {
+    this.getInfo()
     this.openInfo()
   }
 

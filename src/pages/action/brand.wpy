@@ -409,33 +409,34 @@ export default class Brand extends wepy.page {
       })
       if (json.data.code == 'success') {
         const i = json.data.data
-        console.log(i)
-        this.name = i.name
-        this.createUserName = i.createUserName
-        this.createUserPhone = i.createUserPhone
-        this.createUserIdCard = i.createUserIdCard
-        this.createDate = i.createDate
-        this.direStore = i.brandReference.direStore
-        this.joinStore = i.brandReference.joinStore
-        this.representStore = i.brandReference.representStore
-        this.areaFrom = i.brandReference.areaFrom
-        this.areaTo = i.brandReference.areaTo
-        this.priceFrom = i.brandReference.priceFrom
-        this.priceTo = i.brandReference.priceTo
-        this.investmentFrom = i.brandReference.investmentFrom
-        this.investmentTo = i.brandReference.investmentTo
-        this.monthProfileFrom = i.brandReference.monthProfileFrom
-        this.monthProfileTo = i.brandReference.monthProfileTo 
-        this.yearProfileFrom = i.brandReference.yearProfileFrom 
-        this.yearProfileTo = i.brandReference.yearProfileTo 
-        this.backWeekFrom = i.brandReference.backWeekFrom
-        this.backWeekTo = i.brandReference.backWeekTo
-        this.hqSocialNum = i.brandReference.hqSocialNum
-        this.areaName = i.brandReference.areaName
-        // this.failureRateFrom = i.brandReference.failureRateFrom
-        this.failureRate = i.brandReference.failureRate
-        this.areaCode = i.brandReference.areaCode
-        this.$apply()
+        if(i.name) {
+          this.name = i.name
+          this.createUserName = i.createUserName
+          this.createUserPhone = i.createUserPhone
+          this.createUserIdCard = i.createUserIdCard
+          this.createDate = i.createDate
+          this.direStore = i.brandReference.direStore
+          this.joinStore = i.brandReference.joinStore
+          this.representStore = i.brandReference.representStore
+          this.areaFrom = i.brandReference.areaFrom
+          this.areaTo = i.brandReference.areaTo
+          this.priceFrom = i.brandReference.priceFrom
+          this.priceTo = i.brandReference.priceTo
+          this.investmentFrom = i.brandReference.investmentFrom
+          this.investmentTo = i.brandReference.investmentTo
+          this.monthProfileFrom = i.brandReference.monthProfileFrom
+          this.monthProfileTo = i.brandReference.monthProfileTo 
+          this.yearProfileFrom = i.brandReference.yearProfileFrom 
+          this.yearProfileTo = i.brandReference.yearProfileTo 
+          this.backWeekFrom = i.brandReference.backWeekFrom
+          this.backWeekTo = i.brandReference.backWeekTo
+          this.hqSocialNum = i.brandReference.hqSocialNum
+          this.areaName = i.brandReference.areaName
+          // this.failureRateFrom = i.brandReference.failureRateFrom
+          this.failureRate = i.brandReference.failureRate
+          this.areaCode = i.brandReference.areaCode
+          this.$apply()
+        }
       } else {
         // utils.alert(json.data.msg || json.data.description)
       }

@@ -440,15 +440,17 @@ export default class Project extends wepy.page {
         console.log(json)
       if (json.data.code == 'success') {
         const i = json.data.data
-        this.nativePlace = i.nativePlace
-        this.address = i.address
-        this.invitationFlag = i.invitationFlag == 0 ? true : false
-        this.teamHoldCount = i.teamHoldCount
-        this.employeeCount = i.employeeCount
-        this.area = i.area
-        this.score = i.score.teamScore
-        this.member(i.enterpriseSocialNum)
-        this.$apply()
+        if (i.employeeCount) {
+          this.nativePlace = i.nativePlace
+          this.address = i.address
+          this.invitationFlag = i.invitationFlag == 0 ? true : false
+          this.teamHoldCount = i.teamHoldCount
+          this.employeeCount = i.employeeCount
+          this.area = i.area
+          this.score = i.score ? i.score.teamScore : 0
+          this.member(i.enterpriseSocialNum)
+          this.$apply()
+        }
       } else {
         // utils.alert(json.data.msg || json.data.description)
       }
@@ -460,20 +462,27 @@ export default class Project extends wepy.page {
 
   async member(id) {
     try {
-      const json = await api.selectEEMemberByCCode({
+      const json = await api.selectEE({
         method: 'FORM',
         query: {
           creditCode: id
         }
       })
-        console.log(json)
+      const json1 = await api.selectEEMemberByCCode({
+        method: 'FORM',
+        query: {
+          creditCode: id
+        }
+      })
       if (json.data.code == 'success') {
-        this.name = json.data.data.name
-        this.memberList = json.data.data.EnterpriseMemberList.map(i => {
-          i.marriage = i.marriage - 1;
-          i.education = i.education - 1;
-          return i
-        })
+        if (json.data.data.name) {
+          this.name = json.data.data.name
+          this.memberList = json1.data.data.map(i => {
+            i.marriage = i.marriage - 1;
+            i.education = i.education - 1;
+            return i
+          })
+        }
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)

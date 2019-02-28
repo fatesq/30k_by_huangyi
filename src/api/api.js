@@ -83,7 +83,9 @@ const loadAllCalculationInfo = (params) => wxRequest(params, `${url}/searchProje
 
 const loadScoreByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadScoreByProjectId`)
 
-const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/selectEE`) // MemberByCCode
+const selectEE = (params) => wxRequest(params, `${url}/enterprise/selectEE`) // MemberByCCode
+
+const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/selectEEMemberByCCode`) // 
 
 const createIndustryInfo = (params) => wxRequest(params, `${url}/customer/createIndustryInfo`)
 
@@ -136,6 +138,7 @@ module.exports = {
   loadAllChildrenAreaByParentId,
   loadAllCalculationInfo,
   loadScoreByProjectId,
+  selectEE,
   selectEEMemberByCCode,
   createIndustryInfo,
   saveStaticProfile,

@@ -352,7 +352,7 @@ export default class BrandAbout extends wepy.page {
       if (json.data.code == 'success') {
         const i = json.data.data
         console.log(i.length)
-        if (i) {
+        if (i.storeLocal) {
           this.shopInfo = i.storeLocal
           this.areaInfo = i.storeEnvironmental
           this.storePeople = i.storePeople

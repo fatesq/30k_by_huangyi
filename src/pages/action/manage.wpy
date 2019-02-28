@@ -103,10 +103,10 @@ page {
         />
       </van-cell>
       <van-panel title="预测用户数">
-        <interval type="digit" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="monthFrom" startValue="{{info.monthFrom}}" end="位" endValue="{{info.forecastCustomerTo}}" endId="forecastCustomerTo" bind:change='onChildChange' />
+        <interval type="digit" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="forecastCustomerMonthCountFrom" startValue="{{info.forecastCustomerMonthCountFrom}}" end="位" endValue="{{info.forecastCustomerTo}}" endId="forecastCustomerTo" bind:change='onChildChange' />
       </van-panel>
       <van-panel title="预测用户活跃度(产品或服务使用频率)">
-        <interval type="digit" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="activeMonthFrom" startValue="{{info.activeMonthFrom}}" end="人次/天" endId="forecastActiveCustomerTo" endValue="{{info.forecastActiveCustomerTo}}" bind:change='onChildChange' />
+        <interval type="digit" startWidth="0" centerWidth="150rpx"  center='个月后达成' startId="forecastActiveCustomerMonthCountFrom" startValue="{{info.forecastActiveCustomerMonthCountFrom}}" end="人次/天" endId="forecastActiveCustomerTo" endValue="{{info.forecastActiveCustomerTo}}" bind:change='onChildChange' />
       </van-panel>
     </van-cell-group>
 
@@ -254,9 +254,9 @@ export default class Manage extends wepy.page {
       score1: 3,
       coreTechnology: [],
       score2: 3,
-      monthFrom: '',
+      forecastCustomerMonthCountFrom: '',
       forecastCustomerTo: '',
-      activeMonthFrom: '',
+      forecastActiveCustomerMonthCountFrom: '',
       forecastActiveCustomerTo: '',
       keepDevelopmentCostFrom: '',
       keepDevelopmentCostTo: '',
@@ -365,7 +365,66 @@ export default class Manage extends wepy.page {
     }
   }
 
+  async getInfo() {
+    try {
+      const json0 = await api.loadInvestmentByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+      const json = await api.loadProjectIndustryByProjectId({
+        method: 'GET',
+        query: {
+          projectId: wx.getStorageSync('pId')
+        }
+      })
+      if (json.data.code === 'success') {
+        const i = json.data.data
+        this.info = {
+          ...this.info,
+          ...i
+        }
+        // this.info = {
+        //   industryCareful: i.industryCareful,
+        //   scale: i.scale,
+        //   riseRate: i.riseRate,
+        //   score1: 3,
+        //   coreTechnology: i.coreTechnology,
+        //   score2: 3,
+        //   forecastCustomerMonthCountFrom: '',
+        //   forecastCustomerTo: i.forecastCustomerTo,
+        //   forecastActiveCustomerMonthCountFrom: '',
+        //   forecastActiveCustomerTo: i.forecastActiveCustomerTo,
+        //   keepDevelopmentCostFrom: i.keepDevelopmentCostFrom,
+        //   keepDevelopmentCostTo: i.keepDevelopmentCostTo,
+        //   basicEquipmentCostFrom: i.basicEquipmentCostFrom,
+        //   basicEquipmentCostTo: i.basicEquipmentCostTo,
+        //   spreadCostFrom: i.spreadCostFrom,
+        //   spreadCostTo: i.spreadCostTo,
+        //   forecastPersonFrom: i.forecastPersonFrom,
+        //   forecastPersonTo: i.forecastPersonTo,
+        //   score3: 3,
+        //   completeAnalysis: [],
+        //   nowShare: '',
+        //   nowIndustryRanking: '',
+        //   goalShare: '',
+        //   goalIndustryRanking: '',
+        //   coreComplete: '',
+        //   score4: 3,
+        // }
+        this.$apply()
+      } else {
+        utils.alert(json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+
   onShow () {
+    this.getInfo()
     this.openInfo()
   }
 
