@@ -108,7 +108,7 @@ page {
       </view>
     </van-panel>
 
-    
+
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
     </view>
@@ -288,7 +288,7 @@ export default class Manage extends wepy.page {
             // forecastPersonFrom: i.forecastPersonFrom,
             // forecastPersonTo: i.forecastPersonTo,
             industryCarefulId: i.industryCareful.map(i => {
-              return i
+              return i.id
             }),
             positionId: i.positionCode,
             name: i.compelationName,
