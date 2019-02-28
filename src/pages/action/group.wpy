@@ -467,7 +467,8 @@ export default class Project extends wepy.page {
       })
         console.log(json)
       if (json.data.code == 'success') {
-        this.memberList = json.data.data.map(i => {
+        this.name = json.data.data.name
+        this.memberList = json.data.data.EnterpriseMemberList.map(i => {
           i.marriage = i.marriage - 1;
           i.education = i.education - 1;
           return i
