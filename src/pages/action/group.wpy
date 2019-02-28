@@ -133,6 +133,7 @@ page {
   <van-cell-group>
     <van-field
       id="teamHoldCount"
+      value="{{teamHoldCount}}"
       label="经营团队持股"
       placeholder="请输入经营团队持股"
       type="digit"
@@ -143,6 +144,7 @@ page {
     </van-field>
     <van-field
       id="employeeCount"
+      value="{{employeeCount}}"
       label="预计员工数"
       type="digit"
       placeholder="请输入员工数"
@@ -153,6 +155,7 @@ page {
     </van-field>
     <van-field
       id="area"
+      value="{{area}}"
       label="场地面积"
       type="digit"
       placeholder="请输入场地面积"
@@ -306,12 +309,17 @@ export default class Project extends wepy.page {
         this.memberList[0].isRepresentative = 1
       }
       try {
+        const EEMember = this.memberList.map(e => {
+            e.education = e.education + 1
+            e.marriage = e.marriage + 1
+            return e
+        })
         const json = await api.createEEAndMember({
           method: 'FORM',
           query: {
             name: this.name,
             creditCode: wx.getStorageSync('enterpriseSocialNum'), 
-            EEMember: JSON.stringify(this.memberList),
+            EEMember: JSON.stringify(EEMember),
             industry: wx.getStorageSync('belongIndustry')
           }
         })
@@ -459,7 +467,11 @@ export default class Project extends wepy.page {
       })
         console.log(json)
       if (json.data.code == 'success') {
-        this.memberList = json.data.data
+        this.memberList = json.data.data.map(i => {
+          i.marriage = i.marriage - 1;
+          i.education = i.education - 1;
+          return i
+        })
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)

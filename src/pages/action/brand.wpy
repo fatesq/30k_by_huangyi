@@ -69,12 +69,14 @@ page {
       />
       <van-field
         id="createUserPhone"
+        value="{{createUserPhone}}"
         label="手机号"
         placeholder="请输入手机号"
         bind:change="onChange"
       />
       <van-field
         id="createUserIdCard"
+        value="{{createUserIdCard}}"
         label="身份证号"
         placeholder="请输入身份证号"
         bind:change="onChange"
@@ -97,6 +99,7 @@ page {
       </picker>
       <van-field
         id="hqSocialNum"
+        value="{{hqSocialNum}}"
         label="总部统一社会信用代码"
         placeholder="请输入总部统一社会信用代码"
         bind:change="onChange"
@@ -106,6 +109,7 @@ page {
       <view class="item">
         <van-field
           id="direStore"
+          value="{{direStore}}"
           label="直营店"
           type="number"
           placeholder="0"
@@ -116,6 +120,7 @@ page {
         </van-field>
         <van-field
           id="joinStore"
+          value="{{joinStore}}"
           type="number"
           label="加盟店"
           placeholder="0"
@@ -127,6 +132,7 @@ page {
       </view>
       <van-field
         id="representStore"
+        value="{{representStore}}"
         label="代表门店"
         placeholder="请输入门店名称"
         bind:change="onChange"
@@ -139,7 +145,14 @@ page {
       <interval start='月净利润' startId="monthProfileFrom" startValue="{{monthProfileFrom}}" end="万元" endId="monthProfileTo" endValue="{{monthProfileTo}}" bind:change='onChildChange'/>
       <interval start='年化投资回报率' startId="yearProfileFrom" startValue="{{yearProfileFrom}}" end="%" endId="yearProfileTo" endValue="{{yearProfileTo}}" bind:change='onChildChange'/>
       <interval start='回本周期' startId="backWeekFrom" startValue="{{backWeekFrom}}" end="个月" endId="backWeekTo" endValue="{{backWeekTo}}" bind:change='onChildChange'/>
-      <interval start='项目失败率' startId="failureRateFrom" startValue="{{failureRateFrom}}" end="%" endId="failureRateTo" endValue="{{failureRateTo}}" bind:change='onChildChange'/>
+      <!-- <interval start='项目失败率' startId="failureRateFrom" startValue="{{failureRateFrom}}" end="%" endId="failureRateTo" endValue="{{failureRateTo}}" bind:change='onChildChange'/> -->
+      <van-field
+        id="failureRate"
+        value="{{failureRate}}"
+        label="项目失败率"
+        placeholder="请输入项目失败率"
+        bind:change="onChange"
+      />
     </van-cell-group>  
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>
@@ -189,8 +202,8 @@ export default class Brand extends wepy.page {
     yearProfileTo: '', 
     backWeekFrom: '',
     backWeekTo: '',
-    failureRateFrom: '',
-    failureRateTo: '',
+    // failureRateFrom: '',
+    failureRate: '',
     listA: [[],[]],
     multiIndex: [0, 0],
   }
@@ -296,7 +309,7 @@ export default class Brand extends wepy.page {
       utils.alert('请输入品牌所属店面的回本周期')
       return
     }
-    if (!this.failureRateFrom || !this.failureRateTo) {
+    if (!this.failureRate) {
       utils.alert('请输入品牌所属店面的项目失败率')
       return
     }
@@ -314,7 +327,6 @@ export default class Brand extends wepy.page {
           projectId: wx.getStorageSync('pId'),
           ...this.data,
           createDate: moment(this.createDate).valueOf(),
-          failureRate: 1,
           // chainFlag:  wx.getStorageSync('chainFlag'),
         }
       })
@@ -397,6 +409,7 @@ export default class Brand extends wepy.page {
       })
       if (json.data.code == 'success') {
         const i = json.data.data
+        console.log(i)
         this.name = i.name
         this.createUserName = i.createUserName
         this.createUserPhone = i.createUserPhone
@@ -417,13 +430,18 @@ export default class Brand extends wepy.page {
         this.yearProfileTo = i.brandReference.yearProfileTo 
         this.backWeekFrom = i.brandReference.backWeekFrom
         this.backWeekTo = i.brandReference.backWeekTo
+        this.hqSocialNum = i.brandReference.hqSocialNum
+        this.areaName = i.brandReference.areaName
+        // this.failureRateFrom = i.brandReference.failureRateFrom
+        this.failureRate = i.brandReference.failureRate
+        this.areaCode = i.brandReference.areaCode
         this.$apply()
       } else {
         // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)
-      utils.alert('系统异常')
+     //  utils.alert('系统异常')
     }
   }
 

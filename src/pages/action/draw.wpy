@@ -353,11 +353,13 @@ export default class Draw extends wepy.page {
   }
 
   onLoad() {
+    this.getInfo()
     this.getNature()
   }
 
   async getInfo(id) {
     try {
+      console.log(wx.getStorageSync('pId'))
       const json = await api.loadCustomerByProjectId({
         method: 'GET',
         query: {
@@ -366,6 +368,7 @@ export default class Draw extends wepy.page {
       })
       if (json.data.code == 'success') {
         const i = json.data.data
+        console.log(i)
         if (i.length > 0) {
           if (i[0].type == 0) {
             this.saveTimeDistribution = i.filter(res => res.mId == 0)

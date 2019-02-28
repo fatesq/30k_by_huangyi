@@ -126,7 +126,7 @@ export default class Details extends wepy.page {
     router(page) {
       console.log(page)
       wx.navigateTo({
-        url: `${page}?id=${this.id}`
+        url: `${page}?id=${this.id}&name=${this.info.name}`
       })
     }
   }

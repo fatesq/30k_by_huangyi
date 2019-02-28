@@ -101,6 +101,7 @@
 <view style="padding-bottom: 50px">
   <van-field
     id="name"
+    value="{{info.name}}"
     label="项目名称"
     placeholder="请输入项目名称"
     bind:change="onChange"
@@ -121,6 +122,7 @@
   <van-panel title="项目概述">
     <van-field
       id="introduce"
+      value="{{info.introduce}}"
       placeholder="一句话概括项目, 突出项目特点"
       border="{{ false }}"
       type="textarea"
@@ -138,6 +140,7 @@
     </picker>
     <van-field
       id="totalInvestment"
+      value="{{info.totalInvestment}}"
       type="digit"
       label="总投资额"
       placeholder="目标融资额+已投资额+承诺出资"
@@ -148,6 +151,7 @@
     </van-field>
     <van-field
       id="goalInvestment"
+      value="{{info.goalInvestment}}"
       type="digit"
       label="目标融资额"
       placeholder="请输入目标融资额"
@@ -158,6 +162,7 @@
     </van-field>
     <van-field
       id="deadLine"
+      value="{{info.deadLine}}"
       type="digit"
       label="融资时限"
       placeholder="请输入融资时限"
@@ -168,6 +173,7 @@
     </van-field>
     <van-field
       id="sellShares"
+      value="{{info.sellShares}}"
       type="digit"
       label="出让股份"
       placeholder="请输入出让股份"
@@ -178,6 +184,7 @@
     </van-field>
     <van-field
       id="investment"
+      value="{{info.investment}}"
       type="digit"
       label="已投入资金"
       placeholder="请输入投入资金"
@@ -202,6 +209,7 @@
     </van-panel>
     <van-field
       id="promiseInvestment"
+      value="{{info.promiseInvestment}}"
       type="digit"
       label="承诺出资"
       placeholder="请输入投入资金"
@@ -364,6 +372,7 @@ export default class Project extends wepy.page {
       return false
     }
     try {
+      console.log('入:' + this.files.length)
       const json = await api.info({
         method: 'FORM',
         query: {
@@ -450,7 +459,7 @@ export default class Project extends wepy.page {
       if (json.data.code == 'success') {
         const i = json.data.data
         this.info = {
-          name: '',
+          name: i.name,
           parentId: 0,
           introduce: i.introduce,
           totalInvestment: i.projectReference.totalInvestment,
@@ -458,10 +467,11 @@ export default class Project extends wepy.page {
           deadLine: i.projectReference.deadLine,
           sellShares: i.projectReference.sellShares,
           investment: i.projectReference.investment,
-          promiseInvestment: '',
+          promiseInvestment: i.projectReference.promiseInvestment,
           areaName: i.areaName,
           areaCode: i.areaCode,
         }
+        console.log('出:' + i.imageUrls.length)
         this.files = i.imageUrls
         this.imageUrl = i.imageUrl
         this.$apply()
@@ -470,10 +480,12 @@ export default class Project extends wepy.page {
       }
     } catch (e) {
       console.log(e)
-      utils.alert('系统异常')
+      // utils.alert('系统异常')
     }
   }
-  
+  onLoad() {
+    this.getInfo()
+  }
   onShow() {
     this.getCity()
   }
