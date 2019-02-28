@@ -446,6 +446,7 @@ export default class Project extends wepy.page {
         this.teamHoldCount = i.teamHoldCount
         this.employeeCount = i.employeeCount
         this.area = i.area
+        this.score = i.score.teamScore
         this.member(i.enterpriseSocialNum)
         this.$apply()
       } else {
