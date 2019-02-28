@@ -83,7 +83,7 @@ const loadAllCalculationInfo = (params) => wxRequest(params, `${url}/searchProje
 
 const loadScoreByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadScoreByProjectId`)
 
-const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/selectEEMemberByCCode`)
+const selectEEMemberByCCode = (params) => wxRequest(params, `${url}/enterprise/selectEE`) // MemberByCCode
 
 const createIndustryInfo = (params) => wxRequest(params, `${url}/customer/createIndustryInfo`)
 

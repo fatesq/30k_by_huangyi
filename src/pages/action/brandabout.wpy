@@ -84,6 +84,7 @@ page {
     <van-cell-group>
       <van-field
         id="storePeople"
+        value="{{storePeople}}"
         label="绩优门店平均人流量"
         type="digit"
         placeholder="0"
@@ -94,6 +95,7 @@ page {
       </van-field>
       <van-field
         id="storeCustomer"
+        value="{{storeCustomer}}"
         label="绩优门店平均客流量"
         type="digit"
         placeholder="0"
@@ -347,10 +349,10 @@ export default class BrandAbout extends wepy.page {
           projectId: wx.getStorageSync('pId')
         }
       })
-        console.log(json)
       if (json.data.code == 'success') {
         const i = json.data.data
-        if (i.length) {
+        console.log(i.length)
+        if (i) {
           this.shopInfo = i.storeLocal
           this.areaInfo = i.storeEnvironmental
           this.storePeople = i.storePeople

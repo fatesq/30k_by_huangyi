@@ -180,6 +180,11 @@ export default class Search extends wepy.page {
         })
       } else {
         wx.setStorageSync('pId', item.id)
+        // wx.setStorageSync('enterpriseSocialNum', this.enterpriseSocialNum)
+        wx.setStorageSync('industryId', item.industry.industryId)
+        wx.setStorageSync('belongIndustry', item.industry.belongIndustry)
+        wx.setStorageSync('industryType',item.industry.industryType)
+        wx.setStorageSync('isStatic', item.industry.isStatic)
         wx.navigateTo({ url: item.brand ? 'action/brand' : 'action/project' })
       }
     },
