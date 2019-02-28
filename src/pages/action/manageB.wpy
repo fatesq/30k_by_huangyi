@@ -276,19 +276,22 @@ export default class Manage extends wepy.page {
         const i = json.data.data
         if (i.compelationName) {
           this.info = {
-            industryCarefulId: i.industryCareful,
-            diningSpeed: i.diningSpeed,
-            diningType: i.diningType,
-            diningUpdateRate: i.diningUpdateRate,
-            areaEffiency: i.areaEffiency,
-            singleInvestment: i.singleInvestment,
-            peopleCountFrom: i.peopleCountFrom,
-            peopleCountTo: i.peopleCountTo,
-            forecastPersonFrom: i.forecastPersonFrom,
-            forecastPersonTo: i.forecastPersonTo,
-            name: i.compelationName,
+            ...this.info,
+            ...i,
+            // diningSpeed: i.diningSpeed,
+            // diningType: i.diningType,
+            // diningUpdateRate: i.diningUpdateRate,
+            // areaEffiency: i.areaEffiency,
+            // singleInvestment: i.singleInvestment,
+            // peopleCountFrom: i.peopleCountFrom,
+            // peopleCountTo: i.peopleCountTo,
+            // forecastPersonFrom: i.forecastPersonFrom,
+            // forecastPersonTo: i.forecastPersonTo,
+            industryCarefulId: i.industryCareful.map(i => {
+              return i
+            }),
             positionId: i.positionCode,
-            positionName: i.positionName,
+            name: i.compelationName,
           }
         }
         // this.showList = true
