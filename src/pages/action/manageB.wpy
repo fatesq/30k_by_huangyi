@@ -275,6 +275,10 @@ export default class Manage extends wepy.page {
       if (json.data.code === 'success') {
         const i = json.data.data
         if (i.compelationName) {
+        let inList = []
+        i.industryCareful.map(i => {
+                      return inList.push(i.id)
+                    })
           this.info = {
             ...this.info,
             ...i,
@@ -287,9 +291,7 @@ export default class Manage extends wepy.page {
             // peopleCountTo: i.peopleCountTo,
             // forecastPersonFrom: i.forecastPersonFrom,
             // forecastPersonTo: i.forecastPersonTo,
-            industryCarefulId: i.industryCareful.map(i => {
-              return i.id
-            }),
+            industryCarefulId: JSON.stringify(inList),
             positionId: i.positionCode,
             name: i.compelationName,
           }
