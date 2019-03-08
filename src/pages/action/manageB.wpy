@@ -275,10 +275,10 @@ export default class Manage extends wepy.page {
       if (json.data.code === 'success') {
         const i = json.data.data
         if (i.compelationName) {
-        let inList = []
-        i.industryCareful.map(i => {
-                      return inList.push(i.id)
-                    })
+          let inList = []
+          i.industryCareful.map(i => {
+            return inList.push(i.id)
+          })
           this.info = {
             ...this.info,
             ...i,

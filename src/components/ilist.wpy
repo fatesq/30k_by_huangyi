@@ -5,6 +5,8 @@
 </style>
 <template>
 <view style="padding-bottom: 50px">
+  {{clear}}
+  <van-cell wx:if="{{show}}" title="查询所有行业" @tap="all" is-link></van-cell>
   <van-radio-group value="{{ value1 }}" bind:change="onSelect">
   <van-collapse value="{{ value2 }}" bind:change="onChange">
     <van-collapse-item  wx:for="{{ list }}"  wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
@@ -40,10 +42,11 @@ export default class List extends wepy.page {
   }
 
   props = {
-    title: ''
+    title: '',
   };
 
   data = {
+    show: false,
     list: [],
     value1: [],
     value2: [],
@@ -81,6 +84,9 @@ export default class List extends wepy.page {
      
       this.$apply();
     },
+    all() {
+      this.$emit('clear');
+    }
   }
 
   async showList() {
@@ -128,11 +134,14 @@ export default class List extends wepy.page {
    events = {
      reload() {
        this.showList();
+     },
+     showSelectAll() {
+       this.show = true
+       this.$apply()
      }
    }
 
   onShow() {
-    console.log('123', this)
     this.showList()
   }
 }

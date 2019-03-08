@@ -70,7 +70,7 @@ VantComponent({
       if (expanded) {
         this.getRect('.van-collapse-item__content').then(function (res) {
           _this.setData({
-            contentHeight: res.height ? res.height + 'px' : null
+            contentHeight: res.height ? 'auto' : null
           });
         });
       } else {

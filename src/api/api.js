@@ -101,6 +101,10 @@ const selectIndustryByActorId = (params) => wxRequest(params, `${url}/searchProj
 
 const loadDiningIndustryInfoByProjectId = (params) => wxRequest(params, `${url}/searchProject/loadDiningIndustryInfoByProjectId`)
 
+const sendCheckCodeByMobile = (params) => wxRequest(params, `${url}/login/sendCheckCodeByMobile`)
+
+const forgetPwdByMobile = (params) => wxRequest(params, `${url}/login/forgetPwdByMobile`)
+
 module.exports = {
   url,
   login,
@@ -149,5 +153,7 @@ module.exports = {
   loadAllNature,
   selectIndustryByActorId,
   loadDiningIndustryInfoByProjectId,
-  selectCareIndustry
+  selectCareIndustry,
+  sendCheckCodeByMobile,
+  forgetPwdByMobile
 }

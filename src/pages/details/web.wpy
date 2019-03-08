@@ -219,8 +219,29 @@ export default class Setting extends wepy.page {
         this.creditInfoVerifySummary = json.data.data.creditInfoVerifySummary
         this.tcEnterpriseBusinessInfo = json.data.data.tcEnterpriseBusinessInfo
         this.$apply()
+      } else if (json.data.code === 'creditAntiFraudNotExist') {
+          wx.showModal({
+            showCancel: false,
+            title: '提示',
+            content: '正在生成信用报告请稍等',
+            success: function(res) {
+              if (res.confirm) {
+                wx.navigateBack({delta: 1})
+              }
+            }
+          })
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        wx.showModal({
+          showCancel: false,
+          title: '提示',
+          content: json.data.msg || json.data.description,
+          success: function(res) {
+            if (res.confirm) {
+              wx.navigateBack({delta: 1})
+            }
+          }
+        })
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       console.log(e)

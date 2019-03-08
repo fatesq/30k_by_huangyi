@@ -2,12 +2,16 @@
 .value-class {
   flex: none !important;
 }
+.van-collapse-item__wrapper  {
+  max-height: auto !important;
+}
 </style>
 <template>
 <view>
   <van-checkbox-group value="{{ value1 }}" bind:change="onSelect" max="0">
   <van-collapse value="{{ value2 }}" bind:change="onChange">
       <van-collapse-item wx:for="{{ list }}" wx:key="index" title="{{ item.name }}" name="{{ item.id }}">
+        <block wx:if="{{item.show == 1}}">
           <van-cell
             value-class="value-class"
             wx:for="{{ item.childrenList }}"
@@ -19,6 +23,7 @@
           >
             <van-checkbox catch:tap="noop" name="{{ item.id }}" checked-color="#E64340" class="checkboxes-{{ item.id }}"/>
           </van-cell>
+        </block>  
       </van-collapse-item>
   </van-collapse>
   </van-checkbox-group> 
@@ -51,6 +56,21 @@ export default class List extends wepy.page {
     list: [],
     value1: [],
     value2: [],
+    num: 0
+  }
+
+  watch = {
+      value2(newValue, oldValue) {
+        const param = {};
+        this.list = this.list.map(e => {
+          if (newValue.indexOf(e.id) > -1) {
+            e.show = 1
+          }
+          return e
+        });
+        console.log(this.list)
+        this.$apply()
+      }
   }
   
   methods = {
@@ -101,7 +121,7 @@ export default class List extends wepy.page {
       })
       // const json2 = await api.loadAllIndustry()
       if (json.data.code === 'success') {
-        this.value2 = json.data.data.map(res => res.id)
+        // this.value2 = json.data.data.map(res => res.id)
         json.data.data.map(res => {
           res.childrenList.map(i => {
             if(i.isAttention == 1) {

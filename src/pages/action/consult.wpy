@@ -181,7 +181,7 @@ export default class BrandAbout extends wepy.page {
             document: this.document
           }
         })
-        const risk = await api.addRisk({
+        api.addRisk({
           method: 'FORM',
           query: {
             projectId: wx.getStorageSync('pId'),

@@ -245,6 +245,16 @@ export default class Project extends wepy.page {
         utils.alert('图片未上传')
         return
       }
+      const patrn = /^1[0-9]{10}$/;
+      if (patrn.test(this.mobileNumber) == false) {
+        utils.alert('请填写正确的手机号码')
+        return
+      }
+      const patrn2 = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      if (patrn2.test(this.identNumber) == false) {
+        utils.alert('请填写正确的身份证号码')
+        return
+      }
       if (!this.name || !this.position || !this.mobileNumber || !this.identNumber || !this.profile) {
         utils.alert('有未填写的项目')
         return

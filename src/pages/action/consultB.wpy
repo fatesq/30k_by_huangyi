@@ -167,7 +167,7 @@ export default class Consult extends wepy.page {
             spendPurpose:  JSON.stringify(this.spendPurpose),
           }
         })
-        const risk = await api.addRisk({
+        api.addRisk({
           method: 'FORM',
           query: {
             projectId: wx.getStorageSync('pId'),

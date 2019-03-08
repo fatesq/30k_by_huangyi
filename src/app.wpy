@@ -100,6 +100,7 @@ export default class extends wepy.app {
       // 'pages/selectIndustry',
       'pages/setting/index',
       'pages/setting/forget',
+      'pages/setting/forget2',
       'pages/setting/ilist'
     ],
     window: {

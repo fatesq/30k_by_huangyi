@@ -36,7 +36,7 @@ page {
         <button class="weui-btn"  bindgetuserinfo="bind" open-type="getUserInfo" type="warn"> 签入 </button>
       </view>
     </view>
-    <navigator class="forget" url="setting/forget">
+    <navigator class="forget" url="setting/forget2">
       忘记密码
     </navigator>
   </view>  

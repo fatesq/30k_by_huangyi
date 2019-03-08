@@ -125,7 +125,7 @@ page {
       </view>
     </view>
   </view>
-  <SelectIndustry wx:if="{{show}}" title="mytitle" />
+  <SelectIndustry wx:if="{{show}}" />
 </view>  
 </template>
 
@@ -165,6 +165,7 @@ export default class Search extends wepy.page {
 
   methods = {
     showIndustry() {
+      this.$broadcast('showSelectAll')
       this.show = true
       this.$apply()
     },
@@ -215,6 +216,12 @@ export default class Search extends wepy.page {
        this.industryId = id
        this.industryName = name
        this.belongIndustry = belongIndustry
+       this.show = false
+       this.$apply()
+    },
+    clear() {
+       this.industryName = '全部行业'
+       this.showList()
        this.show = false
        this.$apply()
     }
