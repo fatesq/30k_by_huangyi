@@ -1,0 +1,146 @@
+<style lang="less">
+page {
+  background-color: #f4f4f4;
+}
+.panel-box {
+  margin-bottom: 20px;
+  .item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .add {
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    color: #bbb;
+  }
+}
+.van-cell {
+  align-items: center;
+}
+.fix {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  button {
+    border-radius: 0px;
+  }
+}
+.item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 24px;
+  align-items: center;
+  &:after {
+    content: ' ';
+    position: absolute;
+    pointer-events: none;
+    box-sizing: border-box;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    top: auto;
+    left: 15px;
+    right: 0;
+    bottom: 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    border-bottom: 1px solid #eee;
+  }
+}
+</style>
+
+<template>
+<view>
+<view wx:if="{{!show1}}">
+  <van-panel custom-class="panel-box" title="全部资金用途">
+    <view>
+      <view class="item" wx:for="{{info.spendPurpose}}" wx:key="index">
+        {{item.name}}花费{{item.spend}}万元
+      </view>
+    </view>
+  </van-panel>
+
+  <van-cell-group>
+    <van-cell title="预测月净利润" value="{{info.staticProfile.forecastMonthProfileFrom}}至{{info.staticProfile.forecastMonthProfileTo}}万元" />
+    <van-cell title="预测年化投资回报率" value="{{info.staticProfile.forecastYearProfileFrom}}至{{info.staticProfile.forecastYearProfileTo}}%" />
+    <van-cell title="预测回本周期" value="{{info.staticProfile.backWeekFrom}}至{{info.staticProfile.backWeekTo}}个月" />
+  </van-cell-group>
+
+  <van-panel custom-class="panel-box"  title="融资宣传文案">
+    <van-field
+      id="document"
+      autosize
+      disabled
+      value="{{ info.document }}"
+      type="textarea"
+    />
+  </van-panel>
+</view>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import api from '../../api/api'
+import utils from '../../utils/utils'
+
+export default class Consult extends wepy.page {
+  config = {
+    navigationBarTitleText: '投资参考信息',
+    usingComponents: {
+      'van-icon': '../../components/van/icon/index',
+      'van-cell': '../../components/van/cell/index',
+      'van-cell-group': '../../components/van/cell-group/index',
+      'van-field': '../../components/van/field/index',
+      'van-panel': '../../components/van/panel/index',
+      'van-stepper': '../../components/van/stepper/index',
+      'van-checkbox': '../../components/van/checkbox/index',
+      'van-checkbox-group': '../../components/van/checkbox-group/index',
+      'van-radio': '../../components/van/radio/index',
+      'van-radio-group': '../../components/van/radio-group/index',
+      interval: '../../components/interval/index'
+    }
+  }
+
+
+  data = {
+    id: '',
+    info: {},
+  }
+
+  methods = {
+    
+  }
+
+  onLoad(option) {
+    this.id = option.id
+    this.getInfo(option.id);
+    this.$apply();
+  }
+
+  async getInfo(id) {
+    try {
+      const json = await api.loadInvestmentByProjectId({
+        method: 'GET',
+        query: {
+          projectId: id
+        }
+      })
+        console.log(json)
+      if (json.data.code == 'success') {
+        this.info = json.data.data
+        this.$apply()
+      } else {
+        utils.alert(json.data.msg || json.data.description)
+      }
+    } catch (e) {
+      console.log(e)
+      utils.alert('系统异常')
+    }
+  }
+}
+</script>

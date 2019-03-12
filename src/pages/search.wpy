@@ -101,9 +101,13 @@ page {
       </view>
       <view class="detail">
         <view class="list">
-          <view>
+          <view wx:if="{{item.industry.isStatic == 0}}">
             <image class="icon" src="../ic/ic_date@2x.png"/>
-            {{item.projectReference.totalInvestment}}
+            {{item.investment.staticProfile.forecastYearProfileFrom}}% ~ {{item.investment.staticProfile.forecastYearProfileTo}}%
+          </view>
+          <view wx:if="{{item.industry.isStatic == 1}}">
+            <image class="icon" src="../ic/ic_date@2x.png"/>
+            {{item.yearSale}}万元
           </view>
           <view>
             <image class="icon" src="../ic/ic_mine@2x.png"/>

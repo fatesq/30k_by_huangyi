@@ -381,10 +381,17 @@ export default class Manage extends wepy.page {
       })
       if (json.data.code === 'success') {
         const i = json.data.data
+        let inList = []
+        i.industryCareful.map(i => {
+          return inList.push(i.id)
+        })
+        console.log(inList)
         this.info = {
           ...this.info,
-          ...i
+          ...i,
+          industryCareful: JSON.stringify(inList),
         }
+        this.id = inList
         // this.info = {
         //   industryCareful: i.industryCareful,
         //   scale: i.scale,

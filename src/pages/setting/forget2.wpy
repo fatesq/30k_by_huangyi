@@ -98,6 +98,7 @@ export default class Forget extends wepy.page {
       utils.alert('请输入手机号')
       return false
     }
+    this.reload()
     try {
       const json = await api.sendCheckCodeByMobile({
         method: 'FORM',
@@ -106,7 +107,7 @@ export default class Forget extends wepy.page {
         }
       })
       if (json.data.status === 'success') {
-        this.reload()
+       
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)
