@@ -179,7 +179,8 @@ export default class Consult extends wepy.page {
         if (json.data.code === 'success') {
           wx.reLaunch({ url: '../search' })
         } else {
-          utils.alert(json.data.msg || json.data.description)
+          utils.alert('请完善信息')
+          // utils.alert(json.data.msg || json.data.description)
         }
       } catch (e) {
         console.log(e)

@@ -17,6 +17,7 @@
       <van-cell title="项目所处行业" value="{{industryName}}" bind:click="showIndustry"  is-link/>
       <van-field
         label="统一信用代码"
+        value="{{enterpriseSocialNum}}"
         bind:change="getCode"
         input-align="right"
       />
@@ -121,7 +122,8 @@ export default class action extends wepy.page {
         wx.setStorageSync('isStatic', this.isStatic)
         wx.navigateTo({ url: this.checked ? 'brand' : 'project' })
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        utils.alert('请完善信息')
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')

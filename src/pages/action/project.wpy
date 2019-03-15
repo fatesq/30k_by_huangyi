@@ -363,7 +363,7 @@ export default class Project extends wepy.page {
       utils.alert('请输入项目出让股份')
       return false
     }
-    if (!this.info.investment) {
+    if (!this.info.investment && this.info.investment != 0) {
       utils.alert('请输入项目已投入资金,若无则填写0')
       return false
     }
@@ -386,7 +386,8 @@ export default class Project extends wepy.page {
         wx.setStorageSync('financingAmount', this.info.goalInvestment)
         wx.navigateTo({ url: 'group' })
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        utils.alert('请完善信息')
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')

@@ -19,7 +19,7 @@ page {
     padding: 40rpx;
     border-bottom: 1px solid #ddd;
     .img {
-      width: 200rpx;
+      width: 320rpx;
       height: 200rpx;
       background-color: #eee;
       margin-right: 40rpx;
@@ -27,7 +27,7 @@ page {
     .box {
       display: flex;
       flex-direction: column-reverse;
-      width: 100%;
+      max-width: 60%;
       .time {
         color: #ccc;
       }
@@ -75,6 +75,15 @@ page {
 .icon {
   width: 20px;
   height: 20px;
+   
+}
+.dian {
+  width: 490rpx;
+  max-width: 490rpx;
+  -webkit-line-clamp:2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
 
@@ -87,15 +96,18 @@ page {
     </view>
     <view class="item" wx:for="{{list}}" wx:key="index">
       <view class="title">
-        <image class="img" mode="aspectFill" src="{{item.imageUrl}}" />
+        <image class="img" mode="aspectFit" src="{{item.imageUrl}}" />
         <view class="box">
           <view class="time">{{item.createTime}}</view>
           <view class="value">
-            <text>{{item.industry.name}}</text>
+            <text class="dian" style="font-size:16px;font-weight:600">{{item.industry.name}}</text>
             <text class="price" style="text-align:right;white-space: nowrap;">{{item.projectReference.totalInvestment}}万元</text>
           </view>
-          <view class="value">
-             {{item.name}}
+          <view class="value" style="color:#999">
+            <text class="dian">No.{{item.code}}</text>
+          </view>
+          <view class="value dian" style="font-weight:600">
+            <text class="dian">{{item.name}}</text>
           </view>  
         </view>
       </view>
@@ -103,11 +115,11 @@ page {
         <view class="list">
           <view wx:if="{{item.industry.isStatic == 0}}">
             <image class="icon" src="../ic/ic_date@2x.png"/>
-            {{item.investment.staticProfile.forecastYearProfileFrom}}% ~ {{item.investment.staticProfile.forecastYearProfileTo}}%
+            <text wx:if="{{item.investment}}"> {{item.investment.staticProfile.forecastYearProfileFrom}}% ~ {{item.investment.staticProfile.forecastYearProfileTo}}%</text>
           </view>
           <view wx:if="{{item.industry.isStatic == 1}}">
             <image class="icon" src="../ic/ic_date@2x.png"/>
-            {{item.yearSale}}万元
+            <text wx:if="{{item.investment}}"> {{item.countResult}}万元</text>
           </view>
           <view>
             <image class="icon" src="../ic/ic_mine@2x.png"/>
@@ -194,6 +206,10 @@ export default class Search extends wepy.page {
       }
     },
     async search(e) {
+      if (!e.detail) {
+        this.showList()
+        return 
+      }
       try {
         const json = await api.loadProjectByCodeOrName({
           method: 'GET',
@@ -202,6 +218,14 @@ export default class Search extends wepy.page {
           }
         })
         if (json.data.code == 'success') {
+          json.data.data.forEach(item => {
+            if (item.investment && item.industry.isStatic == 1) {
+              const arr = item.investment.trialCalculation.map(i => {
+                return i.countResult
+              })
+              item.countResult = Math.max.apply(null, arr)
+            }
+          });
           this.list = json.data.data
           this.$apply()
         } else {
@@ -243,10 +267,18 @@ export default class Search extends wepy.page {
         query: {
           industryId: id
         }
-       })
-       console.log(json)
+      })
       if (json.data.code == 'success') {
+        json.data.data.forEach(item => {
+          if (item.investment && item.industry.isStatic == 1) {
+            const arr = item.investment.trialCalculation.map(i => {
+              return i.countResult
+            })
+            item.countResult =  Math.max.apply(null, arr)
+          }
+        });
         this.list = json.data.data
+        console.log(this.list)
         this.$apply()
       } else {
         utils.alert(json.data.msg || json.data.description)
@@ -262,6 +294,14 @@ export default class Search extends wepy.page {
       const json = await api.loadAllProjectByActorId({
         method: 'GET'})
       if (json.data.code == 'success') {
+        json.data.data.forEach(item => {
+          if (item.investment && item.industry.isStatic == 1) {
+            const arr = item.investment.trialCalculation.map(i => {
+              return i.countResult
+            })
+            item.countResult = Math.max.apply(null, arr)
+          }
+        });
         this.list = json.data.data
         this.$apply()
       } else {

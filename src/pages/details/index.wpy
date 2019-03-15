@@ -67,9 +67,13 @@ page {
     </view>
     <view class="detail">
       <view class="list">
-        <view>
+        <view wx:if="{{info.industry.isStatic == 0}}">
           <image class="icon" src="../../ic/ic_date@2x.png"/>
-          {{info.projectReference.totalInvestment}}
+          <text wx:if="{{info.investment}}"> {{info.investment.staticProfile.forecastYearProfileFrom}}% ~ {{info.investment.staticProfile.forecastYearProfileTo}}%</text>
+        </view>
+        <view wx:if="{{info.industry.isStatic == 1}}">
+          <image class="icon" src="../../ic/ic_date@2x.png"/>
+          <text wx:if="{{info.investment}}"> {{info.countResult}}万元</text>
         </view>
         <view>
           <image class="icon" src="../../ic/ic_mine@2x.png"/>
@@ -147,7 +151,14 @@ export default class Details extends wepy.page {
       })
         console.log(json)
       if (json.data.code == 'success') {
-        this.info = json.data.data
+        const item = json.data.data
+        if (item.investment && item.industry.isStatic == 1) {
+          const arr = item.investment.trialCalculation.map(i => {
+            return i.countResult
+          })
+          item.countResult = Math.max.apply(null, arr)
+        }
+        this.info = item
         wx.setStorageSync('industryId', this.info.industry.id)
         this.$apply()
       } else {

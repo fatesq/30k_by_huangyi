@@ -342,7 +342,8 @@ export default class Project extends wepy.page {
          
           wx.navigateTo({ url: 'draw' })
         } else {
-          utils.alert(json.data.msg || json.data.description)
+          utils.alert('请完善信息')
+          // utils.alert(json.data.msg || json.data.description)
         }
       } catch (e) {
         console.log(e)
@@ -440,6 +441,8 @@ export default class Project extends wepy.page {
         console.log(json)
       if (json.data.code == 'success') {
         const i = json.data.data
+        if (!i.nativePlace) this.checked = false;
+        if (!i.address) this.checked2 = false;
         if (i.employeeCount) {
           this.nativePlace = i.nativePlace
           this.address = i.address

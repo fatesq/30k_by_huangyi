@@ -211,7 +211,7 @@ page {
       <button type="warn" @tap="toNext">下一步</button>
     </view>
   </view>
-  <List wx:if="{{show1}}" :list.sync="list"/>
+  <List wx:if="{{show1}}" :list.sync="list" :value1.sync="id"/>
   <Add1 wx:if="{{show2}}" />
   <Add2 wx:if="{{show3}}" />
 </view>
@@ -328,7 +328,8 @@ export default class Manage extends wepy.page {
         if (json.data.code === 'success') {
           wx.navigateTo({ url: 'consult' })
         } else {
-          utils.alert(json.data.description || json.data.msg)
+          utils.alert('请完善信息')
+          // utils.alert(json.data.description || json.data.msg)
         }
       } catch (e) {
         console.log(e)
@@ -381,45 +382,19 @@ export default class Manage extends wepy.page {
       })
       if (json.data.code === 'success') {
         const i = json.data.data
-        let inList = []
-        i.industryCareful.map(i => {
-          return inList.push(i.id)
-        })
-        console.log(inList)
-        this.info = {
-          ...this.info,
-          ...i,
-          industryCareful: JSON.stringify(inList),
+        if (i.industryCareful) {
+          let inList = []
+          i.industryCareful.map(i => {
+            return inList.push(i.id)
+          })
+          console.log(inList)
+          this.info = {
+            ...this.info,
+            ...i,
+            industryCareful: JSON.stringify(inList),
+          }
+          this.id = inList
         }
-        this.id = inList
-        // this.info = {
-        //   industryCareful: i.industryCareful,
-        //   scale: i.scale,
-        //   riseRate: i.riseRate,
-        //   score1: 3,
-        //   coreTechnology: i.coreTechnology,
-        //   score2: 3,
-        //   forecastCustomerMonthCountFrom: '',
-        //   forecastCustomerTo: i.forecastCustomerTo,
-        //   forecastActiveCustomerMonthCountFrom: '',
-        //   forecastActiveCustomerTo: i.forecastActiveCustomerTo,
-        //   keepDevelopmentCostFrom: i.keepDevelopmentCostFrom,
-        //   keepDevelopmentCostTo: i.keepDevelopmentCostTo,
-        //   basicEquipmentCostFrom: i.basicEquipmentCostFrom,
-        //   basicEquipmentCostTo: i.basicEquipmentCostTo,
-        //   spreadCostFrom: i.spreadCostFrom,
-        //   spreadCostTo: i.spreadCostTo,
-        //   forecastPersonFrom: i.forecastPersonFrom,
-        //   forecastPersonTo: i.forecastPersonTo,
-        //   score3: 3,
-        //   completeAnalysis: [],
-        //   nowShare: '',
-        //   nowIndustryRanking: '',
-        //   goalShare: '',
-        //   goalIndustryRanking: '',
-        //   coreComplete: '',
-        //   score4: 3,
-        // }
         this.$apply()
       } else {
         utils.alert(json.data.description)

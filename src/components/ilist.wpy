@@ -106,18 +106,23 @@ export default class List extends wepy.page {
         //   }
         // })
         if (!json.data.data || json.data.data.every(i => i.isAttention == 0)) {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '请去设置目标行业',
-            success(res) {
-              if (res.confirm) {
-                wx.switchTab({url: '/pages/setting/index'})
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
+          if (wx.getStorageSync('cnm') != 1) {
+            wx.showModal({
+              title: '提示',
+              showCancel: true,
+              cancelText: '以后再说',
+              content: '请去设置目标行业',
+              success(res) {
+                if (res.confirm) {
+                  wx.setStorageSync('cnm', 1)
+                  wx.switchTab({url: '/pages/setting/index'})
+                } else if (res.cancel) {
+                  wx.setStorageSync('cnm', 1)
+                }
+              
+              },
+            })
+          }
         } else {
           this.list = json.data.data.filter(i => i.isAttention == 1)
         }

@@ -228,7 +228,8 @@ export default class BrandAbout extends wepy.page {
       if (json.data.code === 'success') {
         wx.navigateTo({ url: 'project' })
       } else {
-        utils.alert(json.data.msg || json.data.description)
+        utils.alert('请完善信息')
+        // utils.alert(json.data.msg || json.data.description)
       }
     } catch (e) {
       utils.alert('系统异常')

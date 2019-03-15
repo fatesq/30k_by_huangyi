@@ -48,15 +48,15 @@ export default class List extends wepy.page {
         twoWay: true,
         default: []
     },
-    // value1: {
-    //     type: Array,
-    //     twoWay: true,
-    //     default: []
-    // },
+    value1: {
+        type: Array,
+        twoWay: true,
+        default: []
+    },
   }
 
   data = {
-    value1: [],
+    // value1: [],
     value2: [],
   }
   
@@ -65,11 +65,11 @@ export default class List extends wepy.page {
       this.$emit('cancelAll')
     },
     onSelect(event) {
+      console.log(event)
       this.value1= event.detail
       this.$apply()
     },
     onChange(event) {
-      console.log(event)
       this.value2 = event.detail
       this.$apply()
     },

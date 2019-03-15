@@ -25,6 +25,9 @@ page {
 <template>
   <view>
     <view class="page__bd page__bd_spacing">
+      <view style="display:flex;justify-content: center;align-items: center;">
+        <image mode="aspectFit"  style="width:400rpx;height:250rpx" src="../ic/logo.png" />
+      </view>
       <view class="section">
         <input id='mobile' placeholder="手机号" auto-focus bind:change="onChange"/>
       </view>
