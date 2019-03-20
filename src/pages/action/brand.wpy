@@ -149,10 +149,14 @@ page {
       <van-field
         id="failureRate"
         value="{{failureRate}}"
+        type="digit"
         label="项目失败率"
         placeholder="请输入项目失败率"
+        use-button-slot
         bind:change="onChange"
-      />
+      >
+      <text slot="button">%</text>
+      </van-field>
     </van-cell-group>  
     <view class="fix">
       <button type="warn" @tap="toNext">下一步</button>

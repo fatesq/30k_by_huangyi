@@ -97,7 +97,7 @@ page {
     <van-cell title="项目组织情况" is-link @tap="router('projectGroup')"/>
     <van-cell title="客户群体画像" is-link @tap="router('client')"/>
     <van-cell title="行业项目相关" is-link wx:if="{{info.industry.industryType != '0'}}" @tap="router({{info.industry.industryType == 2 ? 'industry' : 'industryB'}})"/>
-    <van-cell title="投资参考信息" is-link @tap="router({{info.industry.industryType == 1 ? 'financ2' : 'financ'}})"/>
+    <van-cell title="投资参考信息" is-link @tap="router({{info.industry.isStatic == 0 ? 'financ2' : 'financ'}})"/>
   </van-cell-group>
 
   <view class="fix" style="display:flex">

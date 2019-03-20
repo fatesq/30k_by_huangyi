@@ -118,12 +118,12 @@ export default class authorize extends wepy.page {
   }
 
   async checkToken() {
-    const json = await api.checktoken();
-    if (json.data.code === 'success') {
-      wx.switchTab({ url: 'search' })
-    } else {
+    // const json = await api.checktoken();
+    // if (json.data.code === 'success') {
+    //   wx.switchTab({ url: 'search' })
+    // } else {
       this.getSetting()
-    }
+    // }
   }
 
   onShow() {
