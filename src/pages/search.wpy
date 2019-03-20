@@ -78,7 +78,7 @@ page {
    
 }
 .dian {
-  width: 490rpx;
+  // width: 490rpx;
   max-width: 490rpx;
   -webkit-line-clamp:2;
   overflow: hidden;
@@ -98,15 +98,15 @@ page {
       <view class="title">
         <image class="img" mode="aspectFit" src="{{item.imageUrl}}" />
         <view class="box">
-          <view class="time">{{item.createTime}}</view>
+          <view class="time" style="font-size:28rpx;">{{item.createTime}}</view>
           <view class="value">
-            <text class="dian" style="font-size:16px;font-weight:600">{{item.industry.name}}</text>
+            <text class="dian" style="font-size:32rpx;font-weight:600">{{item.industry.name}}</text>
             <text class="price" style="text-align:right;white-space: nowrap;">{{item.projectReference.totalInvestment}}万元</text>
           </view>
-          <view class="value" style="color:#999">
+          <view class="value" style="color:#999;font-size: 30rpx;">
             <text class="dian">No.{{item.code}}</text>
           </view>
-          <view class="value dian" style="font-weight:600">
+          <view class="value dian" style="font-weight:600;font-size: 36rpx;">
             <text class="dian">{{item.name}}</text>
           </view>  
         </view>
@@ -256,6 +256,7 @@ export default class Search extends wepy.page {
   }
 
   onShow() {
+    this.industryName = ''
     this.showList()
     this.$broadcast('reload');
   }

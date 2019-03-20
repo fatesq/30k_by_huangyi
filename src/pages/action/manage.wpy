@@ -313,6 +313,7 @@ export default class Manage extends wepy.page {
     async toNext() {
       if (this.info.coreTechnology.length < 1 || this.info.completeAnalysis.length < 1) {
         utils.alert('请填写完整')
+        return
       }
       try {
         const json = await api.industry({
