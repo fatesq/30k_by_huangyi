@@ -52,7 +52,7 @@ page {
     <view wx:for="{{memberList}}" wx:key="index">
       <view class="title">
         <image src="{{item.imageURL}}" mode="aspectFill"/>
-        <van-cell title="{{item.name}}" style="width: 100%" border="{{false}}">
+        <van-cell title="{{item.position}} {{item.name}}" style="width: 100%" border="{{false}}">
           <van-icon
             slot="right-icon"
             name="delete"
@@ -61,7 +61,7 @@ page {
           />
         </van-cell>
       </view>
-      <view class="title">{{item.profile}}</view>
+      <view class="title" style="font-size: 14px;font-wight:500">{{item.profile}}</view>
       <van-cell-group>
         <van-field value="{{item.mobileNumber}}" label="手机号" readonly/>
         <van-field value="{{item.identNumber}}" label="身份证号" readonly/>

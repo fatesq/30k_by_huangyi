@@ -39,7 +39,7 @@ page {
   
   <van-panel custom-class="panel-box" title="估值试算">
     <view>
-      <view style="padding: 10px 15px" wx:for="{{info.trialCalculation}}" wx:key="index">
+      <view style="padding: 10px 15px;font-size:14px" wx:for="{{info.trialCalculation}}" wx:key="index">
         <view>{{item.calculationName}}</view>
         <view>{{item.calculationName == 'PER估值法' ? '预估年净利润' : item.calculationName == 'PSR估值法' ? '预估年营业收入' : '预估年净资产' }}{{item.yearSale}}万元</view>
         <view>{{item.calculationName == 'PER估值法' ? '参考市盈率' : item.calculationName == 'PSR估值法' ? '参考市销率' : '参考市净率' }}{{item.saleRate}}%</view>
@@ -59,7 +59,7 @@ page {
   </van-panel>  
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">
-     <view class="title">{{info.document}}</view>
+     <view class="title" style="font-size:14px;font-wight:500">{{info.document}}</view>
   </van-panel>
   
 </view>

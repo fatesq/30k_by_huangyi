@@ -35,6 +35,7 @@ page {
   box-sizing: border-box;
   line-height: 24px;
   align-items: center;
+  font-size: 14px;
   &:after {
     content: ' ';
     position: absolute;

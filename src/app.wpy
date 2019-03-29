@@ -65,6 +65,12 @@ page {
     line-height: 44px;
     background-color: #f44;
 }
+.van-cell__title {
+  color: #666;
+}
+.item {
+  font-size: 14px;
+}
 </style>
 
 <script>

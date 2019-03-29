@@ -55,15 +55,22 @@ import wepy from 'wepy'
 import api from '../api/api'
 // import util from '../util/util';
 export default class authorize extends wepy.page {
-  data = {}
+  data = {
+    loading: false
+  }
 
   methods = {}
 
   async bindGetUserInfo(e) {
+    if (this.loading) return;
     let that = this
     const res = await this.login()
     const info = e.detail
-    that.getUserInfo(res, info, 2)
+    if(res.code) {
+      this.loading = true
+      that.getUserInfo(res, info, 2)
+      this.$apply();
+    }
   }
   async getUserInfo(res, info, type) {
     let that = this
@@ -74,7 +81,6 @@ export default class authorize extends wepy.page {
           code: res.code
         }
       })
-      console.log(json)
       if (json.data.code === 'success') {
         wx.setStorageSync('token', json.data.token)
         wx.setStorageSync('openId', json.data.openId)
@@ -83,6 +89,10 @@ export default class authorize extends wepy.page {
       } else {
         wx.redirectTo({ url: 'login' })
       }
+      setTimeout(() => {
+        this.loading = false;
+        this.$apply()
+      }, 3000);
     } catch (e) {
       console.log(e)
     }
@@ -104,17 +114,19 @@ export default class authorize extends wepy.page {
   async getSetting() {
     let that = this
     const code = await this.login()
-    wx.getSetting({
-      success: function(res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function(info) {
-              that.getUserInfo(code, info, 1)
-            }
-          })
+    if(code.code) {
+      wx.getSetting({
+        success: function(res) {
+          if (res.authSetting['scope.userInfo']) {
+            wx.getUserInfo({
+              success: function(info) {
+                that.getUserInfo(code, info, 1)
+              }
+            })
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   async checkToken() {
@@ -131,14 +143,14 @@ export default class authorize extends wepy.page {
     wx.setNavigationBarTitle({
       title: '授权'
     })
-    wx.checkSession({
-      success () {
-        self.checkToken()
-      },
-      fail () {
-       self.getSetting()
-      }
-    })    
+    // wx.checkSession({
+    //   success () {
+    //     self.checkToken()
+    //   },
+    //   fail () {
+    //    self.getSetting()
+    //   }
+    // })    
     
   }
 }

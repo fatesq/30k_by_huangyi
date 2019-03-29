@@ -45,7 +45,8 @@ page {
       <view class="title">
         <van-cell title="{{item.name}}" style="width: 100%"/>
       </view>
-      <view class="title">{{item.value}}</view>
+      <view class="title" style="font-size:14px;font-wight:500">实用价值: {{item.value}}</view>
+        <view class="title" style="font-size:14px;font-wight:500">竞争力: {{item.completion}}</view>
     </view>
   </van-panel>
 
@@ -72,7 +73,7 @@ page {
       <van-cell title="目标市场份额" value="{{info.goalShare}}%"/>
       <van-cell title="业内排名" value="{{info.goalIndustryRanking}}位"/>
       <van-panel title="核心竞争力">
-         <view class="title">{{info.coreComplete}}</view>
+         <view class="title" style="font-size: 14px;font-wight:500">{{info.coreComplete}}</view>
       </van-panel>  
     </van-cell-group>
   </van-panel>

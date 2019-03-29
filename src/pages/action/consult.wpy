@@ -72,7 +72,7 @@ page {
   <van-panel custom-class="panel-box" title="估算试值">
     <view>
       <van-swipe-cell right-width="{{ 65 }}" wx:for="{{trialCalculation}}" wx:key="index" async-close bind:close="closeSwiper({{index}},trialCalculation)">
-      <view style="padding: 10px 15px">
+      <view style="padding: 10px 15px;font-size:14px">
         <view>{{item.calculationName}} </view>
         <view>{{item.calculationName == 'PER估值法' ? '预估年净利润' : item.calculationName == 'PSR估值法' ? '预估年营业收入' : '预估年净资产' }}{{item.yearSale}}万元</view>
         <view>{{item.calculationName == 'PER估值法' ? '参考市盈率' : item.calculationName == 'PSR估值法' ? '参考市销率' : '参考市净率' }}{{item.saleRate}}%</view>

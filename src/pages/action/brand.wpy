@@ -49,6 +49,20 @@ page {
     border-radius: 0px;
   }
 }
+
+.failureRate {
+  .van-cell__title {
+    max-width: 140rpx !important;
+    min-width: 140rpx !important;
+  }
+  input {
+    text-align: center;
+    width:39%;
+  }
+  .van-field__button {
+    padding-left: 0px !important;
+  }
+}
 </style>
 <template>
   <view style="padding-bottom: 50px">
@@ -149,13 +163,14 @@ page {
       <van-field
         id="failureRate"
         value="{{failureRate}}"
+        class="failureRate"
         type="digit"
         label="项目失败率"
         placeholder="请输入项目失败率"
         use-button-slot
         bind:change="onChange"
       >
-      <text slot="button">%</text>
+        <view style="width:50px;text-align:left" slot="button">%</view>
       </van-field>
     </van-cell-group>  
     <view class="fix">
@@ -277,11 +292,11 @@ export default class Brand extends wepy.page {
       utils.alert('请输入总部统一社会信用代码')
       return
     }
-    if (!this.direStore) {
+    if (!(0 <= this.direStore)) {
       utils.alert('请输入品牌直营店数量')
       return
     }
-    if (!this.joinStore) {
+    if (!(0 <= this.joinStore)) {
       utils.alert('请输入品牌加盟店数量')
       return
     }
@@ -289,31 +304,31 @@ export default class Brand extends wepy.page {
       utils.alert('请输入品牌代表门店名称')
       return
     }
-    if (!this.areaFrom || !this.areaTo) {
+    if (!(0 <= this.areaFrom)|| !(0 <= this.areaTo)) {
       utils.alert('请输入品牌所属店面的场地面积')
       return
     }
-    if (!this.priceFrom || !this.priceTo) {
+    if (!(0 <= this.priceFrom) || !(0 <= this.priceTo)) {
       utils.alert('请输入品牌所属店面的客单价区间')
       return
     }
-    if (!this.investmentFrom || !this.investmentTo) {
+    if (!(0 <= this.investmentFrom) || !(0 <= this.investmentTo)) {
       utils.alert('请输入品牌所属店面的单店投资额')
       return
     }
-    if (!this.monthProfileFrom || !this.monthProfileTo) {
+    if (!(0 <= this.monthProfileFrom) || !(0 <= this.monthProfileTo)) {
       utils.alert('请输入品牌所属店面的月净利润')
       return
     }
-    if (!this.yearProfileFrom || !this.yearProfileTo) {
+    if (!(0 <= this.yearProfileFrom) || !(0 <= this.yearProfileTo)) {
       utils.alert('请输入品牌所属店面的年化投资回报率')
       return
     }
-    if (!this.backWeekFrom || !this.backWeekTo) {
+    if (!(0 <= this.backWeekFrom) || !(0 <= this.backWeekTo)) {
       utils.alert('请输入品牌所属店面的回本周期')
       return
     }
-    if (!this.failureRate) {
+    if (!(0 <= this.failureRate)) {
       utils.alert('请输入品牌所属店面的项目失败率')
       return
     }

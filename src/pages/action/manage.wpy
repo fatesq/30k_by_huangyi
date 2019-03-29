@@ -83,7 +83,8 @@ page {
             />
           </van-cell>
         </view>
-        <view class="title">{{item.value}}</view>
+        <view class="title" style="font-size:14px;font-wight:500">实用价值: {{item.value}}</view>
+        <view class="title" style="font-size:14px;font-wight:500">竞争力: {{item.completion}}</view>
       </view>
       <view class="item add" @tap="show('show2')">
         <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加主要产品

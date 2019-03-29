@@ -94,10 +94,22 @@ export default class Forget extends wepy.page {
   }
 
   async code() {
-    // if (!this.mobileNumber || this.mobileNumber.length != 11) {
-      // utils.alert('请输入手机号')
-      // return false
-    // }
+    if (!this.mobileNumber) {
+      utils.alert('请输入原密码')
+      return false
+    }
+    const checkInfo = await api.checkPassword({
+      method: 'FORM',
+      query: {
+        actorId: wx.getStorageSync('id'),
+        password: this.mobileNumber,
+      }
+    })
+    if (checkInfo.data.code === 'passwordFailure') {
+      utils.alert(checkInfo.data.msg)
+      return false;
+    }
+    
     this.reload()
     try {
       const json = await api.sendCheckCode({
@@ -134,6 +146,21 @@ export default class Forget extends wepy.page {
     if (!this.identCode || !this.loginPassword) {
        utils.alert('请填写完整')
         return false
+    }
+    const checkInfo = await api.checkPassword({
+      method: 'FORM',
+      query: {
+        actorId: wx.getStorageSync('id'),
+        password: this.mobileNumber,
+      }
+    })
+    if (checkInfo.data.code === 'passwordFailure') {
+      utils.alert(checkInfo.data.msg)
+      return false;
+    }
+    if (this.mobileNumber == this.loginPassword) {
+      utils.alert('新旧密码不能重复')
+      return false;
     }
     try {
       const json = await api.forgetPwd({
