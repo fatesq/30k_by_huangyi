@@ -2,7 +2,7 @@ import wepy from 'wepy'
 
 const wxRequest = async(params = {}, url) => {
   const token = wx.getStorageSync('token')
-  wx.showLoading()
+  // wx.showLoading()
   let data = params.query || {}
   return new Promise(async(resolve, reject) => {
     let res = await wepy.request({

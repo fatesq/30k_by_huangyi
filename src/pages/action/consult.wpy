@@ -51,6 +51,17 @@ page {
     border-bottom: 1px solid #eee;
   }
 }
+.preview {
+  height: 88rpx;
+  text-align: center;
+  color: #fff;
+  background-color: #B4A078;
+  line-height: 88rpx;
+  font-size: 28rpx;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 </style>
 <template>
 <view>
@@ -94,14 +105,16 @@ page {
   </van-panel>
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">
-    <van-field
+    <!-- <van-field
       id="document"
       value="{{ document }}"
       type="textarea"
       autosize
       placeholder="请输入融资宣传文案"
       bind:change="onChange"
-    />
+    /> -->
+    <rich-editor ctl-style="main-color" init-data="{{ testList }}" op-style="btn-color" support-type="{{ supportType }}" get-object="{{ getObject }}"/>
+    <!-- <view class="preview" bindtap='preview'>预览</view> -->
   </van-panel>
   <view class="fix">
     <button type="warn" @tap="toNext">保存</button>
@@ -117,11 +130,12 @@ import api from '../../api/api'
 import utils from '../../utils/utils'
 import add1 from '../../components/consult/add1'
 import add2 from '../../components/consult/add2'
-
+let result;
 export default class BrandAbout extends wepy.page {
   config = {
     navigationBarTitleText: '投资参考信息',
     usingComponents: {
+      "rich-editor": "plugin://richeditor/richeditor",
       'van-icon': '../../components/van/icon/index',
       'van-cell': '../../components/van/cell/index',
       'van-cell-group': '../../components/van/cell-group/index',
@@ -142,6 +156,7 @@ export default class BrandAbout extends wepy.page {
   }
 
   data = {
+    richText: '123',
     show1: false,
     show2: false,
     list: [],
@@ -149,7 +164,75 @@ export default class BrandAbout extends wepy.page {
     trialCalculation: [],
     document: '',
     obj: {},
-    indShow: false
+    indShow: false,
+
+    testList: [],
+    outPutList: [],
+    supportType: {
+      image: {
+        name: '图片',
+        type: 'image',
+        isSupport: true,
+        supportSource: ['album', 'camera'],
+        sizeType: ['original', 'compressed'],
+        frontMethod: function () {
+          // 对应方法需返回true or false
+          console.log(`插入图片前的前置事件`)
+        },
+        backMethod: function (res) {
+          // 对应方法需返回true or false
+          console.log(`插入图片前的后置事件，所插入的图片路径为${JSON.stringify(res)}`)
+        }
+      },
+      text: {
+        name: '文本',
+        type: 'text',
+        isSupport: true,
+        maxNum: 120,
+        frontMethod: function () {
+          // 对应方法需返回true or false
+          console.log(`插入文本前的前置事件`)
+        },
+        backMethod: function (res) {
+          // 对应方法需返回true or false
+          console.log(`插入文本前的后置事件，所插入的文本内容为${JSON.stringify(res)}`)
+        }
+      },
+      // video: {
+      //   name: '视频',
+      //   type: 'video',
+      //   isSupport: true,
+      //   supportSource: ['album', 'camera'],
+      //   isCompress: true,
+      //   maxDuration: 60,
+      //   camera: 'back',
+      //   frontMethod: function () {
+      //     // 对应方法需返回true or false
+      //     console.log(`插入视频前的前置事件`)
+      //   },
+      //   backMethod: function (res) {
+      //     // 对应方法需返回true or false
+      //     console.log(`插入视频前的后置事件，所插入的视频路径为${JSON.stringify(res)}`)
+      //   }
+      // },
+      // 暂不实现
+      // audio: {
+      //   name: '音频',
+      //   type: 'audio',
+      //   frontMethod: function () {
+      //     // 对应方法需返回true or false
+      //     console.log(`插入音频前的前置事件`)
+      //   },
+      //   backMethod: function (res) {
+      //     // 对应方法需返回true or false
+      //     console.log(`插入音频前的后置事件，所插入的音频路径为${JSON.stringify(res)}`)
+      //   }
+      // }
+    },
+    getObject: function (res) {
+      //　返回当前的对象
+      result = res
+    }
   }
 
   methods = {
@@ -171,6 +254,18 @@ export default class BrandAbout extends wepy.page {
       this.$apply()
     },
     async toNext() {
+      let string = ''
+      result.forEach(function(item, index) {
+        if (item.type === 'image') {
+          string = string + '<div><img style="width: 100%;" src="' + item.src + '"/></div>'
+        } else if (item.type === 'text') {
+          string = string + '<div style="font-size: 14px">' + item.desc + '</div>'
+        } else if (item.type === 'video') {
+          // 目前小程序rich-text不支持video
+          // string = string + '<div><video src="' + item.src + '"></video></div>'
+        }
+      })
+      console.log(string);
       try {
         const json = await api.investment({
           method: 'FORM',

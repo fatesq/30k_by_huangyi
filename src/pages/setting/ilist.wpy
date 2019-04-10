@@ -112,6 +112,9 @@ export default class List extends wepy.page {
   }
 
   async showList() {
+    wx.showLoading({
+      title: '行业加载中...',
+    })
     try {
       const json = await api.selectCareIndustry({
         method: 'FORM',
@@ -139,6 +142,7 @@ export default class List extends wepy.page {
       console.log(e)
       utils.alert('系统异常')
     }
+    wx.hideLoading()
   }
 
   onShow() {

@@ -28,7 +28,7 @@
       />
     </van-cell-group>
     <view class="fix">
-      <button type="warn" @tap="toNext()">下一步</button>
+      <button type="warn" loading="{{loading}}" @tap="toNext()">下一步</button>
     </view>
   </view> 
   <SelectIndustry wx:if="{{show}}"/>
@@ -70,6 +70,7 @@ export default class action extends wepy.page {
     belongIndustry: '',
     type: '',
     isStatic: '',
+    loading: false,
   }
 
   methods = {
@@ -131,6 +132,35 @@ export default class action extends wepy.page {
     this.$apply()
   }
 
+  async load() {
+    this.loading = true
+    const json = await api.selectProjectIsFinish({
+      method: 'get'
+    })
+    const item = json.data.data
+    if (item && Object.keys(item).length) {
+      wx.showModal({
+        title: '提示',
+        content: '是否新建项目',
+        success(res) {
+          if (res.confirm) {
+            
+          } else if (res.cancel) {
+            wx.setStorageSync('pId', item.id)
+            wx.setStorageSync('enterpriseSocialNum', item.enterpriseSocialNum)
+            wx.setStorageSync('industryId', item.industry.industryId)
+            wx.setStorageSync('belongIndustry', item.industry.belongIndustry)
+            wx.setStorageSync('industryType',item.industry.industryType)
+            wx.setStorageSync('isStatic', item.industry.isStatic)
+            wx.navigateTo({ url: item.brand ? 'brand' : 'project' })
+          }
+        }
+      })
+    }
+    this.loading = false;
+    this.$apply();
+  }
+
   events = {
     saveIndustry(id, name, belongIndustry, type, isStatic) {
       console.log(id, name, type, isStatic)
@@ -145,7 +175,7 @@ export default class action extends wepy.page {
   }
 
   onShow() {
-    console.log(123)
+    this.load();
     this.$broadcast('reload');
   }
 }

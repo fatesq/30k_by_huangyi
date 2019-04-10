@@ -81,6 +81,10 @@ export default class Demo extends wepy.page {
         utils.alert('有未填写的项目')
         return
       }
+      if (this.direStore == 0 && this.joinStore == 0) {
+        utils.alert('直营&加盟店不能同时为0')
+        return
+      }
       this.$emit('addShop', {areaCode: this.areaCode, areaName: this.areaName, direStore: parseInt(this.direStore), joinStore: parseInt(this.joinStore)});
       this.direStore = '';
       this.joinStore = '';

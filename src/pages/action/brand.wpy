@@ -166,7 +166,7 @@ page {
         class="failureRate"
         type="digit"
         label="项目失败率"
-        placeholder="请输入项目失败率"
+        placeholder=""
         use-button-slot
         bind:change="onChange"
       >
@@ -222,7 +222,7 @@ export default class Brand extends wepy.page {
     backWeekFrom: '',
     backWeekTo: '',
     // failureRateFrom: '',
-    failureRate: '',
+    failureRate: '0',
     listA: [[],[]],
     multiIndex: [0, 0],
   }
@@ -298,6 +298,10 @@ export default class Brand extends wepy.page {
     }
     if (!(0 <= this.joinStore)) {
       utils.alert('请输入品牌加盟店数量')
+      return
+    }
+    if (this.direStore == 0 && this.joinStore == 0) {
+      utils.alert('直营&加盟店不能同时为0')
       return
     }
     if (!this.representStore) {

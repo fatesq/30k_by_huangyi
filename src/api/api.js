@@ -1,7 +1,7 @@
 import { wxRequest } from '../utils/wxRequest'
 
 // const url = 'http://121.199.63.157:134'
-const url = 'https://litpro.linktou.com'
+const url = 'https://litdev.linktou.com'
 // 获取登陆授权
 const login = (params) => wxRequest(params, `${url}/login/go`)
 // 校验
@@ -108,6 +108,8 @@ const sendCheckCodeByMobile = (params) => wxRequest(params, `${url}/login/sendCh
 
 const forgetPwdByMobile = (params) => wxRequest(params, `${url}/login/forgetPwdByMobile`)
 
+const selectProjectIsFinish = (params) => wxRequest(params, `${url}/searchProject/selectProjectIsFinish`)
+
 module.exports = {
   url,
   login,
@@ -159,5 +161,6 @@ module.exports = {
   loadDiningIndustryInfoByProjectId,
   selectCareIndustry,
   sendCheckCodeByMobile,
-  forgetPwdByMobile
+  forgetPwdByMobile,
+  selectProjectIsFinish
 }
