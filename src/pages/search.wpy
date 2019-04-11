@@ -256,6 +256,12 @@ export default class Search extends wepy.page {
   }
 
   onShow() {
+    wx.showLoading({
+      title: '加载中',
+    })
+    setTimeout(function () {
+      wx.hideLoading()
+    }, 1000)
     this.industryName = ''
     this.showList()
     this.$broadcast('reload');

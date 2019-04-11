@@ -80,11 +80,10 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/action/consult',
       'pages/authorize',
       'pages/login',
       'pages/action/consultB',
-      
+      'pages/action/consult',
       'pages/action/manageB',      
       'pages/action/manage',
       'pages/action/draw',
@@ -146,12 +145,6 @@ export default class extends wepy.app {
     usingComponents: {
       'van-swipe-cell': "./components/van/swipe-cell/index"
     },
-    "plugins": {
-      "richeditor": {
-        "version": "1.0.0",
-        "provider": "wxe65a0c242998f59f"
-      }
-    }
   };
 
   globalData = {

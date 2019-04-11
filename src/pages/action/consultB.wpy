@@ -202,5 +202,14 @@ export default class Consult extends wepy.page {
       this.$apply()
     }
   }
+
+  onShow () {
+    wx.showLoading({
+      title: '加载中',
+    })
+    setTimeout(function () {
+      wx.hideLoading()
+    }, 1000)
+  }  
 }
 </script>

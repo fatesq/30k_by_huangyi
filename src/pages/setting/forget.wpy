@@ -90,6 +90,12 @@ export default class Forget extends wepy.page {
   }
 
   onShow () {
+    wx.showLoading({
+      title: '加载中',
+    })
+    setTimeout(function () {
+      wx.hideLoading()
+    }, 1000)
     clearTimeout(t)
   }
 
