@@ -133,12 +133,14 @@
     <van-field
       id="mobileNumber"
       label="手机号"
+      type="number"
       value="{{mobileNumber}}"
       bind:change="onChange"
     />
     <van-field
       id="identNumber"
       label="身份证号"
+      type="idcard"
       value="{{identNumber}}"
       bind:change="onChange"
     />

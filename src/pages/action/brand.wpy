@@ -84,6 +84,7 @@ page {
       <van-field
         id="createUserPhone"
         value="{{createUserPhone}}"
+        type="number"
         label="手机号"
         placeholder="请输入手机号"
         bind:change="onChange"
@@ -91,6 +92,7 @@ page {
       <van-field
         id="createUserIdCard"
         value="{{createUserIdCard}}"
+        type="idcard"
         label="身份证号"
         placeholder="请输入身份证号"
         bind:change="onChange"

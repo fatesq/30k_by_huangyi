@@ -196,15 +196,15 @@ export default class BrandAbout extends wepy.page {
       utils.alert('请选择绩优门店的周边环境')
       return
     }
-    if (!(0 <= this.storePeople)) {
+    if (this.storePeople == '' || this.storePeople == 0 || isNaN(this.storePeople)) {
       utils.alert('请输入绩优门店平均人流量')
       return
     }
-    if (!(0 <= this.storeCustomer)) {
+    if (this.storeCustomer == '' || this.storeCustomer == 0) {
       utils.alert('请输入绩优门店平均客流量')
       return
     }
-    if (!(0 <= this.storeEfficiency1) || !(0 <= this.storeEfficiency2)  ) {
+    if (this.storeEfficiency1 == '' || this.storeEfficiency1 == 0 || this.storeEfficiency2 == '' || this.storeEfficiency2 == 0) {
       utils.alert('请输入绩优门店的坪效')
       return
     }

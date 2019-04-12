@@ -13,6 +13,7 @@
     <van-field
       id="count"
       label="现存用户数"
+      type="number"
       placeholder="请输入内容"
       bind:change="onInput"
       use-button-slot
