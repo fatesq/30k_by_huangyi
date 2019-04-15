@@ -386,8 +386,8 @@ export default class Manage extends wepy.page {
         if (json.data.code === 'success') {
           wx.navigateTo({ url: 'consult' })
         } else {
-          utils.alert('请完善信息')
-          // utils.alert(json.data.description || json.data.msg)
+          // utils.alert('请完善信息')
+          utils.alert(json.data.description || json.data.msg)
         }
       } catch (e) {
         console.log(e)
