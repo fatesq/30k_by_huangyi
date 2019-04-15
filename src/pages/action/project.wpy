@@ -363,7 +363,7 @@ export default class Project extends wepy.page {
       utils.alert('请输入项目出让股份')
       return false
     }
-    if (!this.info.investment && this.info.investment != 0) {
+    if (this.info.investment == '' || isNaN(this.info.investment)) {
       utils.alert('请输入项目已投入资金,若无则填写0')
       return false
     }

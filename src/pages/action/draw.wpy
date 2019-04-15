@@ -294,19 +294,19 @@ export default class Draw extends wepy.page {
     async toNext() {
       let param = {projectId: wx.getStorageSync('pId')}
       if (this.publicFlag === 0) {
-        if (this.saveTimeDistribution.length < 1 || this.natureDistribution.length < 1 || this.scaleDistribution.length < 1 || this.industryDistribution.length < 1) {
-          utils.alert('请完善信息')
-          return false
-        }
+        // if (this.saveTimeDistribution.length < 1 || this.natureDistribution.length < 1 || this.scaleDistribution.length < 1 || this.industryDistribution.length < 1) {
+        //   utils.alert('请完善信息')
+        //   return false
+        // }
         param.customerList0 = JSON.stringify(this.saveTimeDistribution)
         param.customerList1 = JSON.stringify(this.natureDistribution)
         param.customerList2 = JSON.stringify(this.scaleDistribution)
         param.customerList3 = JSON.stringify(this.industryDistribution)
       } else {
-        if (this.featuresDistribution.length < 1 || this.ageDistribution.length < 1 || this.sexDistribution.length < 1 || this.incomeDistribution.length < 1 || this.occupationDistribution.length < 1) {
-          utils.alert('请完善信息')
-          return false
-        }
+        // if (this.featuresDistribution.length < 1 || this.ageDistribution.length < 1 || this.sexDistribution.length < 1 || this.incomeDistribution.length < 1 || this.occupationDistribution.length < 1) {
+        //   utils.alert('请完善信息')
+        //   return false
+        // }
         param.customerList0 = JSON.stringify(this.ageDistribution)
         param.customerList1 = JSON.stringify(this.sexDistribution)
         param.customerList2 = JSON.stringify(this.incomeDistribution)

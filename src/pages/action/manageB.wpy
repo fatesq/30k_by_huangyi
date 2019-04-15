@@ -196,8 +196,36 @@ export default class Manage extends wepy.page {
       this.$apply()
     },
     async toNext() {
+      if (this.info.diningSpeed == '') {
+        utils.alert('请填写出餐速度')
+        return
+      }
+      if (this.info.diningType == '') {
+        utils.alert('请填写菜品分类')
+        return
+      }
+      if (this.info.diningUpdateRate == '') {
+        utils.alert('请填写菜品年更新率')
+        return
+      }
+      if (this.info.areaEffiency == '') {
+        utils.alert('请填写设计坪效')
+        return
+      }
+      if (this.info.singleInvestment == '') {
+        utils.alert('请填写单店装修投入')
+        return
+      }
+      if (this.info.peopleCountFrom == '' || this.info.peopleCountTo == '') {
+        utils.alert('请填写周边人流量')
+        return
+      }
+      if (this.info.forecastPersonFrom == '' || this.info.forecastPersonTo == '') {
+        utils.alert('请填写预测客流量')
+        return
+      }
       if (this.info.name.length < 1) {
-        utils.alert('请填写完整')
+        utils.alert('请填写周边竞争情况')
         return
       }
       try {

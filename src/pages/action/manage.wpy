@@ -312,8 +312,64 @@ export default class Manage extends wepy.page {
       this.$apply()
     },
     async toNext() {
-      if (this.info.coreTechnology.length < 1 || this.info.completeAnalysis.length < 1) {
-        utils.alert('请填写完整')
+      if (this.info.id.length < 1) {
+        utils.alert('请选择业态细分')
+        return
+      }
+      if (this.info.scale == '') {
+        utils.alert('请填写规模总量')
+        return
+      }
+      if (this.info.riseRate == '') {
+        utils.alert('请填写近三年平均增长率')
+        return
+      }
+      if (this.info.coreTechnology.length < 1) {
+        utils.alert('请填写主要产品（技术）')
+        return
+      }
+      if (this.info.forecastCustomerMonthCountFrom == '' || this.info.forecastCustomerTo) {
+        utils.alert('请填写预测用户数')
+        return
+      }
+      if (this.info.forecastActiveCustomerMonthCountFrom == '' || this.info.forecastActiveCustomerTo == '') {
+        utils.alert('请填写预测用户活跃度')
+        return
+      }
+      if (this.info.keepDevelopmentCostFrom == '' || this.info.keepDevelopmentCostTo == '') {
+        utils.alert('请填写产品持续研发成本')
+        return
+      }
+      if (this.info.basicEquipmentCostFrom == '' || this.info.basicEquipmentCostTo == '') {
+        utils.alert('请填写基础设施维护成本')
+        return
+      }
+      if (this.info.spreadCostFrom == '' || this.info.spreadCostTo == '') {
+        utils.alert('请填写营销推广成本')
+        return
+      }
+      if (this.info.forecastPersonFrom == '' || this.info.forecastPersonTo == '') {
+        utils.alert('请填写预测访问流量')
+        return
+      }
+      if (this.info.completeAnalysis.length < 1) {
+        utils.alert('请填写竞品分析')
+        return
+      }
+      if (this.info.nowShare == '') {
+        utils.alert('请填写当前市场份额')
+        return
+      }
+      if (this.info.goalIndustryRanking == '') {
+        utils.alert('请填写业内排名')
+        return
+      }
+      if (this.info.goalShare == '') {
+        utils.alert('请填写目标市场份额')
+        return
+      }
+      if (this.info.coreComplete == '') {
+        utils.alert('请填写核心竞争力')
         return
       }
       try {

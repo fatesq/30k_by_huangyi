@@ -158,6 +158,26 @@ export default class Consult extends wepy.page {
       this.$apply()
     },
     async toNext() {
+      if (this.spendPurpose.length < 1) {
+        utils.alert('请填写全部资金用途')
+        return
+      }
+      if (this.forecastMonthProfileFrom == '' || this.forecastMonthProfileTo == '') {
+        utils.alert('请填写预测月净利润')
+        return
+      }
+      if (this.forecastYearProfileFrom == '' || this.forecastYearProfileTo == '') {
+        utils.alert('请填写预测年化投资回报率')
+        return
+      }
+      if (this.backWeekFrom == '' || this.forecastYearProfileTo == '') {
+        utils.alert('请填写预测回本周期')
+        return
+      }
+      if (this.document == '') {
+        utils.alert('融资宣传文案')
+        return
+      }
       try {
         const json = await api.saveStaticProfile({
           method: 'FORM',

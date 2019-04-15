@@ -80,7 +80,7 @@ page {
     </view>
   </van-panel>
 
-  <van-panel custom-class="panel-box" title="估算试值">
+  <van-panel custom-class="panel-box" title="估值试算">
     <view>
       <van-swipe-cell right-width="{{ 65 }}" wx:for="{{trialCalculation}}" wx:key="index" async-close bind:close="closeSwiper({{index}},trialCalculation)">
       <view style="padding: 10px 15px;font-size:14px">
@@ -92,7 +92,7 @@ page {
       </van-swipe-cell>
     </view>
     <view class="item add" @tap="showList">
-      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加估算试值
+      <van-icon name="add-o" custom-style="display: block;margin-right: 10px"/> 添加估值试算
     </view>
   </van-panel>
 
@@ -105,14 +105,14 @@ page {
   </van-panel>
 
   <van-panel custom-class="panel-box"  title="融资宣传文案">
-    <!-- <van-field
+    <van-field
       id="document"
       value="{{ document }}"
       type="textarea"
       autosize
       placeholder="请输入融资宣传文案"
       bind:change="onChange"
-    /> -->
+    />
   </van-panel>
   <view class="fix">
     <button type="warn" @tap="toNext">保存</button>
@@ -181,6 +181,18 @@ export default class BrandAbout extends wepy.page {
       this.$apply()
     },
     async toNext() {
+      if (this.spendPurpose.length < 1) {
+        utils.alert('请填写全部资金用途')
+        return
+      }
+      if (this.trialCalculation.length < 1) {
+        utils.alert('请填写估值试算')
+        return
+      }
+      if (this.document == '') {
+        utils.alert('融资宣传文案')
+        return
+      }
       try {
         const json = await api.investment({
           method: 'FORM',
